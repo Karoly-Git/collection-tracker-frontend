@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import './App.css'
+import AppRouter from './components/routes/AppRouter';
+import './App.css';
 
 function App() {
 
   return (
     <>
+      <AppRouter />
     </>
   )
 }
