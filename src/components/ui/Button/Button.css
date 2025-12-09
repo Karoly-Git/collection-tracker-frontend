@@ -10,4 +10,8 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 0.5rem;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #135eb4;
 }/*# sourceMappingURL=Button.css.map */
