@@ -8,7 +8,6 @@ import AddLorryForm from "../../forms/AddLorryForm/AddLorryForm";
 import "./Dashboard.css";
 
 export default function Dashboard() {
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAdd = () => setIsModalOpen(true);
