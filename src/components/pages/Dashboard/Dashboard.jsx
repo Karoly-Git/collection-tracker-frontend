@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from '../../ui/buttons/Button';
+import Button from '../../ui/button/Button';
 import { GoPlus as PlusIcon } from "react-icons/go";
 
 import AddLorryModal from "../../ui/modal/AddLorryModal";
