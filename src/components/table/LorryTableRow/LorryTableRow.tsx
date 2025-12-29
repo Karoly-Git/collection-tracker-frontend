@@ -1,3 +1,4 @@
+import { useState } from "react";
 import StatusBadge from "../statusBadge/StatusBadge";
 import type { Lorry } from "../../../types/lorry";
 import "./LorryTableRow.css";
@@ -9,6 +10,8 @@ interface LorryTableRowProps {
 }
 
 export default function LorryTableRow({ lorry }: LorryTableRowProps) {
+    const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
+
     const {
         materialName,
         customerName,
@@ -27,9 +30,9 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
                     <BsInfoCircle />
                 </button>
 
-                <button className="icon-btn delete" aria-label="Delete lorry">
+                {userLoggedIn && <button className="icon-btn delete" aria-label="Delete lorry">
                     <RiDeleteBin2Line />
-                </button>
+                </button>}
             </td>
         </tr>
     );
