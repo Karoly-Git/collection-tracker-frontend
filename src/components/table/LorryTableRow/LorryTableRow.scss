@@ -6,10 +6,61 @@
     }
 
     .material-name {
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .collection-ref-number {
         text-transform: uppercase;
+        font-family: monospace;
+    }
+
+    /* ACTION COLUMN */
+    .action {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        color: #6b7280; // neutral gray
+        font-size: 18px;
+
+        &:hover {
+            background-color: #f3f4f6;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+
+        &.info {
+            color: green;
+
+            &:hover {
+                color: #2563eb; // blue
+                background-color: white;
+            }
+        }
+
+        &.delete {
+            color: red;
+
+            &:hover {
+                color: #b91c1c; // red
+                background-color: white;
+            }
+        }
     }
 }

@@ -1,11 +1,56 @@
+.lorry-table-row {
+  /* ACTION COLUMN */
+}
 .lorry-table-row td {
   padding: 1rem;
   vertical-align: middle;
   white-space: nowrap;
 }
 .lorry-table-row .material-name {
-  font-weight: bold;
+  font-weight: 600;
 }
 .lorry-table-row .collection-ref-number {
   text-transform: uppercase;
+  font-family: monospace;
+}
+.lorry-table-row .action {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.lorry-table-row .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  color: #6b7280;
+  font-size: 18px;
+}
+.lorry-table-row .icon-btn:hover {
+  background-color: #f3f4f6;
+}
+.lorry-table-row .icon-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+.lorry-table-row .icon-btn.info {
+  color: green;
+}
+.lorry-table-row .icon-btn.info:hover {
+  color: #2563eb;
+  background-color: white;
+}
+.lorry-table-row .icon-btn.delete {
+  color: red;
+}
+.lorry-table-row .icon-btn.delete:hover {
+  color: #b91c1c;
+  background-color: white;
 }/*# sourceMappingURL=LorryTableRow.css.map */
