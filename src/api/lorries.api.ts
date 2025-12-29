@@ -1,16 +1,16 @@
-const getAllLorries = async () => {
-    try {
-        const response = await fetch('http://localhost:8000/lorries');
+import type { Lorry } from "../types/lorry";
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch lorries (${response.status})`);
-        }
+const API_URL = "http://localhost:8000";
 
-        return response.json();
-    } catch (error) {
-        console.error(error);
-        throw error;
+const getAllLorries = async (): Promise<Lorry[]> => {
+    const response = await fetch(`${API_URL}/lorries`);
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch lorries (${response.status})`);
     }
+
+    return response.json();
 };
+
 
 export default getAllLorries;

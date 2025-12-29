@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import getAllLorries from "../../../api/lorries.api";
-import LorryTableRow from "../lorryTableRow/LorryTableRow";
+import LorryTableRow from "../LorryTableRow/LorryTableRow";
+import type { Lorry } from "../../../types/lorry";
 
 export default function LorryTable() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<Lorry[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         getAllLorries()
@@ -21,9 +22,9 @@ export default function LorryTable() {
         <table>
             <thead>
                 <tr>
-                    <th>Lorry ID</th>
-                    <th>Reg num</th>
-                    <th>Ref num</th>
+                    <th>Material</th>
+                    <th>Customer</th>
+                    <th>Ref number</th>
                     <th>Status</th>
                 </tr>
             </thead>
