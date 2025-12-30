@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getAllLorries from "../../../api/lorries.api";
+import { getAllLorries } from "../../../api/lorries.api";
 import LorryTableRow from "../LorryTableRow/LorryTableRow";
 import type { Lorry } from "../../../types/lorry";
 
