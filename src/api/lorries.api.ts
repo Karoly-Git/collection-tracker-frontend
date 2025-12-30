@@ -21,3 +21,12 @@ export const getLorryById = async (id: string): Promise<Lorry> => {
     return response.json();
 };
 
+export const deleteLorry = async (id: string): Promise<Lorry> => {
+    const response = await fetch(`${API_URL}/lorries/${id}/delete`);
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete lorry with ID ${id} (${response.status})`);
+    }
+
+    return response.json();
+};
