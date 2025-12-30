@@ -20,11 +20,11 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
     } = lorry;
 
     function handleInfoClick(lorryId: string): void {
-        console.log("Info from lorry (ID):", lorryId);
+        console.log("Info clicked for lorry:", lorryId);
     }
 
     function handleDeleteClick(lorryId: string): void {
-        console.log("Deleted lorry (ID):", lorryId);
+        console.log("Delete clicked for lorry:", lorryId);
     }
 
     return (
@@ -32,7 +32,12 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
             <td className="material-name">{materialName}</td>
             <td className="customer-name">{customerName}</td>
             <td className="collection-ref-number">{collectionRefNum}</td>
-            <StatusBadge currentStatus={currentStatus} />
+
+            <StatusBadge
+                currentStatus={currentStatus}
+                lorryId={lorry.lorryId}
+            />
+
             <td className="action">
                 <button
                     className="icon-btn info"
