@@ -19,8 +19,12 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
         currentStatus
     } = lorry;
 
-    function handleInfoClick(): void {
-        console.log("info clicked");
+    function handleInfoClick(lorryId: string): void {
+        console.log("Info from lorry (ID):", lorryId);
+    }
+
+    function handleDeleteClick(lorryId: string): void {
+        console.log("Deleted lorry (ID):", lorryId);
     }
 
     return (
@@ -30,15 +34,23 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
             <td className="collection-ref-number">{collectionRefNum}</td>
             <StatusBadge currentStatus={currentStatus} />
             <td className="action">
-                <button className="icon-btn info" aria-label="View details">
-                    <InfoIco
-                        onClick={() => handleInfoClick()}
-                    />
+                <button
+                    className="icon-btn info"
+                    aria-label="View details"
+                    onClick={() => handleInfoClick(lorry.lorryId)}
+                >
+                    <InfoIco />
                 </button>
 
-                {userLoggedIn && <button className="icon-btn delete" aria-label="Delete lorry">
-                    <BinIco />
-                </button>}
+                {userLoggedIn && (
+                    <button
+                        className="icon-btn delete"
+                        aria-label="Delete lorry"
+                        onClick={() => handleDeleteClick(lorry.lorryId)}
+                    >
+                        <BinIco />
+                    </button>
+                )}
             </td>
         </tr>
     );
