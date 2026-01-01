@@ -1,19 +1,11 @@
 import "./Modal.css";
 
-// 1️⃣ Define props for the Modal
-export interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: React.ReactNode; // anything React can render
-}
-
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, children }) {
     if (!isOpen) return null;
 
-    // 2️⃣ Type event handlers explicitly (optional but recommended)
     const handleOverlayClick = () => onClose();
 
-    const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+    const stopPropagation = (e) => {
         e.stopPropagation();
     };
 

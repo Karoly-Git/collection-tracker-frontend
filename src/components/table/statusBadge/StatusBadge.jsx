@@ -1,17 +1,14 @@
-import type { Lorry } from "../../../types/lorry";
 import "./StatusBadge.css";
 
-interface StatusBadgeProps {
-    currentStatus: Lorry["currentStatus"];
-    lorryId: Lorry["lorryId"]
-}
-
-export default function StatusBadge({ currentStatus, lorryId }: StatusBadgeProps) {
-    const formattedStatusText = currentStatus.toLowerCase().split("_").join(" ");
+export default function StatusBadge({ currentStatus, lorryId }) {
+    const formattedStatusText = currentStatus
+        .toLowerCase()
+        .split("_")
+        .join(" ");
 
     const statusClass = currentStatus.toLowerCase();
 
-    function handleBadgeClick(lorryId: string): void {
+    function handleBadgeClick(lorryId) {
         console.log("Badge clicked for lorry:", lorryId);
     }
 

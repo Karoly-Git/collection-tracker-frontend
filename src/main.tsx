@@ -1,8 +1,8 @@
 import { Provider } from "react-redux";
-import { store } from "./state";
+import { store } from "./state/store";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App"; // <-- no extension needed with Vite + TS
+import App from "./App";
 
 const rootElement = document.getElementById("root");
 

@@ -6,11 +6,7 @@ import { IoIosStats } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 
-export interface SidebarProps {
-    isSidebarOpen: boolean;
-}
-
-export default function Sidebar({ isSidebarOpen }: SidebarProps) {
+export default function Sidebar({ isSidebarOpen }) {
     return (
         <nav className={`sidebar ${isSidebarOpen ? "open" : "collapsed"}`}>
             <ul>

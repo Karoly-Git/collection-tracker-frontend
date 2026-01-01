@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import "./AppLayout.css";
 
 export default function AppLayout() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     return (
         <div className="app-layout">

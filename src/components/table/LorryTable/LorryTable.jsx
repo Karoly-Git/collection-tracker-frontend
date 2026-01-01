@@ -1,14 +1,14 @@
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import LorryTableRow from "../LorryTableRow/LorryTableRow";
-import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { fetchLorries } from "../../../state/lorries.slice";
 import "./LorryTable.css";
 
 export default function LorryTable() {
-    const dispatch = useAppDispatch();
+    const dispatch = useDispatch();
 
-    const { items: lorriesData, loading, error } = useAppSelector(
-        state => state.lorries
+    const { items: lorriesData, loading, error } = useSelector(
+        (state) => state.lorries
     );
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function LorryTable() {
                 </tr>
             </thead>
             <tbody>
-                {lorriesData.map(lorry => (
+                {lorriesData.map((lorry) => (
                     <LorryTableRow
                         key={lorry.lorryId}
                         lorry={lorry}

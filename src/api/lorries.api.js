@@ -1,7 +1,6 @@
-import type { Lorry } from "../types/lorry";
 import { API_URL } from "./config";
 
-export const getAllLorries = async (): Promise<Lorry[]> => {
+export const getAllLorries = async () => {
     const response = await fetch(`${API_URL}/lorries`, {
         method: "GET",
     });
@@ -13,7 +12,7 @@ export const getAllLorries = async (): Promise<Lorry[]> => {
     return response.json();
 };
 
-export const getLorryById = async (id: string): Promise<Lorry> => {
+export const getLorryById = async (id) => {
     const response = await fetch(`${API_URL}/lorries/${id}`, {
         method: "GET",
     });
@@ -25,7 +24,7 @@ export const getLorryById = async (id: string): Promise<Lorry> => {
     return response.json();
 };
 
-export const deleteLorry = async (id: string): Promise<{ lorryId: string }> => {
+export const deleteLorry = async (id) => {
     const response = await fetch(`${API_URL}/lorries/${id}/delete`, {
         method: "DELETE",
     });

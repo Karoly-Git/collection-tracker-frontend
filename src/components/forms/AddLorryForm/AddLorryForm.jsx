@@ -1,25 +1,7 @@
 import { useState } from "react";
 import "./AddLorryForm.css";
 
-// 1️⃣ Exact payload shape expected by the backend
-export interface AddLorryPayload {
-    regNum?: string;
-    materialName: string;
-    customerName: string;
-    collectionRefNum: string;
-    updatedBy: {
-        userId: string;
-    };
-    comment?: string;
-}
-
-// 2️⃣ Props
-interface AddLorryFormProps {
-    onSubmit: (data: AddLorryPayload) => void;
-}
-
-export default function AddLorryForm({ onSubmit }: AddLorryFormProps) {
-    // 3️⃣ Form state
+export default function AddLorryForm({ onSubmit }) {
     const [regNum, setRegNum] = useState("");
     const [materialName, setMaterialName] = useState("");
     const [customerName, setCustomerName] = useState("");
@@ -27,8 +9,7 @@ export default function AddLorryForm({ onSubmit }: AddLorryFormProps) {
     const [userId, setUserId] = useState("");
     const [comment, setComment] = useState("");
 
-    // 4️⃣ Submit handler
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         onSubmit({
@@ -42,7 +23,6 @@ export default function AddLorryForm({ onSubmit }: AddLorryFormProps) {
             comment: comment || undefined,
         });
 
-        // 5️⃣ Reset form
         setRegNum("");
         setMaterialName("");
         setCustomerName("");

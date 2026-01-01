@@ -5,23 +5,18 @@ import { GoPlus as PlusIcon } from "react-icons/go";
 import Modal from "../../components/ui/modal/Modal";
 import LorryTable from "../../components/table/LorryTable/LorryTable";
 import AddLorryForm from "../../components/forms/AddLorryForm/AddLorryForm";
-import type { LorryData } from "../../components/forms/AddLorryForm/AddLorryForm";
 
 import "./Dashboard.css";
 
 export default function Dashboard() {
-    const [userLoggedIn] = useState<boolean>(true);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [userLoggedIn] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAdd = () => setIsModalOpen(true);
     const handleClose = () => setIsModalOpen(false);
 
-    // Now fully typed because LorryData comes from the form component
-    const handleFormSubmit = (lorryData: LorryData) => {
+    const handleFormSubmit = (lorryData) => {
         console.log("New Lorry Added:", lorryData);
-
-        // TODO: Save to global state or backend
-
         setIsModalOpen(false);
     };
 
@@ -29,7 +24,9 @@ export default function Dashboard() {
         <div className="dashboard">
             <div className="dashboard-head">
                 <h2>Lorry Overview</h2>
-                {userLoggedIn && <Button icon={PlusIcon} text="Add Lorry" onClick={handleAdd} />}
+                {userLoggedIn && (
+                    <Button icon={PlusIcon} text="Add Lorry" onClick={handleAdd} />
+                )}
             </div>
 
             <LorryTable />

@@ -1,17 +1,12 @@
 import StatusBadge from "../statusBadge/StatusBadge";
-import type { Lorry } from "../../../types/lorry";
 import { BsInfoCircle as InfoIco } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIco } from "react-icons/ri";
-import { useAppDispatch } from "../../../state/hooks";
+import { useDispatch } from "react-redux";
 import { deleteLorryById } from "../../../state/lorries.slice";
 import "./LorryTableRow.css";
 
-interface LorryTableRowProps {
-    lorry: Lorry;
-}
-
-export default function LorryTableRow({ lorry }: LorryTableRowProps) {
-    const dispatch = useAppDispatch();
+export default function LorryTableRow({ lorry }) {
+    const dispatch = useDispatch();
     const userLoggedIn = true;
 
     const {
@@ -19,14 +14,14 @@ export default function LorryTableRow({ lorry }: LorryTableRowProps) {
         materialName,
         customerName,
         collectionRefNum,
-        currentStatus
+        currentStatus,
     } = lorry;
 
-    function handleInfoClick(lorryId: string): void {
+    function handleInfoClick(lorryId) {
         console.log("Info clicked for lorry:", lorryId);
     }
 
-    function handleDeleteClick(lorryId: string): void {
+    function handleDeleteClick(lorryId) {
         dispatch(deleteLorryById(lorryId));
     }
 
