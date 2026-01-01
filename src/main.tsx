@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./state";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App"; // <-- no extension needed with Vite + TS

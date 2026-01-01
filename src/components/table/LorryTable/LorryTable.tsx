@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import LorryTableRow from "../LorryTableRow/LorryTableRow";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { fetchLorries } from "../../../store/lorries.slice";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
+import { fetchLorries } from "../../../state/lorries.slice";
 import "./LorryTable.css";
 
 export default function LorryTable() {

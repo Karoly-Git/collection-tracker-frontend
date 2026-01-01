@@ -2,8 +2,8 @@ import StatusBadge from "../statusBadge/StatusBadge";
 import type { Lorry } from "../../../types/lorry";
 import { BsInfoCircle as InfoIco } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIco } from "react-icons/ri";
-import { useAppDispatch } from "../../../store/hooks";
-import { deleteLorryById } from "../../../store/lorries.slice";
+import { useAppDispatch } from "../../../state/hooks";
+import { deleteLorryById } from "../../../state/lorries.slice";
 import "./LorryTableRow.css";
 
 interface LorryTableRowProps {
