@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LorryTableRow from "../LorryTableRow/LorryTableRow";
-import { fetchLorries } from "../../../state/lorries.slice";
+import { fetchAllLorries } from "../../../state/lorry/lorrySlice";
 import "./LorryTable.css";
 
 export default function LorryTable() {
@@ -12,14 +12,14 @@ export default function LorryTable() {
     );
 
     useEffect(() => {
-        dispatch(fetchLorries());
+        dispatch(fetchAllLorries());
     }, [dispatch]);
 
     if (loading) return <p>Loading lorries…</p>;
     if (error) return <p>{error}</p>;
 
     return (
-        <table>
+        <table className="lorry-table">
             <thead>
                 <tr>
                     <th>Material</th>

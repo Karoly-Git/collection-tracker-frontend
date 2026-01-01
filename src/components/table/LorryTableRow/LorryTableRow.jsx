@@ -2,7 +2,7 @@ import StatusBadge from "../statusBadge/StatusBadge";
 import { BsInfoCircle as InfoIco } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIco } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { deleteLorryById } from "../../../state/lorries.slice";
+import { deleteLorryById } from "../../../state/lorry/lorrySlice";
 import "./LorryTableRow.css";
 
 export default function LorryTableRow({ lorry }) {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllLorries, deleteLorry } from "../api/lorries.api";
+import { getAllLorries, deleteLorry } from "../../api/lorry.api";
 
 const initialState = {
     items: [],
@@ -7,15 +7,15 @@ const initialState = {
     error: null,
 };
 
-export const fetchLorries = createAsyncThunk(
-    "lorries/fetchAll",
+export const fetchAllLorries = createAsyncThunk(
+    "lorries/fetchAllLorries",
     async () => {
         return await getAllLorries();
     }
 );
 
 export const deleteLorryById = createAsyncThunk(
-    "lorries/delete",
+    "lorries/deleteLorryById",
     async (lorryId) => {
         await deleteLorry(lorryId);
         return lorryId;
@@ -23,20 +23,20 @@ export const deleteLorryById = createAsyncThunk(
 );
 
 const lorriesSlice = createSlice({
-    name: "lorries",
+    name: "lorry",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchLorries.pending, (state) => {
+            .addCase(fetchAllLorries.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchLorries.fulfilled, (state, action) => {
+            .addCase(fetchAllLorries.fulfilled, (state, action) => {
                 state.loading = false;
                 state.items = action.payload;
             })
-            .addCase(fetchLorries.rejected, (state, action) => {
+            .addCase(fetchAllLorries.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || "Failed to load lorries";
             })
