@@ -18,8 +18,20 @@ export default function LorryTableRow({ lorry }) {
         currentStatus,
     } = lorry;
 
-    function handleInfoClick(lorryId) {
-        console.log("Info clicked for lorry:", lorryId);
+    function handleMaterialClick(lorryId) {
+        console.log("Material name clicked for lorry:", lorryId);
+    }
+
+    function handleCustomerClick(lorryId) {
+        console.log("Customer name clicked for lorry:", lorryId);
+    }
+
+    function handleRefNumClick(lorryId) {
+        console.log("Reference number clicked for lorry:", lorryId);
+    }
+
+    function handleInfoClick() {
+        console.log("Info clicked for lorry:", lorry);
     }
 
     function handleDeleteClick(lorryId) {
@@ -29,7 +41,11 @@ export default function LorryTableRow({ lorry }) {
     return (
         <tr className="lorry-table-row">
             <td>
-                <button className="cell-btn material-name">
+                <button
+                    className="cell-btn material-name"
+                    aria-label="Change material name"
+                    onClick={() => handleMaterialClick(lorryId)}
+                >
                     <div>{materialName}</div>
                 </button>
                 <div className="time-checked-in">
@@ -38,13 +54,21 @@ export default function LorryTableRow({ lorry }) {
             </td>
 
             <td>
-                <button className="cell-btn customer-name">
+                <button
+                    className="cell-btn customer-name"
+                    aria-label="Change customer name"
+                    onClick={() => handleCustomerClick(lorryId)}
+                >
                     {customerName}
                 </button>
             </td>
 
             <td>
-                <button className="cell-btn collection-ref-number">
+                <button
+                    className="cell-btn collection-ref-number"
+                    aria-label="Change collection reference number"
+                    onClick={() => handleRefNumClick(lorryId)}
+                >
                     {collectionRefNum}
                 </button>
             </td>
