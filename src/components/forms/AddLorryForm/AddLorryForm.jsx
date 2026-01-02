@@ -101,6 +101,7 @@ export default function AddLorryForm({ onSubmit }) {
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                     required
+                    placeholder="Later it will come from login"
                 />
             </label>
 

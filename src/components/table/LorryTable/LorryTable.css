@@ -22,4 +22,10 @@
 }
 .lorry-table tbody tr:hover {
   background-color: #e6f1fd;
+}
+.lorry-table tbody .no-lorry-msg {
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: bolder;
+  font-size: x-large;
 }/*# sourceMappingURL=LorryTable.css.map */

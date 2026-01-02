@@ -29,6 +29,14 @@ export default function LorryTable() {
                 </tr>
             </thead>
             <tbody>
+                {lorriesData.length === 0 && (
+                    <tr>
+                        <td colSpan={4} className="no-lorry-msg">
+                            No lorries currently on site!
+                        </td>
+                    </tr>
+                )}
+
                 {lorriesData.map((lorry) => (
                     <LorryTableRow
                         key={lorry.lorryId}

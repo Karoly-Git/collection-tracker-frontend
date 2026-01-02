@@ -14,6 +14,7 @@ export default function LorryTableRow({ lorry }) {
         materialName,
         customerName,
         collectionRefNum,
+        checkedInAt,
         currentStatus,
     } = lorry;
 
@@ -29,7 +30,9 @@ export default function LorryTableRow({ lorry }) {
         <tr className="lorry-table-row">
             <td>
                 <button className="cell-btn material-name">
-                    {materialName}
+                    <div>{materialName}</div>
+                    <div>
+                        {new Date(checkedInAt).toLocaleTimeString('en-GB', { timeStyle: 'short' })}                        </div>
                 </button>
             </td>
 
