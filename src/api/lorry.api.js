@@ -35,3 +35,30 @@ export const deleteLorry = async (id) => {
 
     return response.json();
 };
+
+export const updateLorryStatus = async ({
+    lorryId,
+    status,
+    userId,
+    comment,
+}) => {
+    const response = await fetch(`${API_URL}/lorries/${lorryId}/update-status`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            status,
+            updatedBy: { userId },
+            comment,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error(
+            `Failed to update status for lorry with ID ${lorryId} (${response.status})`
+        );
+    }
+
+    return response.json();
+};
