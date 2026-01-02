@@ -1,5 +1,5 @@
 export const CUSTOMER_NAMES = {
-    PUTE: "Pute",
+    PEUTE: "Peute",
     MRL: "MRL",
     VOLKER: "Volker",
     UN_GLOBAL: "UN Global",
