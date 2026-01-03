@@ -6,23 +6,29 @@ import { formatText } from "../../../../utils/formatText";
 export default function UpdateStatus({ lorry, onCancel, onUpdate }) {
     const [status, setStatus] = useState(lorry?.currentStatus ?? "");
 
-    const historyStatuses = lorry?.statusHistory.map((entry) => entry.status) || [];
-    const statusOptions = Object.values(LORRY_STATUSES).filter((status) => !historyStatuses.includes(status));
+    const historyStatuses =
+        lorry?.statusHistory.map((entry) => entry.status) || [];
 
-    function handleUpdate() {
-        if (!status) return;
+    const statusOptions = Object.values(LORRY_STATUSES).filter(
+        (s) => !historyStatuses.includes(s)
+    );
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!status || status === lorry?.currentStatus) return;
         onUpdate?.(status);
     }
 
     return (
-        <div className="update-status">
+        <form className="update-status" onSubmit={handleSubmit}>
             <h3>Update lorry status</h3>
 
-            <label htmlFor="status-select">Status</label>
+            <label htmlFor="status-select">Plese select a new status</label>
             <select
                 id="status-select"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
+                required
             >
                 <option value="" disabled>
                     Select status
@@ -45,14 +51,14 @@ export default function UpdateStatus({ lorry, onCancel, onUpdate }) {
                 </button>
 
                 <button
-                    type="button"
+                    type="submit"
                     className="btn update"
-                    onClick={handleUpdate}
-                    disabled={!status || status === lorry?.currentStatus}
+                    disabled={status === lorry?.currentStatus}
                 >
                     Update
                 </button>
             </div>
-        </div>
+        </form>
     );
 }
+
