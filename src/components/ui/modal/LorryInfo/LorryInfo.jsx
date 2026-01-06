@@ -6,7 +6,6 @@ export default function LorryInfo({ lorry }) {
     if (!lorry) return null;
 
     const {
-        lorryId,
         regNum,
         materialName,
         customerName,
@@ -18,42 +17,80 @@ export default function LorryInfo({ lorry }) {
     } = lorry;
 
     return (
-        <div className="lorry-info">
-            <h2>COLLECTION INFO</h2>
+        <section className="lorry-info">
+            <header className="lorry-header">
+                <h2>Collection Info</h2>
 
-            <div className="lorry-details">
-                <p><strong>Material:</strong> <span>{materialName}</span></p>
-                <p><strong>Customer:</strong> <span>{customerName}</span></p>
-                <p><strong>Reference number:</strong> <span>{collectionRefNum}</span></p>
-                <p><strong>Registration number:</strong> <span>{regNum}</span></p>
-                <p><strong>Current status:</strong> <span>{formatText(currentStatus)}</span></p>
-                <p><strong>Checked In at:</strong> <span>{checkedInAt ? formatTime(checkedInAt) : "-"}</span></p>
-                <p><strong>Checked Out at:</strong> <span>{checkedOutAt ? formatTime(checkedOutAt) : "-"}</span></p>
-            </div>
+                <div className="lorry-details">
+                    <p>
+                        <strong>Material</strong>
+                        <span>{materialName}</span>
+                    </p>
+                    <p>
+                        <strong>Customer</strong>
+                        <span>{customerName}</span>
+                    </p>
+                    <p>
+                        <strong>Reference number</strong>
+                        <span>{collectionRefNum}</span>
+                    </p>
+                    <p>
+                        <strong>Registration number</strong>
+                        <span>{regNum}</span>
+                    </p>
+                    <p>
+                        <strong>Current status</strong>
+                        <span>{formatText(currentStatus)}</span>
+                    </p>
+                    <p>
+                        <strong>Checked in at</strong>
+                        <span>{checkedInAt ? formatTime(checkedInAt) : '-'}</span>
+                    </p>
+                    <p>
+                        <strong>Checked out at</strong>
+                        <span>{checkedOutAt ? formatTime(checkedOutAt) : '-'}</span>
+                    </p>
+                </div>
+            </header>
 
             <h3>Status History</h3>
 
             <ul className="status-history">
                 {statusHistory.map((entry) => (
-                    <li key={entry.timestamp} className="status-entry">
-                        <div>
-                            <strong>{formatText(entry.status)}</strong>
+                    <li
+                        key={entry.timestamp}
+                        className={`status-entry ${entry.status}`}
+                    >
+                        {/* Status header */}
+                        <div className="status-header">
+                            <strong className="status-title">
+                                {formatText(entry.status)}
+                            </strong>
                             <span className="timestamp">
-                                {" "} {formatTime(entry.timestamp)}
+                                {formatTime(entry.timestamp)}
                             </span>
                         </div>
 
+                        {/* Meta row */}
                         <div className="updated-by">
-                            Updated by: {entry.updatedBy?.userId}
+                            <span>
+                                Updated by {entry.updatedBy?.userId ?? 'System'}
+                            </span>
+
+                            <button type="button">
+                                <span aria-hidden>✎</span>
+                                <span>Add comment</span>
+                            </button>
                         </div>
 
+                        {/* Comments */}
                         {entry.comments?.length > 0 && (
                             <ul className="comments">
                                 {entry.comments.map((comment) => (
-                                    <li key={comment.id}>
+                                    <li key={comment.id + comment.timestamp}>
                                         <em>{comment.text}</em>
                                         <div className="comment-meta">
-                                            {comment.userId} •{" "}
+                                            {comment.userId} •{' '}
                                             {formatTime(comment.timestamp)}
                                         </div>
                                     </li>
@@ -63,6 +100,6 @@ export default function LorryInfo({ lorry }) {
                     </li>
                 ))}
             </ul>
-        </div>
+        </section>
     );
 }

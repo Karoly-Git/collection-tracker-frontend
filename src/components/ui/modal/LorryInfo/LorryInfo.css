@@ -1,121 +1,178 @@
 .lorry-info {
   --bg: #ffffff;
-  --card-bg: #f9fafb;
+  --card: #f9fafb;
   --border: #e5e7eb;
-  --text: #000000;
+  --text: #111827;
   --muted: #6b7280;
+  --accent: #2563eb;
   background: var(--bg);
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 720px;
-  /* ===== Summary Card ===== */
-  /* ===== Timeline ===== */
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 760px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  /* ===== COLLECTION SUMMARY ===== */
+  /* ===== TIMELINE ===== */
+  /* ===== STATUS COLOURS ===== */
 }
 .lorry-info h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   margin-bottom: 16px;
+  letter-spacing: 0.02em;
 }
 .lorry-info h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 24px 0 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 32px 0 16px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  color: var(--muted);
 }
 .lorry-info .lorry-details {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  background: var(--card-bg);
+  gap: 16px;
+  background: linear-gradient(180deg, #ffffff, var(--card));
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 20px;
 }
 .lorry-info .lorry-details p {
   margin: 0;
 }
-.lorry-info .lorry-details p span {
-  text-transform: uppercase;
-  font-weight: bold;
-}
 .lorry-info .lorry-details p strong {
   display: block;
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin-bottom: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.lorry-info .lorry-details p span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text);
 }
 .lorry-info .status-history {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.lorry-info .status-history .status-entry {
+.lorry-info .status-entry {
   position: relative;
-  padding: 16px 16px 16px 28px;
-  margin-bottom: 12px;
-  background: var(--card-bg);
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  /* ===== Comments ===== */
-  /* ===== Status colours ===== */
+  border-radius: 14px;
+  padding: 16px 18px 18px 20px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  /* Left status bar */
+  /* ===== HEADER ===== */
+  /* ===== META ROW ===== */
+  /* ===== COMMENTS ===== */
 }
-.lorry-info .status-history .status-entry strong {
-  font-size: 0.95rem;
+.lorry-info .status-entry:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+.lorry-info .status-entry::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--border);
+}
+.lorry-info .status-entry .status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.lorry-info .status-entry .status-header strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.lorry-info .status-entry .status-header .timestamp {
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.lorry-info .status-entry .updated-by {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.lorry-info .status-entry .updated-by button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.7rem;
   font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
 }
-.lorry-info .status-history .status-entry .timestamp {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 2px;
+.lorry-info .status-entry .updated-by button:hover {
+  text-decoration: underline;
 }
-.lorry-info .status-history .status-entry .updated-by {
-  font-size: 0.75rem;
-  margin-top: 4px;
-}
-.lorry-info .status-history .status-entry .comments {
-  margin-top: 12px;
-  padding-left: 0;
+.lorry-info .status-entry .comments {
+  margin-top: 14px;
   list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.lorry-info .status-history .status-entry .comments li {
+.lorry-info .status-entry .comments li {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin-bottom: 6px;
+  border-radius: 10px;
+  padding: 10px 12px;
 }
-.lorry-info .status-history .status-entry .comments li em {
+.lorry-info .status-entry .comments li em {
   display: block;
   font-size: 0.85rem;
   font-style: normal;
+  margin-bottom: 4px;
 }
-.lorry-info .status-history .status-entry .comments li .comment-meta {
-  margin-top: 2px;
-  font-size: 0.7rem;
+.lorry-info .status-entry .comments li .comment-meta {
+  font-size: 0.65rem;
+  color: var(--muted);
 }
-.lorry-info .status-history .status-entry.CHECKED_IN {
-  border-left: 4px solid #22c55e;
-}
-.lorry-info .status-history .status-entry.CHECKED_IN::before {
+.lorry-info .status-entry.CHECKED_IN::before {
   background: #22c55e;
 }
-.lorry-info .status-history .status-entry.LOADING_IN_PROGRESS {
-  border-left: 4px solid #f59e0b;
-  background-color: red;
+.lorry-info .status-entry.CHECKED_IN .status-header strong {
+  color: #22c55e;
 }
-.lorry-info .status-history .status-entry.LOADING_IN_PROGRESS::before {
+.lorry-info .status-entry.LOADING_IN_PROGRESS::before {
   background: #f59e0b;
 }
-.lorry-info .status-history .status-entry.LOADED {
-  border-left: 4px solid #3b82f6;
+.lorry-info .status-entry.LOADING_IN_PROGRESS .status-header strong {
+  color: #f59e0b;
 }
-.lorry-info .status-history .status-entry.LOADED::before {
+.lorry-info .status-entry.LOADED::before {
   background: #3b82f6;
 }
-.lorry-info .status-history .status-entry.CHECKED_OUT {
-  border-left: 4px solid #9ca3af;
+.lorry-info .status-entry.LOADED .status-header strong {
+  color: #3b82f6;
 }
-.lorry-info .status-history .status-entry.CHECKED_OUT::before {
+.lorry-info .status-entry.CHECKED_OUT::before {
   background: #9ca3af;
+}
+.lorry-info .status-entry.CHECKED_OUT .status-header strong {
+  color: #9ca3af;
 }/*# sourceMappingURL=LorryInfo.css.map */
