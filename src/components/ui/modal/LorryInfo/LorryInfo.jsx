@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { formatText } from '../../../../utils/formatText';
 import { formatTime } from '../../../../utils/formatTime';
 import Modal from '../Modal';
@@ -64,7 +64,7 @@ export default function LorryInfo({ lorry }) {
             <h3>Status History</h3>
 
             <ul className="status-history">
-                {statusHistory.map((entry) => (
+                {[...statusHistory].reverse().map((entry) => (
                     <li
                         key={entry.timestamp}
                         className={`status-entry ${entry.status}`}
@@ -97,7 +97,7 @@ export default function LorryInfo({ lorry }) {
                         {/* Comments */}
                         {entry.comments?.length > 0 && (
                             <ul className="comments">
-                                {entry.comments.map((comment) => (
+                                {[...entry.comments].toReversed().map((comment) => (
                                     <li key={comment.id + comment.timestamp}>
                                         <em>{comment.text}</em>
                                         <div className="comment-meta">
