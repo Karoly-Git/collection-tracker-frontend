@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import LorryTableRow from "../LorryTableRow/LorryTableRow";
 import { fetchAllLorries } from "../../../state/lorry/lorrySlice";
-import "./LorryTable.css";
+import "./CollectionTable.css";
+import CollectionTableRow from "../CollectionTableRow/CollectionTableRow";
 
-export default function LorryTable() {
+export default function CollectionTable() {
     const dispatch = useDispatch();
 
     const { items: lorriesList, loading, error } = useSelector(
@@ -21,14 +21,14 @@ export default function LorryTable() {
     return (
         <>
             {lorriesList.length === 0 && (
-                <div className="no-lorry-msg">
+                <div className="no-collection-msg">
                     <div className="icon">🚚</div>
-                    <h2>No lorries on site</h2>
+                    <h2>No collections on site</h2>
                     <p>All clear for now. New arrivals will appear here.</p>
                 </div>
             )}
             {lorriesList.length !== 0 && (
-                <table className="lorry-table" >
+                <table className="collection-table" >
                     <thead>
                         <tr>
                             <th>Material</th>
@@ -40,7 +40,7 @@ export default function LorryTable() {
                     <tbody>
 
                         {lorriesList.map((lorry) => (
-                            <LorryTableRow
+                            <CollectionTableRow
                                 key={lorry.lorryId}
                                 lorry={lorry}
                             />

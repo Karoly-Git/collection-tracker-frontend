@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { LORRY_STATUSES } from "../../../constants/lorry-statuses";
+import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
 import { formatText } from "../../../utils/formatText";
 import { updateLorryStatusById } from "../../../state/lorry/lorrySlice";
 
@@ -15,7 +15,7 @@ export default function UpdateStatusForm({ lorry, onCancel }) {
     );
 
     // ✅ Find the only valid next status
-    const nextStatus = Object.values(LORRY_STATUSES).find(
+    const nextStatus = Object.values(COLLECTION_STATUSES).find(
         (status) => !usedStatuses.includes(status)
     );
 
@@ -60,7 +60,7 @@ export default function UpdateStatusForm({ lorry, onCancel }) {
 
     return (
         <form className="form update-status-form" onSubmit={handleSubmit}>
-            <h2>Update lorry status</h2>
+            <h2>Status Update</h2>
 
             <div className="status-preview">
                 <div className="status-row">

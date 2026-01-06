@@ -5,8 +5,8 @@ import { GoPlus as PlusIcon } from "react-icons/go";
 import "./Dashboard.css";
 
 import Modal from "../../components/ui/modal/Modal";
-import LorryTable from "../../components/table/LorryTable/LorryTable";
-import AddLorryForm from "../../components/forms/AddLorryForm/AddLorryForm";
+import CollectionTable from "../../components/table/CollectionTable/CollectionTable";
+import AddCollectionForm from "../../components/forms/AddCollectionForm/AddCollectionForm";
 
 export default function Dashboard() {
     const [userLoggedIn] = useState(true);
@@ -25,14 +25,14 @@ export default function Dashboard() {
             <div className="dashboard-head">
                 <h2>Collection Overview</h2>
                 {userLoggedIn && (
-                    <Button icon={PlusIcon} text="Add Lorry" onClick={handleAddClick} />
+                    <Button icon={PlusIcon} text="Add Collection" onClick={handleAddClick} />
                 )}
             </div>
 
-            <LorryTable />
+            <CollectionTable />
 
             <Modal isOpen={isAddModalOpen} onClose={handleAddClose}>
-                <AddLorryForm onSubmit={handleAddFormSubmit} onCancel={handleAddClose} />
+                <AddCollectionForm onSubmit={handleAddFormSubmit} onCancel={handleAddClose} />
             </Modal>
         </div>
     );

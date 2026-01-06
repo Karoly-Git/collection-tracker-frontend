@@ -1,4 +1,4 @@
-export const LORRY_STATUSES = {
+export const COLLECTION_STATUSES = {
     CHECKED_IN: "CHECKED_IN",
     LOADING: "LOADING_IN_PROGRESS",
     LOADED: "LOADED",

@@ -1,4 +1,4 @@
-.no-lorry-msg {
+.no-collection-msg {
   margin: 3rem auto;
   max-width: 420px;
   padding: 2rem;
@@ -11,45 +11,45 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.no-lorry-msg .icon {
+.no-collection-msg .icon {
   font-size: 3rem;
   margin-bottom: 0.75rem;
 }
 
-.no-lorry-msg h2 {
+.no-collection-msg h2 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.no-lorry-msg p {
+.no-collection-msg p {
   margin-top: 0.5rem;
   font-size: 0.95rem;
   color: #64748b;
 }
 
-.lorry-table {
+.collection-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #ffffff;
   margin-top: 2rem;
 }
-.lorry-table thead * {
+.collection-table thead * {
   font-family: monospace;
 }
-.lorry-table thead tr {
+.collection-table thead tr {
   border-bottom: 1px solid #e5e7eb;
 }
-.lorry-table thead th {
+.collection-table thead th {
   padding: 1.75rem 1rem;
   text-align: left;
   font-weight: 600;
   color: #111827;
   font-size: 1.5rem;
 }
-.lorry-table tbody tr {
+.collection-table tbody tr {
   border-bottom: 1px solid #edf0f4;
 }
-.lorry-table tbody tr:hover {
+.collection-table tbody tr:hover {
   background-color: #e6f1fd;
-}/*# sourceMappingURL=LorryTable.css.map */
+}/*# sourceMappingURL=CollectionTable.css.map */

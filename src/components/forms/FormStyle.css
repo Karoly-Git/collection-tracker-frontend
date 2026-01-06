@@ -12,6 +12,7 @@
   font-size: 1.4rem;
   font-weight: 600;
   color: #222;
+  text-transform: uppercase;
 }
 .form label {
   display: flex;

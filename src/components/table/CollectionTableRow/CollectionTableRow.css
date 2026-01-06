@@ -1,4 +1,4 @@
-.lorry-table-row {
+.collection-table-row {
   /* ======================
      CLICKABLE CELL BUTTONS
      ====================== */
@@ -6,15 +6,15 @@
      ACTION COLUMN
      ====================== */
 }
-.lorry-table-row * {
+.collection-table-row * {
   font-family: monospace;
 }
-.lorry-table-row td {
+.collection-table-row td {
   padding: 1rem;
   vertical-align: middle;
   white-space: nowrap;
 }
-.lorry-table-row .cell-btn {
+.collection-table-row .cell-btn {
   all: unset;
   cursor: pointer;
   font-size: 15px;
@@ -22,29 +22,29 @@
   display: inline-block;
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
-.lorry-table-row .cell-btn:hover {
+.collection-table-row .cell-btn:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.lorry-table-row .cell-btn:focus-visible {
+.collection-table-row .cell-btn:focus-visible {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
   border-radius: 4px;
 }
-.lorry-table-row .material-name {
+.collection-table-row .material-name {
   font-weight: 600;
 }
-.lorry-table-row .collection-ref-number {
+.collection-table-row .collection-ref-number {
   text-transform: uppercase;
   color: #6b7280;
 }
-.lorry-table-row .action {
+.collection-table-row .action {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-end;
 }
-.lorry-table-row .icon-btn {
+.collection-table-row .icon-btn {
   all: unset;
   display: inline-flex;
   align-items: center;
@@ -56,22 +56,22 @@
   color: #9ca3af;
   transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
-.lorry-table-row .icon-btn:hover {
+.collection-table-row .icon-btn:hover {
   background-color: #f3f4f6;
   color: #374151;
 }
-.lorry-table-row .icon-btn:active {
+.collection-table-row .icon-btn:active {
   transform: scale(0.96);
 }
-.lorry-table-row .icon-btn:focus-visible {
+.collection-table-row .icon-btn:focus-visible {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
-.lorry-table-row .icon-btn.info:hover {
+.collection-table-row .icon-btn.info:hover {
   color: #2563eb;
   background-color: #e0ecff;
 }
-.lorry-table-row .icon-btn.delete:hover {
+.collection-table-row .icon-btn.delete:hover {
   color: #b91c1c;
   background-color: #fee2e2;
-}/*# sourceMappingURL=LorryTableRow.css.map */
+}/*# sourceMappingURL=CollectionTableRow.css.map */

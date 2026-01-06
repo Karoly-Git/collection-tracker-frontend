@@ -3,7 +3,7 @@ import { CUSTOMER_NAMES } from "../../../constants/customer-names";
 import { MATERIAL_NAMES } from "../../../constants/material-names";
 import "../FormStyle.css";
 
-export default function AddLorryForm({ onSubmit, onCancel }) {
+export default function AddCollectionForm({ onSubmit, onCancel }) {
     const [regNum, setRegNum] = useState("");
     const [materialName, setMaterialName] = useState("");
     const [customerName, setCustomerName] = useState("");
@@ -34,8 +34,8 @@ export default function AddLorryForm({ onSubmit, onCancel }) {
     };
 
     return (
-        <form className="form add-lorry-form" onSubmit={handleSubmit}>
-            <h3>Check In New Collection</h3>
+        <form className="form add-collection-form" onSubmit={handleSubmit}>
+            <h2>Add Collection</h2>
 
             <label>
                 Material
@@ -124,7 +124,7 @@ export default function AddLorryForm({ onSubmit, onCancel }) {
                 </button>
 
                 <button type="submit" className="btn update">
-                    Add Lorry
+                    Add Collection
                 </button>
             </div>
         </form>

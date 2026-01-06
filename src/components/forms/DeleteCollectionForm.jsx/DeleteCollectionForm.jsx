@@ -1,6 +1,6 @@
 import "../FormStyle.css";
 
-export default function DeleteLorryForm({ lorryId, onCancel }) {
+export default function DeleteCollectionForm({ lorryId, onCancel }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -12,7 +12,7 @@ export default function DeleteLorryForm({ lorryId, onCancel }) {
         onCancel(); // Close the form after submission
     };
     return (
-        <form className="form delete-lorry-form" onSubmit={handleSubmit}>
+        <form className="form delete-collection-form" onSubmit={handleSubmit}>
             <div className="actions">
                 <button
                     type="button"

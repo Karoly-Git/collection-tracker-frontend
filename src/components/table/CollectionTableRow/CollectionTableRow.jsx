@@ -3,18 +3,16 @@ import StatusBadge from "../statusBadge/StatusBadge";
 import { BsInfoCircle as InfoIco } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIco } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { deleteLorryById } from "../../../state/lorry/lorrySlice";
 import { formatTime } from "../../../utils/formatTime";
-import { LORRY_STATUSES } from "../../../constants/lorry-statuses";
 
-import "./LorryTableRow.css";
+import "./CollectionTableRow.css";
 
 import Modal from "../../ui/modal/Modal";
-import UpdateStatusForm from "../../forms/updateStatusForm/UpdateStatusForm";
-import DeleteLorryForm from "../../forms/DeleteCollectionForm.jsx/DeleteLorryForm";
-import LorryInfoForm from "../../forms/CollectionInfoForm/LorryInfoForm";
+import UpdateStatusForm from "../../forms/UpdateStatusForm/UpdateStatusForm";
+import CollectionInfoForm from "../../forms/CollectionInfoForm/CollectionInfoForm";
+import DeleteCollectionForm from "../../forms/DeleteCollectionForm.jsx/DeleteCollectionForm";
 
-export default function LorryTableRow({ lorry }) {
+export default function CollectionTableRow({ lorry }) {
     const dispatch = useDispatch();
     const userLoggedIn = true;
 
@@ -44,7 +42,7 @@ export default function LorryTableRow({ lorry }) {
 
     return (
         <>
-            <tr className="lorry-table-row">
+            <tr className="collection-table-row">
                 <td>
                     <button
                         className="cell-btn material-name"
@@ -105,7 +103,7 @@ export default function LorryTableRow({ lorry }) {
             <tr>
                 <td>
                     <Modal isOpen={isInfoModalOpen} onClose={handleInfoClose}>
-                        <LorryInfoForm lorry={lorry} onCancel={handleInfoClose} />
+                        <CollectionInfoForm lorry={lorry} onCancel={handleInfoClose} />
                     </Modal>
                 </td>
                 <td>
@@ -115,7 +113,7 @@ export default function LorryTableRow({ lorry }) {
                 </td>
                 <td>
                     <Modal isOpen={isDeleteModalOpen} onClose={handleDeleteClose}>
-                        <DeleteLorryForm lorry={lorry} onCancel={handleDeleteClose} />
+                        <DeleteCollectionForm lorry={lorry} onCancel={handleDeleteClose} />
                     </Modal>
                 </td>
             </tr>

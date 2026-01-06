@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import "../FormStyle.css";
-import './LorryInfoForm.css';
+import './CollectionInfoForm.css';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 import { FaCommentMedical as AddCommentIcon } from 'react-icons/fa6';
@@ -8,7 +8,7 @@ import { FaCommentSlash as DontAddCommentIcon } from 'react-icons/fa6';
 import { formatText } from '../../../utils/formatText';
 import { formatTime } from '../../../utils/formatTime';
 
-export default function LorryInfoForm({ lorry, onCancel }) {
+export default function CollectionInfoForm({ lorry, onCancel }) {
     if (!lorry) return null;
 
     const {
