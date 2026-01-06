@@ -6,9 +6,9 @@
   /* ---------- Status preview ---------- */
   /* ---------- Actions ---------- */
 }
-.update-status-form h3 {
+.update-status-form h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #222;
 }

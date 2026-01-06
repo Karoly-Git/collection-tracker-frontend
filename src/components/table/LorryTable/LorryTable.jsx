@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import LorryTableRow from "../lorryTableRow/LorryTableRow";
+import LorryTableRow from "../LorryTableRow/LorryTableRow";
 import { fetchAllLorries } from "../../../state/lorry/lorrySlice";
 import "./LorryTable.css";
 

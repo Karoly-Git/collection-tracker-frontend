@@ -42,7 +42,7 @@ export default function LorryTableRow({ lorry }) {
     }
 
     function handleStatusClick() {
-        if (LORRY_STATUSES.CHECKED_OUT === currentStatus) return;
+        //if (LORRY_STATUSES.CHECKED_OUT === currentStatus) return;
         setIsStatusModalOpen(true)
     }
 

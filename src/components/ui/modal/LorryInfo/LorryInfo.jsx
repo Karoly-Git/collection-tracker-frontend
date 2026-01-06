@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { formatText } from '../../../../utils/formatText';
 import { formatTime } from '../../../../utils/formatTime';
+import Modal from '../Modal';
 import './LorryInfo.css';
+import AddCommentForm from '../../../forms/AddCommentForm/AddCommentForm';
 
 export default function LorryInfo({ lorry }) {
     if (!lorry) return null;
 
     const {
+        lorryId,
         regNum,
         materialName,
         customerName,
@@ -15,6 +19,10 @@ export default function LorryInfo({ lorry }) {
         currentStatus,
         statusHistory
     } = lorry;
+
+    const [isAddCommentModalOpen, setIsAddCommentModalOpen] = useState(false);
+
+    const handCommentClose = () => setIsAddCommentModalOpen(false);
 
     return (
         <section className="lorry-info">
@@ -77,7 +85,10 @@ export default function LorryInfo({ lorry }) {
                                 Updated by {entry.updatedBy?.userId ?? 'System'}
                             </span>
 
-                            <button type="button">
+                            <button
+                                type="button"
+                                onClick={() => setIsAddCommentModalOpen(true)}
+                            >
                                 <span aria-hidden>✎</span>
                                 <span>Add comment</span>
                             </button>
@@ -100,6 +111,10 @@ export default function LorryInfo({ lorry }) {
                     </li>
                 ))}
             </ul>
+
+            <Modal isOpen={isAddCommentModalOpen} onClose={handCommentClose}>
+                <AddCommentForm lorryId={lorryId} onCancel={handCommentClose} />
+            </Modal>
         </section>
     );
 }

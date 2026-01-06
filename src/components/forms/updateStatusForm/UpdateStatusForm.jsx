@@ -20,7 +20,7 @@ export default function UpdateStatusForm({ lorry, onCancel }) {
     if (!nextStatus) {
         return (
             <div className="update-status-form">
-                <h3>Update lorry status</h3>
+                <h2>Lorry has checked out</h2>
                 <p>No further status updates available.</p>
 
                 <div className="actions">
