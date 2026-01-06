@@ -1,4 +1,6 @@
 Delet icon should not delete it immadiatelly, should ask for confirmation.
 
+Centralise cancel and confirm button style.
+
 
 
