@@ -29,18 +29,6 @@ export default function LorryTableRow({ lorry }) {
         currentStatus,
     } = lorry;
 
-    function handleMaterialClick(lorryId) {
-        console.log("Material name clicked for lorry:", lorryId);
-    }
-
-    function handleCustomerClick(lorryId) {
-        console.log("Customer name clicked for lorry:", lorryId);
-    }
-
-    function handleRefNumClick(lorryId) {
-        console.log("Reference number clicked for lorry:", lorryId);
-    }
-
     function handleStatusClick() {
         //if (LORRY_STATUSES.CHECKED_OUT === currentStatus) return;
         setIsStatusModalOpen(true)
@@ -66,7 +54,6 @@ export default function LorryTableRow({ lorry }) {
                     <button
                         className="cell-btn material-name"
                         aria-label="Change material name"
-                        onClick={() => handleMaterialClick(lorryId)}
                     >
                         <div>{materialName}</div>
                     </button>
@@ -79,7 +66,6 @@ export default function LorryTableRow({ lorry }) {
                     <button
                         className="cell-btn customer-name"
                         aria-label="Change customer name"
-                        onClick={() => handleCustomerClick(lorryId)}
                     >
                         {customerName}
                     </button>
@@ -89,7 +75,6 @@ export default function LorryTableRow({ lorry }) {
                     <button
                         className="cell-btn collection-ref-number"
                         aria-label="Change collection reference number"
-                        onClick={() => handleRefNumClick(lorryId)}
                     >
                         {collectionRefNum}
                     </button>
