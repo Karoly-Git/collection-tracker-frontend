@@ -16,7 +16,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
         materialName,
         customerName,
         collectionRefNum,
-        regNum,
+        lorryRegNum,
         checkedInAt,
         checkedOutAt,
         currentStatus,
@@ -52,7 +52,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                     </p>
                     <p>
                         <strong>Vehicle reg number</strong>
-                        <span>{regNum}</span>
+                        <span>{lorryRegNum}</span>
                     </p>
                     <p>
                         <strong>Current status</strong>
@@ -116,38 +116,37 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                             </div>
 
                             {/* Comments */}
-                            {entry.comments?.length > 0 && (
-                                <ul className="comments">
-                                    {isOpen && (
-                                        <li>
-                                            <AddCommentForm
-                                                onCancel={() =>
-                                                    setActiveStatusTimestamp(null)
-                                                }
-                                            />
-                                        </li>
-                                    )}
+                            <ul className="comments">
+                                {isOpen && (
+                                    <li>
+                                        <AddCommentForm
+                                            onCancel={() =>
+                                                setActiveStatusTimestamp(null)
+                                            }
+                                        />
+                                    </li>
+                                )
+                                }
 
-                                    {[...entry.comments]
-                                        .toReversed()
-                                        .map((comment) => (
-                                            <li
-                                                key={
-                                                    comment.id +
+                                {[...entry.comments]
+                                    .toReversed()
+                                    .map((comment) => (
+                                        <li
+                                            key={
+                                                comment.id +
+                                                comment.timestamp
+                                            }
+                                        >
+                                            <em>{comment.text}</em>
+                                            <div className="comment-meta">
+                                                {comment.userId} •{' '}
+                                                {formatTime(
                                                     comment.timestamp
-                                                }
-                                            >
-                                                <em>{comment.text}</em>
-                                                <div className="comment-meta">
-                                                    {comment.userId} •{' '}
-                                                    {formatTime(
-                                                        comment.timestamp
-                                                    )}
-                                                </div>
-                                            </li>
-                                        ))}
-                                </ul>
-                            )}
+                                                )}
+                                            </div>
+                                        </li>
+                                    ))}
+                            </ul>
                         </li>
                     );
                 })}
