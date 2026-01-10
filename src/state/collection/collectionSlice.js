@@ -3,6 +3,7 @@ import {
     getAllCollections,
     deleteCollection,
     updateCollectionStatus,
+    addCommentUnderStatus,
 } from "../../api/collection.api";
 
 const initialState = {
@@ -57,7 +58,30 @@ export const updateCollectionStatusById = createAsyncThunk(
                 comment,
             });
 
-            // backend already returns full updated collection
+            return updatedCollection;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+/**
+ * Add comment to status
+ */
+export const addCommentToStatus = createAsyncThunk(
+    "collections/addCommentToStatus",
+    async (
+        { collectionId, statusKey, text, userId },
+        { rejectWithValue }
+    ) => {
+        try {
+            const updatedCollection = await addCommentUnderStatus({
+                collectionId,
+                statusKey,
+                userId,
+                text,
+            });
+
             return updatedCollection;
         } catch (error) {
             return rejectWithValue(error.message);
@@ -123,6 +147,30 @@ const collectionSlice = createSlice({
                 state.loading = false;
                 state.error =
                     action.payload || "Failed to update collection status";
+            })
+
+            /* ---------------- Add comment ---------------- */
+            .addCase(addCommentToStatus.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addCommentToStatus.fulfilled, (state, action) => {
+                state.loading = false;
+
+                const updatedCollection = action.payload;
+
+                const index = state.items.findIndex(
+                    (l) => l.collectionId === updatedCollection.collectionId
+                );
+
+                if (index !== -1) {
+                    state.items[index] = updatedCollection;
+                }
+            })
+            .addCase(addCommentToStatus.rejected, (state, action) => {
+                state.loading = false;
+                state.error =
+                    action.payload || "Failed to add comment to status";
             });
     },
 });

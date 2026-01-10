@@ -13,6 +13,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
     if (!collection) return null;
 
     const {
+        id,
         materialName,
         customerName,
         collectionRefNum,
@@ -72,12 +73,12 @@ export default function CollectionInfoForm({ collection, onCancel }) {
             <h3>Status History</h3>
 
             <ul className="status-history">
-                {[...statusHistory].reverse().map((entry) => {
+                {[...statusHistory].reverse().map((entry, i) => {
                     const isOpen = activeStatusTimestamp === entry.timestamp;
 
                     return (
                         <li
-                            key={entry.timestamp}
+                            key={`${entry} + ${i}`}
                             className={`status-entry ${entry.status}`}
                         >
                             {/* Status header */}
@@ -120,6 +121,9 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 {isOpen && (
                                     <li>
                                         <AddCommentForm
+                                            collectionId={id}
+                                            statusKey={entry.status}
+                                            userId={entry.updatedBy?.userId || 'System'}
                                             onCancel={() =>
                                                 setActiveStatusTimestamp(null)
                                             }
@@ -133,9 +137,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                     .map((comment) => (
                                         <li
                                             key={
-                                                comment.id +
-                                                comment.timestamp
-                                            }
+                                                comment.id}
                                         >
                                             <em>{comment.text}</em>
                                             <div className="comment-meta">
