@@ -5,7 +5,7 @@ import Button from "../../ui/button/Button";
 export default function AddCommentForm({
     collectionId,
     statusKey,
-    userId,
+    userId, // Will come from login later
     onCancel,
 }) {
     const [text, setText] = useState("");

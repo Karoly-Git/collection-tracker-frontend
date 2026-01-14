@@ -98,7 +98,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                             {/* Meta row */}
                             <div className="updated-by">
                                 <span>
-                                    Updated by {entry.updatedByUserId ?? 'System'}
+                                    Status updated by: <strong>{entry.updatedByUserId}</strong>
                                 </span>
 
                                 <button
