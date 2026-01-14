@@ -1,27 +1,32 @@
+// React & Redux
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+// Constants
 import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
+
+// Utils
 import { formatText } from "../../../utils/formatText";
+
+// State
 import { updateCollectionStatusById } from "../../../state/collection/collectionSlice";
+
+// UI Components
 import Button from "../../ui/button/Button";
 
+// Styles
 import "../FormStyle.css";
 import "./UpdateStatusForm.css";
-import { useState } from "react";
 
-export default function UpdateStatusForm({ collection, onCancel }) {
+export default function UpdateStatusForm({ currentStatus, statusHistory, collectionId, onCancel }) {
     const dispatch = useDispatch();
-    const currentStatus = collection.currentStatus;
     const [comment, setComment] = useState("");
 
-    // Extract used statuses from status history
-    const usedStatuses = collection.statusHistory.map(
-        (entry) => entry.status
-    );
-
     // Find the only valid next status
-    const nextStatus = Object.values(COLLECTION_STATUSES).find(
-        (status) => !usedStatuses.includes(status)
-    );
+    const statusFlow = Object.values(COLLECTION_STATUSES);
+
+    const currentIndex = statusFlow.indexOf(currentStatus);
+    const nextStatus = currentIndex !== -1 ? statusFlow[currentIndex + 1] : null;
 
     if (!nextStatus) {
         return (
@@ -47,9 +52,9 @@ export default function UpdateStatusForm({ collection, onCancel }) {
         try {
             await dispatch(
                 updateCollectionStatusById({
-                    collectionId: collection.id,
-                    status: nextStatus,
-                    userId: "User ID", // This should come from auth state
+                    collectionId,
+                    newStatus: nextStatus,
+                    userId: "User ID", // This will come from auth state later
                     comment: comment,
                 })
             ).unwrap();

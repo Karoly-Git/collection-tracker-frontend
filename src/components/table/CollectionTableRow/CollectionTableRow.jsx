@@ -1,19 +1,26 @@
+// React & Redux
 import { useState } from "react";
-import StatusBadge from "../StatusBadge/StatusBadge";
+
+// Icons
 import { BsInfoCircle as InfoIco } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIco } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+
+// Utils
 import { formatTime } from "../../../utils/formatTime";
 
-import "./CollectionTableRow.css";
-
+// UI Components
 import Modal from "../../ui/modal/Modal";
+import StatusBadge from "../StatusBadge/StatusBadge";
+
+// Forms
 import UpdateStatusForm from "../../forms/UpdateStatusForm/UpdateStatusForm";
 import CollectionInfoForm from "../../forms/CollectionInfoForm/CollectionInfoForm";
 import DeleteCollectionForm from "../../forms/DeleteCollectionForm.jsx/DeleteCollectionForm";
 
+// Styles
+import "./CollectionTableRow.css";
+
 export default function CollectionTableRow({ collection }) {
-    const dispatch = useDispatch();
     const userLoggedIn = true;
 
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -33,7 +40,6 @@ export default function CollectionTableRow({ collection }) {
     const handleInfoClick = () => setIsInfoModalOpen(true);
     const handleDeleteClick = () => setIsDeleteModalOpen(true);
 
-
     const handleStatusClose = () => setIsStatusModalOpen(false);
     const handleInfoClose = () => setIsInfoModalOpen(false);
     const handleDeleteClose = () => setIsDeleteModalOpen(false);
@@ -47,7 +53,7 @@ export default function CollectionTableRow({ collection }) {
                         className="cell-btn material-name"
                         aria-label="Change material name"
                     >
-                        <div>{materialName} {id}</div>
+                        <div>{id} {materialName}</div>
                     </button>
                     <div className="time-checked-in">
                         {formatTime(checkedInAt)}
@@ -73,8 +79,8 @@ export default function CollectionTableRow({ collection }) {
                 </td>
 
                 <StatusBadge
-                    currentStatus={currentStatus}
                     collectionId={id}
+                    currentStatus={currentStatus}
                     onClick={handleStatusClick}
                 />
 
@@ -107,7 +113,12 @@ export default function CollectionTableRow({ collection }) {
                 </td>
                 <td>
                     <Modal isOpen={isStatusModalOpen} onClose={handleStatusClose}>
-                        <UpdateStatusForm collection={collection} onCancel={handleStatusClose} />
+                        <UpdateStatusForm
+                            currentStatus={currentStatus}
+                            statusHistory={collection.statusHistory}
+                            collectionId={id}
+                            onCancel={handleStatusClose}
+                        />
                     </Modal>
                 </td>
                 <td>

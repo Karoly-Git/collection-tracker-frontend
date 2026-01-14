@@ -1,7 +1,14 @@
+// React & Redux
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+// State
 import { fetchAllCollections } from "../../../state/collection/collectionSlice";
+
+// Components
 import CollectionTableRow from "../CollectionTableRow/CollectionTableRow";
+
+// Styles
 import "./CollectionTable.css";
 
 export default function CollectionTable() {

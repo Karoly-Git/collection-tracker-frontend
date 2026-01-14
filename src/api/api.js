@@ -38,7 +38,7 @@ export const deleteCollection = async (id) => {
 
 export const updateCollectionStatus = async ({
     collectionId,
-    status,
+    newStatus,
     userId,
     comment,
 }) => {
@@ -50,7 +50,7 @@ export const updateCollectionStatus = async ({
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                status, // REQUIRED
+                newStatus, // REQUIRED
                 updatedByUserId: userId, // REQUIRED
                 comment: comment || "", // OPTIONAL
             }),

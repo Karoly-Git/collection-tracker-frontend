@@ -73,12 +73,12 @@ export default function CollectionInfoForm({ collection, onCancel }) {
             <h3>Status History</h3>
 
             <ul className="status-history">
-                {[...statusHistory].reverse().map((entry, i) => {
+                {statusHistory.toReversed().map((entry) => {
                     const isOpen = activeStatusTimestamp === entry.timestamp;
 
                     return (
                         <li
-                            key={entry.timestamp}
+                            key={`${id}-${entry.status}-${entry.timestamp}`}
                             className={`status-entry ${entry.status}`}
                         >
                             {/* Status header */}
@@ -94,7 +94,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                             {/* Meta row */}
                             <div className="updated-by">
                                 <span>
-                                    Updated by {entry.updatedBy?.userId ?? 'System'}
+                                    Updated by {entry.updatedByUserId ?? 'System'}
                                 </span>
 
                                 <button
@@ -132,18 +132,16 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 )
                                 }
 
-                                {[...entry.comments]
+                                {entry.comments
                                     .toReversed()
                                     .map((comment) => (
                                         <li
-                                            key={comment.id + comment.timestamp}
+                                            key={comment.id}
                                         >
                                             <em>{comment.text}</em>
                                             <div className="comment-meta">
                                                 {comment.userId} •{' '}
-                                                {formatTime(
-                                                    comment.timestamp
-                                                )}
+                                                {formatTime(comment.timestamp)}
                                             </div>
                                         </li>
                                     ))}

@@ -4,7 +4,7 @@ import {
     deleteCollection,
     updateCollectionStatus,
     addCommentUnderStatus,
-} from "../../api/collection.api";
+} from "../../api/api";
 
 const initialState = {
     items: [],
@@ -16,7 +16,7 @@ const initialState = {
  * Fetch all collections
  */
 export const fetchAllCollections = createAsyncThunk(
-    "lorries/fetchAllCollections",
+    "collection/fetchAllCollections",
     async (_, { rejectWithValue }) => {
         try {
             return await getAllCollections();
@@ -30,7 +30,7 @@ export const fetchAllCollections = createAsyncThunk(
  * Delete collection by ID
  */
 export const deleteCollectionById = createAsyncThunk(
-    "lorries/deleteCollectionById",
+    "collection/deleteCollectionById",
     async (collectionId, { rejectWithValue }) => {
         try {
             await deleteCollection(collectionId);
@@ -45,15 +45,15 @@ export const deleteCollectionById = createAsyncThunk(
  * Update collection status
  */
 export const updateCollectionStatusById = createAsyncThunk(
-    "collections/updateCollectionStatus",
+    "collection/updateCollectionStatus",
     async (
-        { collectionId, status, userId, comment },
+        { collectionId, newStatus, userId, comment },
         { rejectWithValue }
     ) => {
         try {
             const updatedCollection = await updateCollectionStatus({
                 collectionId,
-                status,
+                newStatus,
                 userId,
                 comment,
             });
@@ -116,7 +116,7 @@ const collectionSlice = createSlice({
                 const updatedCollection = action.payload;
 
                 const index = state.items.findIndex(
-                    (l) => l.collectionId === updatedCollection.collectionId
+                    (c) => c.id === updatedCollection.id
                 );
 
                 if (index !== -1) {
