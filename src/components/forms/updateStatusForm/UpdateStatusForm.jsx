@@ -18,6 +18,9 @@ import Button from "../../ui/button/Button";
 import "../FormStyle.css";
 import "./UpdateStatusForm.css";
 
+// React Icons
+import { FaArrowRightLong } from "react-icons/fa6";
+
 export default function UpdateStatusForm({ currentStatus, statusHistory, collectionId, onCancel }) {
     const dispatch = useDispatch();
     const [comment, setComment] = useState("");
@@ -78,7 +81,9 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
                     </span>
                 </div>
 
-                <div className="arrow">→</div>
+                <div className="arrow">
+                    <FaArrowRightLong className="" />
+                </div>
 
                 <div className="status-row">
                     <span className="label">Next</span>

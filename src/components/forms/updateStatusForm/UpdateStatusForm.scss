@@ -63,8 +63,8 @@
     }
 
     .arrow {
-        font-size: 1.25rem;
-        color: #999;
+        display: flex;
+        align-items: center;
         margin-top: 0.9rem;
         user-select: none;
     }

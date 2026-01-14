@@ -54,8 +54,8 @@
   color: #1f2937;
 }
 .update-status-form .arrow {
-  font-size: 1.25rem;
-  color: #999;
+  display: flex;
+  align-items: center;
   margin-top: 0.9rem;
   -webkit-user-select: none;
      -moz-user-select: none;
