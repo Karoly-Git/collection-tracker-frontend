@@ -68,6 +68,26 @@ export const updateCollectionStatusById = createAsyncThunk(
 /**
  * Add comment to status
  */
+export const addCommentToCollectionStatus = createAsyncThunk(
+    "collection/addCommentToCollectionStatus",
+    async (
+        { collectionId, statusKey, userId, text },
+        { rejectWithValue }
+    ) => {
+        try {
+            const updatedCollection = await addCommentUnderStatus({
+                collectionId,
+                statusKey,
+                userId,
+                text,
+            });
+
+            return updatedCollection;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 const collectionSlice = createSlice({
     name: "collections",
@@ -129,7 +149,29 @@ const collectionSlice = createSlice({
                     action.payload || "Failed to update collection status";
             })
 
-        /* ---------------- Add comment ---------------- */
+            /* ---------------- Add comment ---------------- */
+            .addCase(addCommentToCollectionStatus.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addCommentToCollectionStatus.fulfilled, (state, action) => {
+                state.loading = false;
+
+                const updatedCollection = action.payload;
+
+                const index = state.items.findIndex(
+                    (c) => c.id === updatedCollection.id
+                );
+
+                if (index !== -1) {
+                    state.items[index] = updatedCollection;
+                }
+            })
+            .addCase(addCommentToCollectionStatus.rejected, (state, action) => {
+                state.loading = false;
+                state.error =
+                    action.payload || "Failed to add comment to status";
+            });
     },
 });
 

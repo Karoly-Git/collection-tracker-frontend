@@ -71,7 +71,7 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
 
     return (
         <form className="form update-status-form" onSubmit={handleSubmit}>
-            <h2>Status Update</h2>
+            <h2>Want to update Status?</h2>
 
             <div className="status-preview">
                 <div className="status-row">
@@ -82,7 +82,7 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
                 </div>
 
                 <div className="arrow">
-                    <FaArrowRightLong className="" />
+                    <FaArrowRightLong />
                 </div>
 
                 <div className="status-row">
