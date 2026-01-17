@@ -9,7 +9,7 @@ export default function Button({
     return (
         <button
             type={type}
-            className={`button ${className}`}
+            className={className}
             onClick={onClick}>
             {Icon && <Icon className="icon" />} {text}
         </button>

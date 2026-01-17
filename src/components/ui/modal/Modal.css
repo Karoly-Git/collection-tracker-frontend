@@ -17,23 +17,13 @@
   overflow-y: auto;
   padding: 24px;
 }
-.modal-overlay .modal-container .modal-header,
-.modal-overlay .modal-container .modal-footer {
+.modal-overlay .modal-container .modal-header {
   display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
-
-.modal-close-btn {
-  margin-left: auto;
-  display: block;
-  background: #ffffff;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #6b7280;
-  z-index: 2;
-}
-.modal-close-btn:hover {
-  font-weight: bold;
+.modal-overlay .modal-container .modal-header .modal-title {
+  font-weight: 100;
+  color: gray;
 }/*# sourceMappingURL=Modal.css.map */

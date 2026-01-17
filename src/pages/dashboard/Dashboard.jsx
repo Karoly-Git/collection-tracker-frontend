@@ -89,10 +89,8 @@ export default function Dashboard() {
 
             <Modal
                 isOpen={activeModal === "status"}
-                onReject={handleCloseModal}
-                onAccept={() => null}
-                rejectBtnText={"Cancel"}
-                acceptBtnText={"Update Status"}
+                onClose={handleCloseModal}
+                modalTitle="Status Update"
             >
                 <UpdateStatusForm
                     onCancel={handleCloseModal}

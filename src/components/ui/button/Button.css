@@ -10,15 +10,16 @@
 .btn:active {
   transform: translateY(1px);
 }
-.btn.transparent {
+.btn.x-btn {
   background: transparent;
   box-shadow: none;
   color: gray;
+  display: flex;
 }
-.btn.transparent .icon {
+.btn.x-btn .icon {
   font-size: 1.25rem;
 }
-.btn.transparent:hover {
+.btn.x-btn:hover {
   color: black;
 }
 .btn.add {

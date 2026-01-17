@@ -4,27 +4,27 @@ import Button from "../button/Button";
 
 import { IoMdClose } from "react-icons/io";
 
-export default function Modal({
-    isOpen, onReject, onAccept, rejectBtnText, acceptBtnText, children }) {
+export default function Modal({ isOpen, onClose, modalTitle, children }) {
     useEffect(() => {
         if (!isOpen) return;
 
+        // Close modal on "Escape" key press
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
-                onReject();
+                onClose();
                 document.activeElement?.blur?.();
             }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isOpen, onReject]);
+    }, [isOpen, onClose]);
 
     if (!isOpen) return null;
 
     const handleOverlayClick = (e) => {
-        // ✅ only close when clicking the overlay background itself
-        if (e.target === e.currentTarget) onReject();
+        // Close when clicking the overlay background itself
+        if (e.target === e.currentTarget) onClose();
     };
 
     const stopPropagation = (e) => e.stopPropagation();
@@ -34,19 +34,15 @@ export default function Modal({
             <div
                 className="modal-container"
                 onClick={stopPropagation}
-                onMouseDown={stopPropagation} // ✅ helps in some cases
+                onMouseDown={stopPropagation} // Helps in some cases
             >
                 <div className="modal-header">
-                    <Button icon={IoMdClose} className="btn transparent" onClick={onReject} />
+                    <h4 className="modal-title">{modalTitle}</h4>
+                    <Button icon={IoMdClose} className="btn x-btn" onClick={onClose} />
                 </div>
 
                 <div className="modal-body">
                     {children}
-                </div>
-
-                <div className="modal-footer">
-                    {onReject && <Button text={rejectBtnText} className="btn reject" onClick={onReject} />}
-                    {onAccept && <Button className="btn accept" text={acceptBtnText} onClick={onAccept} />}
                 </div>
             </div>
         </div>

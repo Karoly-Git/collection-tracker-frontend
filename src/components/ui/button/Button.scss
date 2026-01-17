@@ -14,10 +14,12 @@
         transform: translateY(1px);
     }
 
-    &.transparent {
+    &.x-btn {
         background: transparent;
         box-shadow: none;
         color: gray;
+        display: flex;
+        //width: auto;
 
         .icon {
             font-size: 1.25rem;
