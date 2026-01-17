@@ -53,14 +53,14 @@ export default function UpdateStatusForm({ onCancel }) {
                 <h2>Collection has checked out</h2>
                 <p>No further status updates available.</p>
 
-                {/*<div className="actions">
+                <div className="actions">
                     <Button
                         type="button"
                         text="Cancel"
                         className="btn reject"
                         onClick={onCancel}
                     />
-                </div>*/}
+                </div>
             </div>
         );
     }
@@ -118,7 +118,7 @@ export default function UpdateStatusForm({ onCancel }) {
             </label>
 
 
-            {<div className="actions">
+            <div className="actions">
                 <Button
                     type="button"
                     text="Cancel"
@@ -131,7 +131,7 @@ export default function UpdateStatusForm({ onCancel }) {
                     text="Update Status"
                     className="btn accept"
                 />
-            </div>}
+            </div>
         </form>
     );
 }

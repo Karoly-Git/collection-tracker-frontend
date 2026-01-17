@@ -1,14 +1,14 @@
 .btn {
     padding: 0.45rem 1.1rem;
     font-size: 0.85rem;
-    border-radius: 6px;
+    border-radius: 3px;
     border: none;
     cursor: pointer;
     transition:
         background-color 0.2s ease,
         box-shadow 0.15s ease,
         transform 0.1s ease;
-    font-weight: bold;
+    //font-weight: bold;
 
     &:active {
         transform: translateY(1px);
