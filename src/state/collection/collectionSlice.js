@@ -7,7 +7,7 @@ import {
 } from "../../api/api";
 
 const initialState = {
-    items: [],
+    collections: [],
     loading: false,
     error: null,
 };
@@ -102,7 +102,7 @@ const collectionSlice = createSlice({
             })
             .addCase(fetchAllCollections.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = action.payload;
+                state.collections = action.payload;
             })
             .addCase(fetchAllCollections.rejected, (state, action) => {
                 state.loading = false;
@@ -116,7 +116,7 @@ const collectionSlice = createSlice({
             })
             .addCase(deleteCollectionById.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = state.items.filter(
+                state.collections = state.collections.filter(
                     (collection) => collection.collectionId !== action.payload
                 );
             })
@@ -135,12 +135,12 @@ const collectionSlice = createSlice({
 
                 const updatedCollection = action.payload;
 
-                const index = state.items.findIndex(
+                const index = state.collections.findIndex(
                     (c) => c.id === updatedCollection.id
                 );
 
                 if (index !== -1) {
-                    state.items[index] = updatedCollection;
+                    state.collections[index] = updatedCollection;
                 }
             })
             .addCase(updateCollectionStatusById.rejected, (state, action) => {
@@ -159,12 +159,12 @@ const collectionSlice = createSlice({
 
                 const updatedCollection = action.payload;
 
-                const index = state.items.findIndex(
+                const index = state.collections.findIndex(
                     (c) => c.id === updatedCollection.id
                 );
 
                 if (index !== -1) {
-                    state.items[index] = updatedCollection;
+                    state.collections[index] = updatedCollection;
                 }
             })
             .addCase(addCommentToCollectionStatus.rejected, (state, action) => {

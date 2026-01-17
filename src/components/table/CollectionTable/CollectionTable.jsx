@@ -16,7 +16,7 @@ import "./CollectionTable.css";
 export default function CollectionTable() {
     const dispatch = useDispatch();
 
-    const { items: collectionsList, loading, error } = useSelector(
+    const { collections: collectionsList, loading, error } = useSelector(
         (state) => state.collections
     );
 

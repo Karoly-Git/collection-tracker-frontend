@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    activeModal: null, // 'info' | 'status' | 'delete'
-    modalProps: {},    // optional data for modals
+    activeModal: null,        // 'info' | 'status' | 'delete'
+    modalProps: {},           // optional data for modals
+    clickedCollectionId: null,  // <-- global value
 };
 
 const modalSlice = createSlice({
@@ -17,8 +18,20 @@ const modalSlice = createSlice({
             state.activeModal = null;
             state.modalProps = {};
         },
+        setClickedCollectionId: (state, action) => {
+            state.clickedCollectionId = action.payload;
+        },
+        clearClickedCollectionId: (state) => {
+            state.clickedCollectionId = null;
+        },
     },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const {
+    openModal,
+    closeModal,
+    setClickedCollectionId,
+    clearClickedCollectionId,
+} = modalSlice.actions;
+
 export default modalSlice.reducer;

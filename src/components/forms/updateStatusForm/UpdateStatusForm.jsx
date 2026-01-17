@@ -1,6 +1,6 @@
 // React & Redux
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // Constants
 import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
@@ -21,7 +21,23 @@ import "./UpdateStatusForm.css";
 // React Icons
 import { FaArrowRightLong } from "react-icons/fa6";
 
-export default function UpdateStatusForm({ currentStatus, statusHistory, collectionId, onCancel }) {
+export default function UpdateStatusForm({ onCancel }) {
+    const clickedCollectionId = useSelector((state) => state.modal.clickedCollectionId);
+
+    const collection = useSelector((state) =>
+        state.collections.collections.find((c) => c.id === clickedCollectionId)
+    );
+
+    if (!collection) {
+        return (
+            <div className="form update-status-form">
+                <p>Loading collection...</p>
+            </div>
+        );
+    }
+
+    const { currentStatus } = collection;
+
     const dispatch = useDispatch();
     const [comment, setComment] = useState("");
 
@@ -37,14 +53,14 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
                 <h2>Collection has checked out</h2>
                 <p>No further status updates available.</p>
 
-                <div className="actions">
+                {/*<div className="actions">
                     <Button
                         type="button"
                         text="Cancel"
                         className="btn reject"
                         onClick={onCancel}
                     />
-                </div>
+                </div>*/}
             </div>
         );
     }
@@ -55,7 +71,7 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
         try {
             await dispatch(
                 updateCollectionStatusById({
-                    collectionId,
+                    collectionId: clickedCollectionId,
                     newStatus: nextStatus,
                     userId: "User ID", // This will come from auth state later
                     comment: comment,
@@ -102,7 +118,7 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
             </label>
 
 
-            <div className="actions">
+            {<div className="actions">
                 <Button
                     type="button"
                     text="Cancel"
@@ -115,7 +131,7 @@ export default function UpdateStatusForm({ currentStatus, statusHistory, collect
                     text="Update Status"
                     className="btn accept"
                 />
-            </div>
+            </div>}
         </form>
     );
 }

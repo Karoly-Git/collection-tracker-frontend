@@ -10,7 +10,9 @@ import CollectionTable from "../../components/table/CollectionTable/CollectionTa
 import AddCollectionForm from "../../components/forms/AddCollectionForm/AddCollectionForm";
 import CollectionInfoForm from "../../components/forms/CollectionInfoForm/CollectionInfoForm";
 
+
 import { openModal, closeModal } from "../../state/collection/modalSlice";
+import UpdateStatusForm from "../../components/forms/updateStatusForm/UpdateStatusForm";
 
 export default function Dashboard() {
     const userLoggedIn = true;
@@ -92,12 +94,9 @@ export default function Dashboard() {
                 rejectBtnText={"Cancel"}
                 acceptBtnText={"Update Status"}
             >
-                {/*<UpdateStatusForm
-                            currentStatus={currentStatus}
-                            statusHistory={collection.statusHistory}
-                            collectionId={id}
-                            onCancel={handleStatusClose}
-                        />*/}
+                <UpdateStatusForm
+                    onCancel={handleCloseModal}
+                />
             </Modal>
         </div>
     );

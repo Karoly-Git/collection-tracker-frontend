@@ -43,35 +43,4 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-end;
-}
-.collection-table-row .icon-btn {
-  all: unset;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #9ca3af;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
-}
-.collection-table-row .icon-btn:hover {
-  background-color: #f3f4f6;
-  color: #374151;
-}
-.collection-table-row .icon-btn:active {
-  transform: scale(0.96);
-}
-.collection-table-row .icon-btn:focus-visible {
-  outline: 2px solid #6366f1;
-  outline-offset: 2px;
-}
-.collection-table-row .icon-btn.info:hover {
-  color: #2563eb;
-  background-color: #e0ecff;
-}
-.collection-table-row .icon-btn.delete:hover {
-  color: #b91c1c;
-  background-color: #fee2e2;
 }/*# sourceMappingURL=CollectionTableRow.css.map */

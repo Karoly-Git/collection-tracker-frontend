@@ -1,11 +1,11 @@
 // React
-import { useState } from "react";
-
-// Redux
 import { useDispatch } from "react-redux";
 
 // Redux slices
-import { openModal } from "../../../state/collection/modalSlice";
+import {
+    openModal,
+    setClickedCollectionId,
+} from "../../../state/collection/modalSlice";
 
 // Icons
 import { BsInfoCircle as InfoIcon } from "react-icons/bs";
@@ -26,7 +26,8 @@ const userLoggedIn = true;
 export default function CollectionTableRow({ collection }) {
     const dispatch = useDispatch();
 
-    const handleOpenModal = (name) => {
+    const handleOpenModal = (name, collectionId) => {
+        dispatch(setClickedCollectionId(collectionId));
         dispatch(openModal({ name }));
     };
 
@@ -42,54 +43,47 @@ export default function CollectionTableRow({ collection }) {
     return (
         <tr className="collection-table-row">
             <td>
-                <button
-                    className="cell-btn material-name"
-                >
+                <button className="cell-btn material-name">
                     <div>{id} {materialName}</div>
                 </button>
+
                 <div className="time-checked-in">
                     {formatTime(checkedInAt)}
                 </div>
             </td>
 
             <td>
-                <button
-                    className="cell-btn customer-name"
-                >
+                <button className="cell-btn customer-name">
                     {customerName}
                 </button>
             </td>
 
             <td>
-                <button
-                    className="cell-btn collection-ref-number"
-                >
+                <button className="cell-btn collection-ref-number">
                     {collectionRefNum}
                 </button>
             </td>
 
             <StatusBadge
-                collectionId={id}
                 currentStatus={currentStatus}
-                onClick={() => handleOpenModal("status")}
+                onClick={() => handleOpenModal("status", id)}
             />
 
             <td className="action">
                 <Button
                     icon={InfoIcon}
                     className="icon-btn info"
-                    onClick={() => handleOpenModal("info")}
+                    onClick={() => handleOpenModal("info", id)}
                 />
 
                 {userLoggedIn && (
                     <Button
                         icon={BinIcon}
                         className="icon-btn delete"
-                        onClick={() => handleOpenModal("delete")}
-                    //onClick={() => handleDeleteClick(id)}
+                        onClick={() => handleOpenModal("delete", id)}
                     />
                 )}
             </td>
-        </tr >
+        </tr>
     );
 }
