@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Button from "../../components/ui/button/Button";
 import { GoPlus as PlusIcon } from "react-icons/go";
+import { IoSearchSharp as SearchIcon } from "react-icons/io5";
 
 import "./Dashboard.css";
 
@@ -78,8 +79,8 @@ export default function Dashboard() {
                 )}
             </div>
 
-            <div className="dashboard-search with-icon">
-                <span className="search-icon">🔍</span>
+            <div className="dashboard-search">
+                <SearchIcon className="search-icon" />
 
                 <input
                     type="text"

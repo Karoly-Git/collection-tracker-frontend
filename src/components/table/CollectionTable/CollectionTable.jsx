@@ -13,6 +13,8 @@ import LoadingState from "../../ui/loading/LoadingState";
 // Styles
 import "./CollectionTable.css";
 
+import { IoSearchSharp as SearchIcon } from "react-icons/io5";
+
 export default function CollectionTable({ searchValue }) {
     const dispatch = useDispatch();
 
@@ -67,7 +69,7 @@ export default function CollectionTable({ searchValue }) {
             {/* No search results */}
             {collectionsList.length > 0 && filteredCollections.length === 0 && searchValue && (
                 <div className="no-collection-msg">
-                    <div className="icon">🔍</div>
+                    <SearchIcon className="icon" />
                     <h2>No results found</h2>
                     <p>
                         No collections match "<strong>{searchValue}</strong>"
