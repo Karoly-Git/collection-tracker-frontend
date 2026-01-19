@@ -34,13 +34,6 @@ export default function Dashboard() {
         dispatch(closeModal());
     };
 
-    const handleAddFormSubmit = (collectionData) => {
-        console.log("New Collection Added:", collectionData);
-
-        // Close only if UX requires it
-        dispatch(closeModal());
-    };
-
     const handleResetSearch = () => {
         setInputValue("");
     };
@@ -73,7 +66,7 @@ export default function Dashboard() {
                 {userLoggedIn && (
                     <Button
                         icon={PlusIcon}
-                        text="Add New Collection"
+                        text="Add Collection"
                         className="btn add"
                         onClick={() => handleOpenModal("add")}
                     />
@@ -121,20 +114,15 @@ export default function Dashboard() {
 
             <Modal
                 isOpen={activeModal === "add"}
-                onReject={handleCloseModal}
-                onAccept={handleAddFormSubmit}
-                rejectBtnText="Cancel"
-                acceptBtnText="Add Collection"
+                modalTitle="Add Collection"
             >
-                {/*<AddCollectionForm
-                    onSubmit={handleAddFormSubmit}
+                <AddCollectionForm
                     onCancel={handleCloseModal}
-                />*/}
+                />
             </Modal>
 
             <Modal
                 isOpen={activeModal === "status"}
-                onClose={handleCloseModal}
                 modalTitle="Update Collection Status"
             >
                 <UpdateStatusForm
@@ -154,10 +142,11 @@ export default function Dashboard() {
 
             <Modal
                 isOpen={activeModal === "delete"}
-                onClose={handleCloseModal}
                 modalTitle="Confirm Delete Collection"
             >
-                <DeleteCollectionForm onCancel={handleCloseModal} />
+                <DeleteCollectionForm
+                    onCancel={handleCloseModal}
+                />
             </Modal>
         </div>
     );
