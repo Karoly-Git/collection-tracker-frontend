@@ -1,33 +1,3 @@
-.no-collection-msg {
-  margin: 3rem auto;
-  max-width: 420px;
-  padding: 2rem;
-  text-align: center;
-  background: #f8fafc;
-  /* light gray */
-  border: 1px dashed #cbd5e1;
-  border-radius: 12px;
-  color: #334155;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-.no-collection-msg .icon {
-  font-size: 3rem;
-  margin-bottom: 0.75rem;
-}
-
-.no-collection-msg h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.no-collection-msg p {
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: #64748b;
-}
-
 .collection-table {
   width: 100%;
   border-collapse: collapse;

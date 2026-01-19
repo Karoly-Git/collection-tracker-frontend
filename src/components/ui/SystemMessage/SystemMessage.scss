@@ -1,0 +1,96 @@
+// ---- Base tokens ----
+$radius: 12px;
+$max-width: 420px;
+
+// ---- Variants ----
+$primary: #1e4e8c;
+$muted: #6b7280;
+
+$error-bg: #fff5f5;
+$error-border: #f0c2c2;
+$error-text: #7a1f1f;
+$error-muted: #8a2c2c;
+$error-btn: #c53030;
+$error-btn-hover: #9b2c2c;
+
+$neutral-bg: #f8fafc;
+$neutral-border: #e5e7eb;
+
+// ---- Base layout ----
+.system-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    margin: 3rem auto;
+    padding: 3rem;
+    max-width: $max-width;
+
+    border-radius: $radius;
+    background: $neutral-bg;
+    border: 1px solid $neutral-border;
+
+    h2 {
+        margin: 1rem 0 0.4rem;
+        font-size: 1.5rem;
+    }
+
+    p {
+        color: $muted;
+        line-height: 1.5;
+    }
+
+    button {
+        margin-top: 1.5rem;
+        border: none;
+        border-radius: 6px;
+        padding: 0.6rem 1.2rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+// ---- Icon ----
+.system-message__icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+// ---- Loading ----
+.system-message--loading {
+    h2 {
+        color: $primary;
+    }
+}
+
+// ---- Error ----
+.system-message--error {
+    background: $error-bg;
+    border-color: $error-border;
+    color: $error-text;
+
+    p {
+        color: $error-muted;
+    }
+
+    button {
+        background: $error-btn;
+        color: white;
+
+        &:hover {
+            background: $error-btn-hover;
+        }
+    }
+}
+
+// ---- Empty / No results ----
+.system-message--empty {
+    border-style: dashed;
+}
+
+// ---- Not found ----
+.system-message--notFound {
+    background: #fefce8;
+    border-color: #fde68a;
+}

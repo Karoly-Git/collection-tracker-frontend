@@ -1,18 +1,30 @@
-Delet icon should not delete it immadiatelly, should ask for confirmation.
-
-Centralise cancel and confirm button style in modals.
-Focus on textarea when clicked add comment icon
-
-Move StatusBadge into UI
-
-What if the status acidentally changed? How to redo it?
-
-No button in td where no need
-
-Auth on login
-userId: "9999", // This should come from auth state
+------------------------
+REFACTOR / RESTRUCTURE
+------------------------
+    Move StatusBadge into UI
+    No button tag should be in the <td> where no need.
+    When adding comment, shouldn't re-load the table content.
+    Make component to Not result, Loading, Not found, etc messages.
 
 
-Make form element styles global
+------------------------
+FUNCTIONALITIES
+------------------------
+    What if the status just acidentally changed? How to redo it?
+    Authorisation on login. userId: "9999", // This should come from auth state
+
+
+------------------------
+STYLES
+------------------------
+    Makeform element styles global
+    Dark mode in the settings
+
+
+------------------------
+TO SETTINGS PAGE
+------------------------
+    Today's collections only by default checked or not
+    Dark mode in the settings
 
 

@@ -1,4 +1,4 @@
-import Spinner from "../spinner/Spinner";
+import Spinner from "../../Spinner/Spinner";
 import "./LoadingState.css";
 
 export default function LoadingState({

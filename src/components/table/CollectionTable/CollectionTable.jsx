@@ -7,13 +7,12 @@ import { fetchAllCollections } from "../../../state/collection/collectionSlice";
 
 // Components
 import CollectionTableRow from "../CollectionTableRow/CollectionTableRow";
-import ErrorState from "../../ui/error/ErrorState";
-import LoadingState from "../../ui/loading/LoadingState";
 
 // Styles
 import "./CollectionTable.css";
 
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
+import SystemMessage from "../../ui/SystemMessage/SystemMessage";
 
 export default function CollectionTable({ searchValue, showTodayOnly }) {
     const dispatch = useDispatch();
@@ -53,18 +52,20 @@ export default function CollectionTable({ searchValue, showTodayOnly }) {
 
     if (loading) {
         return (
-            <LoadingState
+            <SystemMessage
+                variant="loading"
                 title="Loading collections"
-                message="Checking for the latest collections…"
+                message={<>Checking for the latest collections…</>}
             />
         );
     }
 
     if (error) {
         return (
-            <ErrorState
+            <SystemMessage
+                variant="error"
                 title="Failed to load collections"
-                message="We couldn't load collections from the server. Please check your connection or try again."
+                message={<>We couldn't load collections from the server. Please check your connection or try again.</>}
                 actionLabel="Retry"
                 onAction={() => dispatch(fetchAllCollections())}
             />
@@ -74,24 +75,27 @@ export default function CollectionTable({ searchValue, showTodayOnly }) {
     return (
         <>
             {collectionsList.length === 0 && !loading && !error && (
-                <div className="no-collection-msg">
-                    <div className="icon">🚚</div>
-                    <h2>No collections on site</h2>
-                    <p>All clear for now. New arrivals will appear here.</p>
-                </div>
+                <SystemMessage
+                    variant="error"
+                    title="No collections on site"
+                    message={<>All clear for now. New arrivals will appear here.</>}
+                />
+
             )}
 
             {collectionsList.length > 0 &&
                 filteredCollections.length === 0 &&
-                searchValue && (
-                    <div className="no-collection-msg">
-                        <SearchIcon className="icon" />
-                        <h2>No results found</h2>
-                        <p>
-                            No collections match "
-                            <strong>{searchValue}</strong>"
-                        </p>
-                    </div>
+                searchValue && (<SystemMessage
+                    variant="empty"
+                    icon={<SearchIcon />}
+                    title="No results found"
+                    message={
+                        <>
+                            No collections match "<strong>{searchValue}</strong>"
+                        </>
+                    }
+                />
+
                 )}
 
             {filteredCollections.length > 0 && (
