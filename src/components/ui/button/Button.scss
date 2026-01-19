@@ -95,6 +95,12 @@
         color 0.15s ease,
         transform 0.1s ease;
 
+    .icon {
+        width: 1.15rem;
+        height: 1.15rem;
+        font-size: 1.15rem;
+    }
+
     &:hover {
         background-color: #f3f4f6;
         color: #374151;

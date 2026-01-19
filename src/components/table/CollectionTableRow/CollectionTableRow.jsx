@@ -43,9 +43,9 @@ export default function CollectionTableRow({ collection }) {
     return (
         <tr className="collection-table-row">
             <td>
-                <button className="cell-btn material-name">
+                <div className="cell-content material-name">
                     <div>{id} {materialName}</div>
-                </button>
+                </div>
 
                 <div className="time-checked-in">
                     {formatDateTime(checkedInAt, { date: true, time: true })}
@@ -53,15 +53,15 @@ export default function CollectionTableRow({ collection }) {
             </td>
 
             <td>
-                <button className="cell-btn customer-name">
+                <div className="cell-content customer-name">
                     {customerName}
-                </button>
+                </div>
             </td>
 
             <td>
-                <button className="cell-btn collection-ref-number">
+                <div className="cell-content collection-ref-number">
                     {collectionRefNum}
-                </button>
+                </div>
             </td>
 
             <StatusBadge

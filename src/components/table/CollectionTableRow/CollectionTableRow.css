@@ -14,22 +14,12 @@
   vertical-align: middle;
   white-space: nowrap;
 }
-.collection-table-row .cell-btn {
+.collection-table-row .cell-content {
   all: unset;
-  cursor: pointer;
   font-size: 15px;
   color: #111827;
   display: inline-block;
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-.collection-table-row .cell-btn:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.collection-table-row .cell-btn:focus-visible {
-  outline: 2px solid #6366f1;
-  outline-offset: 2px;
-  border-radius: 4px;
 }
 .collection-table-row .material-name {
   font-weight: 600;
