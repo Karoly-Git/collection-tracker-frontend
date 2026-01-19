@@ -5,7 +5,7 @@ import Button from "../../ui/button/Button";
 
 import "../FormStyle.css";
 
-export default function AddCollectionForm({ onSubmit, onCancel }) {
+export default function AddCollectionForm({ onCancel }) {
     const [regNum, setRegNum] = useState("");
     const [materialName, setMaterialName] = useState("");
     const [customerName, setCustomerName] = useState("");
@@ -16,7 +16,7 @@ export default function AddCollectionForm({ onSubmit, onCancel }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        onSubmit({
+        const newCollection = {
             regNum: regNum || undefined,
             materialName,
             customerName,
@@ -25,7 +25,9 @@ export default function AddCollectionForm({ onSubmit, onCancel }) {
                 userId,
             },
             comment: comment || undefined,
-        });
+        };
+
+        console.log("New Collection:", newCollection);
 
         setRegNum("");
         setMaterialName("");
