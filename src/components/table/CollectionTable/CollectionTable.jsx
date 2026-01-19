@@ -102,6 +102,7 @@ export default function CollectionTable({ searchValue, showTodayOnly }) {
                 <table className="collection-table">
                     <thead>
                         <tr>
+                            <th>Timer</th>
                             <th>Material</th>
                             <th>Customer</th>
                             <th>Reference</th>
