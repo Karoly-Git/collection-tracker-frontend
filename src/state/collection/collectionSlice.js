@@ -4,6 +4,7 @@ import {
     deleteCollection,
     updateCollectionStatus,
     addCommentUnderStatus,
+    addCollection, // 👈 NEW
 } from "../../api/api";
 
 const initialState = {
@@ -13,6 +14,9 @@ const initialState = {
 
     addCommentLoading: false,
     addCommentError: null,
+
+    addCollectionLoading: false, // 👈 optional
+    addCollectionError: null,    // 👈 optional
 };
 
 /**
@@ -106,6 +110,25 @@ export const addCommentToCollectionStatus = createAsyncThunk(
     }
 );
 
+/**
+ * Add new collection
+ */
+export const addNewCollection = createAsyncThunk(
+    "collection/addNewCollection",
+    async (payload, { rejectWithValue }) => {
+        try {
+            // ⏳ optional delay to match your other thunks
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            const newCollection = await addCollection(payload);
+            return newCollection;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
 const collectionSlice = createSlice({
     name: "collections",
     initialState,
@@ -187,6 +210,20 @@ const collectionSlice = createSlice({
                 state.addCommentLoading = false;
                 state.addCommentError =
                     action.payload || "Something went wrong while adding the comment.";
+            })
+            /* ---------------- Add collection ---------------- */
+            .addCase(addNewCollection.pending, (state) => {
+                state.addCollectionLoading = true;
+                state.addCollectionError = null;
+            })
+            .addCase(addNewCollection.fulfilled, (state, action) => {
+                state.addCollectionLoading = false;
+                state.collections.push(action.payload); // 👈 append new collection
+            })
+            .addCase(addNewCollection.rejected, (state, action) => {
+                state.addCollectionLoading = false;
+                state.addCollectionError =
+                    action.payload || "Failed to add collection";
             });
     },
 });

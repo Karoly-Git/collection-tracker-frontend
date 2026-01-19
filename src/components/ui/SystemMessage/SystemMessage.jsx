@@ -1,12 +1,15 @@
+import Button from "../button/Button";
 import Spinner from "../Spinner/Spinner";
 import "./SystemMessage.css";
 
 const ICONS_BY_VARIANT = {
     loading: null,
-    error: "⛔",
-    empty: "🗂️",
+    error: "⚠️",
+    //error: "⛔",
+    //empty: "🗂️",
+    empty: "⚠️",
     notFound: "🚫",
-    info: "💡",
+    info: "⚠️",
 };
 
 export default function SystemMessage({
@@ -14,6 +17,7 @@ export default function SystemMessage({
     title,
     message,
     actionLabel,
+    actionBtnClassName,
     onAction,
 }) {
     const Icon = ICONS_BY_VARIANT[variant];
@@ -32,7 +36,11 @@ export default function SystemMessage({
             {message && <p>{message}</p>}
 
             {actionLabel && onAction && (
-                <button onClick={onAction}>{actionLabel}</button>
+                <Button
+                    text={actionLabel}
+                    className={actionBtnClassName}
+                    onClick={onAction}
+                />
             )}
         </div>
     );

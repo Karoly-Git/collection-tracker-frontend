@@ -2,8 +2,10 @@ import { useState } from "react";
 import { CUSTOMER_NAMES } from "../../../constants/customer-names";
 import { MATERIAL_NAMES } from "../../../constants/material-names";
 import Button from "../../ui/button/Button";
+import { useDispatch } from "react-redux";
 
 import "../FormStyle.css";
+import { addNewCollection } from "../../../state/collection/collectionSlice";
 
 export default function AddCollectionForm({ onCancel }) {
     const [regNum, setRegNum] = useState("");
@@ -12,23 +14,25 @@ export default function AddCollectionForm({ onCancel }) {
     const [collectionRefNum, setCollectionRefNum] = useState("");
     const [userId, setUserId] = useState("");
     const [comment, setComment] = useState("");
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newCollection = {
-            regNum: regNum || undefined,
             materialName,
             customerName,
             collectionRefNum,
-            updatedBy: {
-                userId,
-            },
+            lorryRegNum: regNum || undefined,
+            updatedByUserId: userId,
             comment: comment || undefined,
         };
 
-        console.log("New Collection:", newCollection);
+        dispatch(
+            addNewCollection(newCollection)
+        );
 
+        // Clear form fields after submission
         setRegNum("");
         setMaterialName("");
         setCustomerName("");

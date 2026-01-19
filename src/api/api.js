@@ -86,4 +86,35 @@ export const addCommentUnderStatus = async ({ collectionId, statusKey, userId, t
     }
 
     return response.json();
-}
+};
+
+export const addCollection = async ({
+    materialName,
+    customerName,
+    collectionRefNum,
+    lorryRegNum,
+    updatedByUserId,
+    comment,
+}) => {
+    const response = await fetch(`${API_URL}/collections`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            materialName,        // REQUIRED
+            customerName,        // REQUIRED
+            collectionRefNum,    // REQUIRED
+            lorryRegNum,         // OPTIONAL
+            updatedByUserId,     // REQUIRED
+            comment,             // OPTIONAL
+        }),
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to add collection");
+    }
+
+    return response.json();
+};

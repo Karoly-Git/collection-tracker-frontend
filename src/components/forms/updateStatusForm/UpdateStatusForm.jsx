@@ -20,6 +20,7 @@ import "./UpdateStatusForm.css";
 
 // React Icons
 import { FaArrowRightLong } from "react-icons/fa6";
+import SystemMessage from "../../ui/SystemMessage/SystemMessage";
 
 export default function UpdateStatusForm({ onCancel }) {
     const clickedCollectionId = useSelector((state) => state.modal.clickedCollectionId);
@@ -50,17 +51,14 @@ export default function UpdateStatusForm({ onCancel }) {
     if (!nextStatus) {
         return (
             <div className="form update-status-form">
-                <h2>Collection has checked out</h2>
-                <p>No further status updates available.</p>
-
-                <div className="actions">
-                    <Button
-                        type="button"
-                        text="Cancel"
-                        className="btn reject"
-                        onClick={onCancel}
-                    />
-                </div>
+                <SystemMessage
+                    variant="info"
+                    title="Collection has checked out"
+                    message="This collection has already reached its final status and cannot be updated further."
+                    actionLabel="Close"
+                    actionBtnClassName="btn reject"
+                    onAction={onCancel}
+                />
             </div>
         );
     }
