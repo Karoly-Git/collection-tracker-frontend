@@ -88,8 +88,7 @@ export const addCommentToCollectionStatus = createAsyncThunk(
             await new Promise((resolve) => setTimeout(resolve, 3000));
 
             // ❌ simulate failure (50% chance)
-            //if (Math.random() < 0.5) {
-            if (true) {
+            if (Math.random() < 0.5) {
                 throw new Error("Simulated error: comment could not be added");
             }
 
