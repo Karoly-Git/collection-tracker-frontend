@@ -16,6 +16,29 @@
   font-weight: 600;
   color: #111827;
   font-size: 1.5rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.collection-table thead .th-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.collection-table thead .sort-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: gray;
+}
+.collection-table thead .sort-icon svg {
+  font-size: 1.4rem;
+}
+.collection-table thead .icon-placeholder {
+  opacity: 0;
 }
 .collection-table tbody tr {
   border-bottom: 1px solid #edf0f4;

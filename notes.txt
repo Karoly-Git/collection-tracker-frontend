@@ -15,7 +15,7 @@ REFACTOR / RESTRUCTURE
 FUNCTIONALITIES / UI / UX
 ------------------------
     ✔ System message if no match to filter options. At this moment message is displayed only if no match to the serching value.
-    - A-Z & Z-A order in collection table
+    ✔ A-Z & Z-A order in collection table
     - What if the status just acidentally changed? How to redo it?
     - Authorisation on login. userId: "9999", // This should come from auth state
     - Lorry spent time plus indicator displayed in the table row:

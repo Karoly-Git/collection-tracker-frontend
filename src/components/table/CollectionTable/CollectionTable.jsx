@@ -1,5 +1,5 @@
 // React & Redux
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // State
@@ -11,6 +11,10 @@ import SystemMessage from "../../ui/SystemMessage/SystemMessage";
 
 // Icons
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
+import { LuArrowDownAZ as AscAbcIcon } from "react-icons/lu";
+import { LuArrowUpAZ as DescAbcIcon } from "react-icons/lu";
+import { RiSortNumberAsc as AscNumIcon } from "react-icons/ri";
+import { RiSortNumberDesc as DescNumIcon } from "react-icons/ri";
 
 // Styles
 import "./CollectionTable.css";
@@ -28,6 +32,12 @@ export default function CollectionTable({
         error,
     } = useSelector((state) => state.collections);
 
+    /** 🔃 SORT STATE */
+    const [sortConfig, setSortConfig] = useState({
+        key: null, // "checkedInAt", "materialName", etc.
+        direction: "asc",
+    });
+
     useEffect(() => {
         dispatch(fetchAllCollections());
     }, [dispatch]);
@@ -43,30 +53,99 @@ export default function CollectionTable({
         );
     };
 
-    const filteredCollections = collectionsList.filter((collection) => {
-        const searchLower = searchValue.toLowerCase();
+    /** 🔍 FILTER */
+    const filteredCollections = useMemo(() => {
+        return collectionsList.filter((collection) => {
+            const searchLower = searchValue.toLowerCase();
 
-        /** 🔍 SEARCH FILTER */
-        const searchMatch =
-            collection.materialName.toLowerCase().includes(searchLower) ||
-            collection.customerName.toLowerCase().includes(searchLower) ||
-            collection.collectionRefNum.toLowerCase().includes(searchLower);
+            const searchMatch =
+                collection.materialName.toLowerCase().includes(searchLower) ||
+                collection.customerName.toLowerCase().includes(searchLower) ||
+                collection.collectionRefNum.toLowerCase().includes(searchLower);
 
-        /** 📅 TODAY FILTER */
-        if (showTodayOnly && !isToday(collection.checkedInAt)) {
-            return false;
+            if (showTodayOnly && !isToday(collection.checkedInAt)) {
+                return false;
+            }
+
+            if (
+                activeStatuses &&
+                !activeStatuses[collection.currentStatus]
+            ) {
+                return false;
+            }
+
+            return searchMatch;
+        });
+    }, [collectionsList, searchValue, showTodayOnly, activeStatuses]);
+
+    /** 🔃 SORT (TEXT + DATE SAFE) */
+    const sortedCollections = useMemo(() => {
+        if (!sortConfig.key) return filteredCollections;
+
+        return [...filteredCollections].sort((a, b) => {
+            let aValue;
+            let bValue;
+
+            // ⏱ TIMER (DATE)
+            if (sortConfig.key === "checkedInAt") {
+                aValue = new Date(a.checkedInAt).getTime();
+                bValue = new Date(b.checkedInAt).getTime();
+            } else {
+                // 🔤 TEXT
+                aValue = a[sortConfig.key]?.toLowerCase?.() ?? "";
+                bValue = b[sortConfig.key]?.toLowerCase?.() ?? "";
+            }
+
+            if (aValue < bValue)
+                return sortConfig.direction === "asc" ? -1 : 1;
+            if (aValue > bValue)
+                return sortConfig.direction === "asc" ? 1 : -1;
+            return 0;
+        });
+    }, [filteredCollections, sortConfig]);
+
+    /** 🖱 SORT HANDLER */
+    const handleSort = (key) => {
+        setSortConfig((prev) => {
+            if (prev.key === key) {
+                return {
+                    key,
+                    direction: prev.direction === "asc" ? "desc" : "asc",
+                };
+            }
+            return { key, direction: "asc" };
+        });
+    };
+
+    /** 🔼🔽 ICON RENDERER (RESERVED SPACE) */
+    const renderSortIcon = (key) => {
+        const isTimer = key === "checkedInAt";
+
+        // Placeholder icon (keeps width stable)
+        if (sortConfig.key !== key) {
+            return isTimer ? (
+                <AscNumIcon className="icon-placeholder" />
+            ) : (
+                <AscAbcIcon className="icon-placeholder" />
+            );
         }
 
-        /** ✅ STATUS FILTER */
-        if (
-            activeStatuses &&
-            !activeStatuses[collection.currentStatus]
-        ) {
-            return false;
+        // Active sort icon
+        if (isTimer) {
+            return sortConfig.direction === "asc" ? (
+                <AscNumIcon />
+            ) : (
+                <DescNumIcon />
+            );
         }
 
-        return searchMatch;
-    });
+        return sortConfig.direction === "asc" ? (
+            <AscAbcIcon />
+        ) : (
+            <DescAbcIcon />
+        );
+    };
+
 
     /** ✅ FILTER ACTIVITY CHECKS */
     const isSearchActive = searchValue.trim().length > 0;
@@ -107,20 +186,18 @@ export default function CollectionTable({
 
     return (
         <>
-            {/* NO COLLECTIONS AT ALL */}
+            {/* NO COLLECTIONS */}
             {collectionsList.length === 0 && (
                 <SystemMessage
                     variant="error"
                     title="No collections on site"
-                    message={
-                        <>All clear for now. New arrivals will appear here.</>
-                    }
+                    message="All clear for now. New arrivals will appear here."
                 />
             )}
 
-            {/* FILTERED BUT NO RESULTS */}
+            {/* NO RESULTS */}
             {collectionsList.length > 0 &&
-                filteredCollections.length === 0 &&
+                sortedCollections.length === 0 &&
                 isAnyFilterActive && (
                     <SystemMessage
                         variant="empty"
@@ -131,19 +208,60 @@ export default function CollectionTable({
                 )}
 
             {/* TABLE */}
-            {filteredCollections.length > 0 && (
+            {sortedCollections.length > 0 && (
                 <table className="collection-table">
                     <thead>
                         <tr>
-                            <th>Timer</th>
-                            <th>Material</th>
-                            <th>Customer</th>
-                            <th>Reference</th>
-                            <th>Status</th>
+                            {/* ⏱ TIMER */}
+                            <th onClick={() => handleSort("checkedInAt")}>
+                                <span className="th-content">
+                                    Timer
+                                    <span className="sort-icon">
+                                        {renderSortIcon("checkedInAt")}
+                                    </span>
+                                </span>
+                            </th>
+
+                            <th onClick={() => handleSort("materialName")}>
+                                <span className="th-content">
+                                    Material
+                                    <span className="sort-icon">
+                                        {renderSortIcon("materialName")}
+                                    </span>
+                                </span>
+                            </th>
+
+                            <th onClick={() => handleSort("customerName")}>
+                                <span className="th-content">
+                                    Customer
+                                    <span className="sort-icon">
+                                        {renderSortIcon("customerName")}
+                                    </span>
+                                </span>
+                            </th>
+
+                            <th onClick={() => handleSort("collectionRefNum")}>
+                                <span className="th-content">
+                                    Reference
+                                    <span className="sort-icon">
+                                        {renderSortIcon("collectionRefNum")}
+                                    </span>
+                                </span>
+                            </th>
+
+                            <th onClick={() => handleSort("currentStatus")}>
+                                <span className="th-content">
+                                    Status
+                                    <span className="sort-icon">
+                                        {renderSortIcon("currentStatus")}
+                                    </span>
+                                </span>
+                            </th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {filteredCollections.map((collection) => (
+                        {sortedCollections.map((collection) => (
                             <CollectionTableRow
                                 key={collection.id}
                                 collection={collection}
