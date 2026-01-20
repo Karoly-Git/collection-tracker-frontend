@@ -27,6 +27,7 @@ export default function StatusBadge({ currentStatus, onClick, isDiv = false }) {
             >
                 <Icon className="status-icon" /> {formatText(currentStatus)}
             </button>
+            <div>Alma</div>
         </td>
     );
 }

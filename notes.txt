@@ -14,7 +14,8 @@ REFACTOR / RESTRUCTURE
 ------------------------
 FUNCTIONALITIES / UI / UX
 ------------------------
-    - System message if no match to filter options. At this moment message is displayed only if no match to the serching value.
+    ✔ System message if no match to filter options. At this moment message is displayed only if no match to the serching value.
+    - A-Z & Z-A order in collection table
     - What if the status just acidentally changed? How to redo it?
     - Authorisation on login. userId: "9999", // This should come from auth state
     - Lorry spent time plus indicator displayed in the table row:
@@ -22,8 +23,7 @@ FUNCTIONALITIES / UI / UX
         / 1h <= time < 2h ==> yellow
         / time >= 2h ==> red 
     - Title popup when hovering elements/components
-    - From - To date picker as filter
-    - A-Z & Z-A order in collection table
+    - From-To date picker as filter
     - For status update: in progress, failed SystemMessages
     - When adding comment in the info modal, disable concurens field/buttons
     - In the info modal: option to amend the records
