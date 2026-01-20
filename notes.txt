@@ -19,6 +19,7 @@ FUNCTIONALITIES / UI / UX
         / 1h <= time < 2h ==> yellow
         / time >= 2h ==> red 
     ✔ Add a "filter reset button" to set all filters back to default.
+    ✔ setInterval to update the displayed times.
     - What if the status just accidentally changed? How to redo it?
     - Authorisation on login. userId: "9999", // This should come from auth state
     - Under the badge, display the spent time of that status.
@@ -26,7 +27,6 @@ FUNCTIONALITIES / UI / UX
     - When adding comment in the info modal, disable concurrent fields/buttons
     - In the info modal: option to amend the records
     - If browser refreshes, keep the currently selected filters.
-    - setInterval to update the displayed times.
     - (From-To date picker as filter?)
 
 

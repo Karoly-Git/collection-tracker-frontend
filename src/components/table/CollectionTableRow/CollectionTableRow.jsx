@@ -1,5 +1,6 @@
 // React
 import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 // Redux slices
 import {
@@ -69,9 +70,35 @@ export default function CollectionTableRow({ collection }) {
         currentStatus !== COLLECTION_STATUSES.LOADED &&
         currentStatus !== COLLECTION_STATUSES.CHECKED_OUT;
 
-    const { time, color } = showLiveTimer
-        ? getDurationWithColor(checkedInAt)
-        : { time: "--:--", color: null };
+    /* ─────────────────────────────
+       LIVE TIMER STATE
+    ───────────────────────────── */
+
+    const [{ time, color }, setDuration] = useState(() =>
+        showLiveTimer
+            ? getDurationWithColor(checkedInAt)
+            : { time: "--:--", color: null }
+    );
+
+    /* ─────────────────────────────
+       UPDATE TIMER EVERY MINUTE
+    ───────────────────────────── */
+
+    useEffect(() => {
+        if (!showLiveTimer) {
+            setDuration({ time: "--:--", color: null });
+            return;
+        }
+
+        // Initial sync (important if mounted mid-minute)
+        setDuration(getDurationWithColor(checkedInAt));
+
+        const intervalId = setInterval(() => {
+            setDuration(getDurationWithColor(checkedInAt));
+        }, 60_000); // 1 minute
+
+        return () => clearInterval(intervalId);
+    }, [checkedInAt, showLiveTimer]);
 
     const indicatorStyle = { backgroundColor: color };
 
@@ -81,7 +108,10 @@ export default function CollectionTableRow({ collection }) {
             <td>
                 <div className="cell-content timer">
                     {showLiveTimer && (
-                        <span className="indicator" style={indicatorStyle}></span>
+                        <span
+                            className="indicator"
+                            style={indicatorStyle}
+                        ></span>
                     )}
                     <span className={`time ${!showLiveTimer ? "muted" : ""}`}>
                         {time}
@@ -96,7 +126,10 @@ export default function CollectionTableRow({ collection }) {
                 </div>
 
                 <div className="time-checked-in">
-                    {formatDateTime(checkedInAt, { date: true, time: true })}
+                    {formatDateTime(checkedInAt, {
+                        date: true,
+                        time: true,
+                    })}
                 </div>
             </td>
 
