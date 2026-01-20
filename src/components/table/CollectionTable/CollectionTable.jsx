@@ -18,7 +18,7 @@ import "./CollectionTable.css";
 export default function CollectionTable({
     searchValue,
     showTodayOnly,
-    activeStatuses, // ✅ NEW
+    activeStatuses,
 }) {
     const dispatch = useDispatch();
 
@@ -68,6 +68,16 @@ export default function CollectionTable({
         return searchMatch;
     });
 
+    /** ✅ FILTER ACTIVITY CHECKS */
+    const isSearchActive = searchValue.trim().length > 0;
+
+    const isStatusFilterActive =
+        activeStatuses &&
+        Object.values(activeStatuses).some((v) => v === false);
+
+    const isAnyFilterActive =
+        isSearchActive || showTodayOnly || isStatusFilterActive;
+
     if (loading) {
         return (
             <SystemMessage
@@ -97,6 +107,7 @@ export default function CollectionTable({
 
     return (
         <>
+            {/* NO COLLECTIONS AT ALL */}
             {collectionsList.length === 0 && (
                 <SystemMessage
                     variant="error"
@@ -107,9 +118,10 @@ export default function CollectionTable({
                 />
             )}
 
+            {/* FILTERED BUT NO RESULTS */}
             {collectionsList.length > 0 &&
                 filteredCollections.length === 0 &&
-                searchValue && (
+                isAnyFilterActive && (
                     <SystemMessage
                         variant="empty"
                         icon={<SearchIcon />}
@@ -118,29 +130,28 @@ export default function CollectionTable({
                     />
                 )}
 
-            {
-                filteredCollections.length > 0 && (
-                    <table className="collection-table">
-                        <thead>
-                            <tr>
-                                <th>Timer</th>
-                                <th>Material</th>
-                                <th>Customer</th>
-                                <th>Reference</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredCollections.map((collection) => (
-                                <CollectionTableRow
-                                    key={collection.id}
-                                    collection={collection}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
-                )
-            }
+            {/* TABLE */}
+            {filteredCollections.length > 0 && (
+                <table className="collection-table">
+                    <thead>
+                        <tr>
+                            <th>Timer</th>
+                            <th>Material</th>
+                            <th>Customer</th>
+                            <th>Reference</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredCollections.map((collection) => (
+                            <CollectionTableRow
+                                key={collection.id}
+                                collection={collection}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </>
     );
 }
