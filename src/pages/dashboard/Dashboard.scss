@@ -120,6 +120,7 @@
             position: relative;
             display: inline-flex;
             align-items: center;
+            text-transform: capitalize;
 
             input {
                 position: absolute;
@@ -134,7 +135,7 @@
                 font-size: 0.85rem;
                 font-weight: 600;
 
-                border: 1px solid #d0d7de;
+                border: 1px solid rgba(208, 215, 222, 0.5);
                 background-color: #ffffff;
                 color: #24292f;
 

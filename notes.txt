@@ -14,6 +14,7 @@ REFACTOR / RESTRUCTURE
 ------------------------
 FUNCTIONALITIES / UI / UX
 ------------------------
+    - System message if no match to filter options. At this moment message is displayed only if no match to the serching value.
     - What if the status just acidentally changed? How to redo it?
     - Authorisation on login. userId: "9999", // This should come from auth state
     - Lorry spent time plus indicator displayed in the table row:
@@ -27,6 +28,7 @@ FUNCTIONALITIES / UI / UX
     - When adding comment in the info modal, disable concurens field/buttons
     - In the info modal: option to amend the records
     - If browser refreshes, keep the currently selected filters.
+    - But add a filters reset button.
     - Under the badge, display the spent time of that status.
     - setInterval to update the displayed times.
 
