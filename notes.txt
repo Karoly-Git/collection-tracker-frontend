@@ -21,12 +21,12 @@ FUNCTIONALITIES / UI / UX
         / time <= 1h ==> green
         / 1h <= time < 2h ==> yellow
         / time >= 2h ==> red 
+    ✔ Add a "filter reset button" to set all filters back to default.
+    - Under the badge, display the spent time of that status.
     - For status update: in-progress, failed SystemMessages
     - When adding comment in the info modal, disable concurrent fields/buttons
     - In the info modal: option to amend the records
     - If browser refreshes, keep the currently selected filters.
-    - Add a "filter reset button" to set all filters back to default.
-    - Under the badge, display the spent time of that status.
     - setInterval to update the displayed times.
     - (From-To date picker as filter?)
 

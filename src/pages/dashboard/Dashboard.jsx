@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "../../components/ui/button/Button";
 import { GoPlus as PlusIcon } from "react-icons/go";
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
+import { RxReset as ResetFiltersIcon } from "react-icons/rx";
 
 import "./Dashboard.css";
 
@@ -42,6 +43,21 @@ export default function Dashboard() {
     const { collections } = useSelector((state) => state.collections);
     const collection = collections.find((c) => c.id === collectionId);
 
+    /* ─────────────────────────────
+       FILTER STATE CHECKS
+       (SEARCH EXCLUDED)
+    ───────────────────────────── */
+
+    const isStatusFilterActive =
+        Object.values(statusFilters).some((checked) => checked === false);
+
+    const isAnyFilterApplied =
+        !showTodayOnly || isStatusFilterActive;
+
+    /* ─────────────────────────────
+       HANDLERS
+    ───────────────────────────── */
+
     const handleOpenModal = (name) => {
         dispatch(openModal({ name }));
     };
@@ -61,6 +77,16 @@ export default function Dashboard() {
             ...prev,
             [status]: !prev[status],
         }));
+    };
+
+    const resetFilters = () => {
+        setShowTodayOnly(true);
+        setStatusFilters(
+            Object.values(COLLECTION_STATUSES).reduce((acc, status) => {
+                acc[status] = true;
+                return acc;
+            }, {})
+        );
     };
 
     return (
@@ -145,6 +171,17 @@ export default function Dashboard() {
                         </span>
                     </label>
                 ))}
+
+                {/* RESET FILTERS (ONLY WHEN CHIP FILTERS CHANGE) */}
+                {isAnyFilterApplied && (
+                    <Button
+                        type="button"
+                        icon={ResetFiltersIcon}
+                        text=""
+                        className="btn icon-btn"
+                        onClick={resetFilters}
+                    />
+                )}
             </div>
 
             {/* =========================
