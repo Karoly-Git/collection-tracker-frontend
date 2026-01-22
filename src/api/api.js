@@ -53,6 +53,7 @@ export const updateCollectionStatus = async ({
                 newStatus, // REQUIRED
                 updatedByUserId: userId, // REQUIRED
                 comment: comment || "", // OPTIONAL
+                timestamp: new Date().toISOString()
             }),
         }
     );

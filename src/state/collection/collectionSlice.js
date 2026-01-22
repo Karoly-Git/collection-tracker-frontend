@@ -57,7 +57,7 @@ export const deleteCollectionById = createAsyncThunk(
 export const updateCollectionStatusById = createAsyncThunk(
     "collection/updateCollectionStatus",
     async (
-        { collectionId, newStatus, userId, comment },
+        { collectionId, newStatus, userId, comment, timestamp },
         { rejectWithValue }
     ) => {
         try {
@@ -66,6 +66,7 @@ export const updateCollectionStatusById = createAsyncThunk(
                 newStatus,
                 userId,
                 comment,
+                timestamp
             });
 
             return updatedCollection;
