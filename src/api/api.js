@@ -66,7 +66,7 @@ export const updateCollectionStatus = async ({
     return response.json();
 };
 
-export const addCommentUnderStatus = async ({ collectionId, statusKey, userId, text }) => {
+export const addCommentUnderStatus = async ({ collectionId, statusKey, userId, text, timestamp }) => {
     const response = await fetch(
         `${API_URL}/comments/collection/${collectionId}/status/${statusKey}/comment`,
         {
@@ -77,6 +77,7 @@ export const addCommentUnderStatus = async ({ collectionId, statusKey, userId, t
             body: JSON.stringify({
                 userId, // REQUIRED
                 text, // REQUIRED
+                timestamp // REQUIRED
             }),
         }
     );

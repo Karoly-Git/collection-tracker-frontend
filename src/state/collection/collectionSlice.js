@@ -85,7 +85,7 @@ export const updateCollectionStatusById = createAsyncThunk(
 export const addCommentToCollectionStatus = createAsyncThunk(
     "collection/addCommentToCollectionStatus",
     async (
-        { collectionId, statusKey, userId, text },
+        { collectionId, statusKey, userId, text, timestamp },
         { rejectWithValue }
     ) => {
         try {
@@ -102,6 +102,7 @@ export const addCommentToCollectionStatus = createAsyncThunk(
                 statusKey,
                 userId,
                 text,
+                timestamp
             });
 
             return updatedCollection;

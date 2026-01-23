@@ -45,6 +45,7 @@ export default function AddCommentForm({
                     statusKey,
                     userId,
                     text,
+                    timestamp: new Date().toISOString(),
                 })
             ).unwrap();
 
