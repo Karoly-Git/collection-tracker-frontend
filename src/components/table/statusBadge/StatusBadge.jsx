@@ -2,7 +2,7 @@ import { formatText } from "../../../utils/formatText";
 import { STATUS_ICONS } from "../../../constants/status-icons";
 import "./StatusBadge.css";
 
-export default function StatusBadge({ currentStatus, onClick, isDiv = false }) {
+export default function StatusBadge({ currentStatus, onClick, isDiv = false, spentTimeInStatus }) {
     const Icon = STATUS_ICONS[currentStatus];
 
     if (isDiv) {
@@ -27,7 +27,7 @@ export default function StatusBadge({ currentStatus, onClick, isDiv = false }) {
             >
                 <Icon className="status-icon" /> {formatText(currentStatus)}
             </button>
-            <div>Alma</div>
+            <div>{spentTimeInStatus}</div>
         </td>
     );
 }

@@ -15,6 +15,7 @@ import { RiDeleteBin2Line as BinIcon } from "react-icons/ri";
 // Utils
 import { formatDateTime } from "../../../utils/formatDateTime";
 import { getDurationWithColor } from "../../../utils/getDurationWithColor";
+import { getSpentTimeInStatus } from "../../../utils/getSpentTimeInStatus";
 
 // Constants
 import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
@@ -71,22 +72,46 @@ export default function CollectionTableRow({ collection }) {
         currentStatus !== COLLECTION_STATUSES.CHECKED_OUT;
 
     /* ─────────────────────────────
-       LIVE TIMER STATE
+       LIVE TIMER STATE (existing timer)
     ───────────────────────────── */
 
     const [{ time, color }, setDuration] = useState(() =>
         showLiveTimer
             ? getDurationWithColor(checkedInAt)
-            : { time: "--:--", color: null }
+            : { time: "--:--:--", color: null }
     );
 
     /* ─────────────────────────────
-       UPDATE TIMER EVERY MINUTE
+       SPENT TIME IN STATUS (updates every second)
+    ───────────────────────────── */
+
+    const [spentTimeInStatus, setSpentTimeInStatus] = useState(() =>
+        getSpentTimeInStatus(collection)
+    );
+
+    useEffect(() => {
+        // initial sync
+        setSpentTimeInStatus(getSpentTimeInStatus(collection));
+
+        const intervalId = setInterval(() => {
+            setSpentTimeInStatus(getSpentTimeInStatus(collection));
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [
+        collection.checkedInAt,
+        collection.startedLoadingAt,
+        collection.finishedLoadingAt,
+        collection.checkedOutAt,
+    ]);
+
+    /* ─────────────────────────────
+       UPDATE TIMER EVERY MINUTE (existing)
     ───────────────────────────── */
 
     useEffect(() => {
         if (!showLiveTimer) {
-            setDuration({ time: "--:--", color: null });
+            setDuration({ time: "--:--:--", color: null });
             return;
         }
 
@@ -95,7 +120,7 @@ export default function CollectionTableRow({ collection }) {
 
         const intervalId = setInterval(() => {
             setDuration(getDurationWithColor(checkedInAt));
-        }, 60_000); // 1 minute
+        }, 1000);
 
         return () => clearInterval(intervalId);
     }, [checkedInAt, showLiveTimer]);
@@ -108,10 +133,7 @@ export default function CollectionTableRow({ collection }) {
             <td>
                 <div className="cell-content timer">
                     {showLiveTimer && (
-                        <span
-                            className="indicator"
-                            style={indicatorStyle}
-                        ></span>
+                        <span className="indicator" style={indicatorStyle}></span>
                     )}
                     <span className={`time ${!showLiveTimer ? "muted" : ""}`}>
                         {time}
@@ -135,9 +157,7 @@ export default function CollectionTableRow({ collection }) {
 
             {/* Customer */}
             <td>
-                <div className="cell-content customer-name">
-                    {customerName}
-                </div>
+                <div className="cell-content customer-name">{customerName}</div>
             </td>
 
             {/* Reference */}
@@ -151,6 +171,7 @@ export default function CollectionTableRow({ collection }) {
             <StatusBadge
                 currentStatus={currentStatus}
                 onClick={() => handleOpenModal("status", id)}
+                spentTimeInStatus={spentTimeInStatus}
             />
 
             {/* Actions */}
