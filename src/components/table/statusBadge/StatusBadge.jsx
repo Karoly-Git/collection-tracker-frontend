@@ -1,5 +1,6 @@
 import { formatText } from "../../../utils/formatText";
 import { STATUS_ICONS } from "../../../constants/status-icons";
+import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
 import "./StatusBadge.css";
 
 export default function StatusBadge({ currentStatus, onClick, isDiv = false, spentTimeInStatus }) {
@@ -27,7 +28,10 @@ export default function StatusBadge({ currentStatus, onClick, isDiv = false, spe
             >
                 <Icon className="status-icon" /> {formatText(currentStatus)}
             </button>
-            <div>{spentTimeInStatus}</div>
+            {
+                currentStatus !== COLLECTION_STATUSES.CHECKED_OUT &&
+                <div>{spentTimeInStatus}</div>
+            }
         </td>
     );
 }
