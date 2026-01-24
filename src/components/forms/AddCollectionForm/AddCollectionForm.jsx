@@ -1,141 +1,278 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CUSTOMER_NAMES } from "../../../constants/customer-names";
 import { MATERIAL_NAMES } from "../../../constants/material-names";
 import Button from "../../ui/button/Button";
-import { useDispatch } from "react-redux";
+import Spinner from "../../ui/Spinner/Spinner";
+import { useDispatch, useSelector } from "react-redux";
 
 import "../FormStyle.css";
-import { addNewCollection } from "../../../state/collection/collectionSlice";
+import {
+    addNewCollection,
+    resetAddCollectionState,
+} from "../../../state/collection/collectionSlice";
+
+import { FaCheck, FaExclamationTriangle } from "react-icons/fa";
+
+const AUTO_CLOSE_SECONDS = 10;
 
 export default function AddCollectionForm({ onCancel }) {
-    const [regNum, setRegNum] = useState("");
+    const dispatch = useDispatch();
+
+    /* ---------- Local state ---------- */
+    const [lorryRegNum, setLorryRegNum] = useState("");
     const [materialName, setMaterialName] = useState("");
     const [customerName, setCustomerName] = useState("");
     const [collectionRefNum, setCollectionRefNum] = useState("");
-    const [userId, setUserId] = useState("");
+    const [updatedByUserId, setUpdatedByUserId] = useState("");
     const [comment, setComment] = useState("");
-    const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
+    const [secondsLeft, setSecondsLeft] = useState(AUTO_CLOSE_SECONDS);
+
+    /* ---------- Redux state ---------- */
+    const addCollectionStatus = useSelector(
+        (state) => state.collections.addCollectionStatus
+    );
+    const addCollectionError = useSelector(
+        (state) => state.collections.addCollectionError
+    );
+    const addCollectionSuccessMessage = useSelector(
+        (state) => state.collections.addCollectionSuccessMessage
+    );
+
+    const isValid =
+        materialName && customerName && collectionRefNum && updatedByUserId;
+
+    const isBusy = addCollectionStatus === "loading";
+    const isAdded = addCollectionStatus === "succeeded";
+    const isFailed = addCollectionStatus === "failed";
+
+    /* ---------- Reset redux state when form mounts/unmounts ---------- */
+    useEffect(() => {
+        dispatch(resetAddCollectionState());
+
+        return () => {
+            dispatch(resetAddCollectionState());
+        };
+    }, [dispatch]);
+
+    /* ---------- Auto close after success (same as DeleteCollectionForm) ---------- */
+    useEffect(() => {
+        if (!isAdded) return;
+
+        setSecondsLeft(AUTO_CLOSE_SECONDS);
+
+        const interval = setInterval(() => {
+            setSecondsLeft((prev) => prev - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [isAdded]);
+
+    useEffect(() => {
+        if (secondsLeft <= 0 && isAdded) {
+            onCancel();
+        }
+    }, [secondsLeft, isAdded, onCancel]);
+
+    /* ---------- Submit ---------- */
+    async function handleSubmit(e) {
         e.preventDefault();
+        if (isBusy) return;
 
         const newCollection = {
             materialName,
             customerName,
             collectionRefNum,
-            lorryRegNum: regNum || undefined,
-            updatedByUserId: userId,
+            lorryRegNum: lorryRegNum || undefined,
+            updatedByUserId,
             comment: comment || undefined,
             timestamp: new Date().toISOString(),
         };
 
-        dispatch(
-            addNewCollection(newCollection)
-        );
+        try {
+            await dispatch(addNewCollection(newCollection)).unwrap();
 
-        // Clear form fields after submission
-        setRegNum("");
-        setMaterialName("");
-        setCustomerName("");
-        setCollectionRefNum("");
-        setUserId("");
-        setComment("");
+            // ✅ Clear fields after success
+            setLorryRegNum("");
+            setMaterialName("");
+            setCustomerName("");
+            setCollectionRefNum("");
+            setUpdatedByUserId("");
+            setComment("");
+        } catch (err) {
+            console.error("Add collection failed:", err);
+        }
+    }
+
+    /* ---------- Header content ---------- */
+    const renderHeader = () => {
+        if (isAdded) {
+            return (
+                <>
+                    <FaCheck className="icon success" />
+                    <span>
+                        {addCollectionSuccessMessage || "Collection added successfully"}
+                    </span>
+                </>
+            );
+        }
+
+        if (isFailed) {
+            return (
+                <>
+                    <FaExclamationTriangle className="icon warning" />
+                    <span>{addCollectionError || "Failed to add collection"}</span>
+                </>
+            );
+        }
+
+        if (isBusy) {
+            return (
+                <>
+                    <Spinner size={26} inline />
+                    <span>Adding collection… Please wait</span>
+                </>
+            );
+        }
+
+        return null;
     };
+
+    const headerContent = renderHeader();
 
     return (
         <form className="form add-collection-form" onSubmit={handleSubmit}>
-            <h2>Add Collection</h2>
+            <div className="form-header">
+                {headerContent && (
+                    <h2
+                        className={`warning-text ${isAdded ? "success" : isFailed ? "error" : ""
+                            }`}
+                        aria-live="polite"
+                    >
+                        {headerContent}
+                    </h2>
+                )}
 
-            <label>
-                Material
-                <select
-                    value={materialName}
-                    onChange={(e) => setMaterialName(e.target.value)}
-                    required
-                >
-                    <option value="" disabled>
-                        Select material
-                    </option>
+                {isAdded && (
+                    <p className="auto-close-text">
+                        (Auto closing in <strong>{secondsLeft}</strong> second
+                        {secondsLeft !== 1 ? "s" : ""})
+                    </p>
+                )}
+            </div>
 
-                    {Object.entries(MATERIAL_NAMES).map(([key, value]) => (
-                        <option key={key} value={value}>
-                            {value}
-                        </option>
-                    ))}
-                </select>
-            </label>
+            {/* Form fields only when idle or error */}
+            {!isAdded && !isBusy && (
+                <>
+                    <label>
+                        Material
+                        <select
+                            value={materialName}
+                            onChange={(e) => setMaterialName(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled>
+                                Select material
+                            </option>
 
-            <label>
-                Customer
-                <select
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    required
-                >
-                    <option value="" disabled>
-                        Select customer
-                    </option>
+                            {Object.entries(MATERIAL_NAMES).map(([key, value]) => (
+                                <option key={key} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
 
-                    {Object.entries(CUSTOMER_NAMES).map(([key, value]) => (
-                        <option key={key} value={value}>
-                            {value}
-                        </option>
-                    ))}
-                </select>
-            </label>
+                    <label>
+                        Customer
+                        <select
+                            value={customerName}
+                            onChange={(e) => setCustomerName(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled>
+                                Select customer
+                            </option>
 
-            <label>
-                Reference number
-                <input
-                    type="text"
-                    value={collectionRefNum}
-                    onChange={(e) => setCollectionRefNum(e.target.value)}
-                    required
-                />
-            </label>
+                            {Object.entries(CUSTOMER_NAMES).map(([key, value]) => (
+                                <option key={key} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
 
-            <label>
-                Vehicle reg number (optional)
-                <input
-                    type="text"
-                    value={regNum}
-                    onChange={(e) => setRegNum(e.target.value)}
-                />
-            </label>
+                    <label>
+                        Reference number
+                        <input
+                            type="text"
+                            value={collectionRefNum}
+                            onChange={(e) => setCollectionRefNum(e.target.value)}
+                            required
+                        />
+                    </label>
 
+                    <label>
+                        Vehicle reg number (optional)
+                        <input
+                            type="text"
+                            value={lorryRegNum}
+                            onChange={(e) => setLorryRegNum(e.target.value)}
+                        />
+                    </label>
 
-            <label>
-                Updated By (User ID)
-                <input
-                    type="text"
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                    required
-                    placeholder="Later it will come from login"
-                />
-            </label>
+                    <label>
+                        Updated By (User ID)
+                        <input
+                            type="text"
+                            value={updatedByUserId}
+                            onChange={(e) => setUpdatedByUserId(e.target.value)}
+                            required
+                            placeholder="Later it will come from login"
+                        />
+                    </label>
 
-            <label>
-                Comment (optional)
-                <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-            </label>
+                    <label>
+                        Comment (optional)
+                        <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                    </label>
+                </>
+            )}
 
             <div className="actions">
-                <Button
-                    type="button"
-                    text="Cancel"
-                    className="btn reject"
-                    onClick={onCancel}
-                />
+                {isAdded && (
+                    <Button
+                        type="button"
+                        text="Close"
+                        className="btn accept"
+                        onClick={onCancel}
+                    />
+                )}
 
-                <Button
-                    type="submit"
-                    text="Add Collection"
-                    className="btn accept"
-                />
+                {!isAdded && !isBusy && (
+                    <>
+                        <Button
+                            type="button"
+                            text="Cancel"
+                            className="btn reject"
+                            onClick={() => {
+                                dispatch(resetAddCollectionState());
+                                onCancel();
+                            }}
+                        />
+
+                        {isValid && (
+                            <Button
+                                type="submit"
+                                text={isFailed ? "Retry Add" : "Add Collection"}
+                                className="btn accept"
+                            />
+                        )}
+                    </>
+                )}
             </div>
         </form>
     );

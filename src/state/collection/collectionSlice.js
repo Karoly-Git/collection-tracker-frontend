@@ -4,7 +4,7 @@ import {
     deleteCollection,
     updateCollectionStatus,
     addCommentUnderStatus,
-    addCollection, // 👈 NEW
+    addCollection,
 } from "../../api/api";
 
 const initialState = {
@@ -15,8 +15,10 @@ const initialState = {
     addCommentLoading: false,
     addCommentError: null,
 
-    addCollectionLoading: false, // 👈 optional
-    addCollectionError: null,    // 👈 optional
+    // ✅ Add collection status
+    addCollectionStatus: "idle", // "idle" | "loading" | "succeeded" | "failed"
+    addCollectionError: null,
+    addCollectionSuccessMessage: null,
 };
 
 /**
@@ -66,7 +68,7 @@ export const updateCollectionStatusById = createAsyncThunk(
                 newStatus,
                 userId,
                 comment,
-                timestamp
+                timestamp,
             });
 
             return updatedCollection;
@@ -102,7 +104,7 @@ export const addCommentToCollectionStatus = createAsyncThunk(
                 statusKey,
                 userId,
                 text,
-                timestamp
+                timestamp,
             });
 
             return updatedCollection;
@@ -119,8 +121,13 @@ export const addNewCollection = createAsyncThunk(
     "collection/addNewCollection",
     async (payload, { rejectWithValue }) => {
         try {
-            // ⏳ optional delay to match your other thunks
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            // ⏳ simulate slow API (3 seconds)
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+
+            // ❌ simulate failure (50% chance)
+            if (Math.random() < 0.5) {
+                throw new Error("Simulated error: collection could not be added. Please try again.");
+            }
 
             const newCollection = await addCollection(payload);
             return newCollection;
@@ -130,11 +137,17 @@ export const addNewCollection = createAsyncThunk(
     }
 );
 
-
 const collectionSlice = createSlice({
     name: "collections",
     initialState,
-    reducers: {},
+    reducers: {
+        // ✅ important: reset status when opening/closing the form
+        resetAddCollectionState: (state) => {
+            state.addCollectionStatus = "idle";
+            state.addCollectionError = null;
+            state.addCollectionSuccessMessage = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             /* ---------------- Fetch all ---------------- */
@@ -148,7 +161,7 @@ const collectionSlice = createSlice({
             })
             .addCase(fetchAllCollections.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload || "Failed to load lorries";
+                state.error = action.payload || "Failed to load collections";
             })
 
             /* ---------------- Delete ---------------- */
@@ -187,8 +200,7 @@ const collectionSlice = createSlice({
             })
             .addCase(updateCollectionStatusById.rejected, (state, action) => {
                 state.loading = false;
-                state.error =
-                    action.payload || "Failed to update collection status";
+                state.error = action.payload || "Failed to update collection status";
             })
 
             /* ---------------- Add comment ---------------- */
@@ -213,21 +225,26 @@ const collectionSlice = createSlice({
                 state.addCommentError =
                     action.payload || "Something went wrong while adding the comment.";
             })
-            /* ---------------- Add collection ---------------- */
+
+            /* ---------------- Add collection ✅ ---------------- */
             .addCase(addNewCollection.pending, (state) => {
-                state.addCollectionLoading = true;
+                state.addCollectionStatus = "loading";
                 state.addCollectionError = null;
+                state.addCollectionSuccessMessage = null;
             })
             .addCase(addNewCollection.fulfilled, (state, action) => {
-                state.addCollectionLoading = false;
-                state.collections.push(action.payload); // 👈 append new collection
+                state.addCollectionStatus = "succeeded";
+                state.collections.push(action.payload);
+
+                state.addCollectionSuccessMessage = "Collection added successfully!";
             })
             .addCase(addNewCollection.rejected, (state, action) => {
-                state.addCollectionLoading = false;
-                state.addCollectionError =
-                    action.payload || "Failed to add collection";
+                state.addCollectionStatus = "failed";
+                state.addCollectionError = action.payload || "Failed to add collection";
             });
     },
 });
+
+export const { resetAddCollectionState } = collectionSlice.actions;
 
 export default collectionSlice.reducer;
