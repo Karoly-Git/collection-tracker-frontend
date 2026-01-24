@@ -68,7 +68,7 @@ export default function CollectionTableRow({ collection }) {
      */
     const showLiveTimer =
         isToday(checkedInAt) &&
-        currentStatus !== COLLECTION_STATUSES.LOADED &&
+        //currentStatus !== COLLECTION_STATUSES.LOADED &&
         currentStatus !== COLLECTION_STATUSES.CHECKED_OUT;
 
     /* ─────────────────────────────
