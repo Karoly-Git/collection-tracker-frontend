@@ -104,7 +104,7 @@ export const addCommentToCollectionStatus = createAsyncThunk(
     ) => {
         try {
             // ⏳ simulate slow API (3 seconds)
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 8000));
 
             // ❌ simulate failure (50% chance)
             if (Math.random() < 0.5) {

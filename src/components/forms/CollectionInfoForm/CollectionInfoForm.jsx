@@ -114,9 +114,9 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                     }
                                 >
                                     {isOpen ? (
-                                        <DontAddCommentIcon />
+                                        !isAddingComment && <DontAddCommentIcon />
                                     ) : (
-                                        <AddCommentIcon />
+                                        !isAddingComment && <AddCommentIcon />
                                     )}
                                 </button>
                             </div>
