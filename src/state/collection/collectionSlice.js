@@ -3,7 +3,7 @@ import {
     getAllCollections,
     deleteCollection,
     updateCollectionStatus,
-    addCommentUnderStatus,
+    addNewComment,
     addCollection,
 } from "../../api/api";
 
@@ -105,8 +105,8 @@ export const updateCollectionStatusById = createAsyncThunk(
 /**
  * Add comment to status
  */
-export const addCommentToCollectionStatus = createAsyncThunk(
-    "collection/addCommentToCollectionStatus",
+export const addComment = createAsyncThunk(
+    "collection/addComment",
     async (
         {
             collectionId,
@@ -128,11 +128,11 @@ export const addCommentToCollectionStatus = createAsyncThunk(
 
             // ❌ simulate failure (50% chance)
             // if (Math.random() < 0.5) {
-            if (true) {
+            if (false) {
                 throw new Error("Simulated error: comment could not be added");
             }
 
-            const updatedCollection = await addCommentUnderStatus({
+            const updatedCollection = await addNewComment({
                 collectionId,
                 statusKey,
                 userId,
@@ -158,7 +158,8 @@ export const addNewCollection = createAsyncThunk(
             await new Promise((resolve) => setTimeout(resolve, 3000));
 
             // ❌ simulate failure (50% chance)
-            if (Math.random() < 0.5) {
+            //if (Math.random() < 0.5) {
+            if (false) {
                 throw new Error("Simulated error: collection could not be added");
             }
 
@@ -250,7 +251,7 @@ const collectionSlice = createSlice({
             })
 
             /* ---------------- Add comment ---------------- */
-            .addCase(addCommentToCollectionStatus.pending, (state, action) => {
+            .addCase(addComment.pending, (state, action) => {
                 state.addCommentLoading = true;
                 state.addCommentError = null;
 
@@ -261,7 +262,7 @@ const collectionSlice = createSlice({
                     statusTimestamp: action.meta.arg.statusTimestamp,
                 };
             })
-            .addCase(addCommentToCollectionStatus.fulfilled, (state, action) => {
+            .addCase(addComment.fulfilled, (state, action) => {
                 state.addCommentLoading = false;
 
                 // ✅ NEW: clear target on success
@@ -276,7 +277,7 @@ const collectionSlice = createSlice({
                     state.collections[index] = updatedCollection;
                 }
             })
-            .addCase(addCommentToCollectionStatus.rejected, (state, action) => {
+            .addCase(addComment.rejected, (state, action) => {
                 state.addCommentLoading = false;
                 state.addCommentError =
                     action.payload ||

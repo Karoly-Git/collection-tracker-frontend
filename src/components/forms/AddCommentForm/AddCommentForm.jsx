@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/button/Button";
 import Spinner from "../../ui/Spinner/Spinner";
 
-import { addCommentToCollectionStatus, resetAddCommentState } from "../../../state/collection/collectionSlice";
+import { addComment, resetAddCommentState } from "../../../state/collection/collectionSlice";
 
 export default function AddCommentForm({
     collectionId,
@@ -58,7 +58,7 @@ export default function AddCommentForm({
 
         try {
             await dispatch(
-                addCommentToCollectionStatus({
+                addComment({
                     collectionId,
                     statusKey,
                     statusTimestamp, // ✅ NEW
