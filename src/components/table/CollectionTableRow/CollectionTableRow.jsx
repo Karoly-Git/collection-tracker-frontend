@@ -15,7 +15,7 @@ import { RiDeleteBin2Line as BinIcon } from "react-icons/ri";
 // Utils
 import { formatDateTime } from "../../../utils/formatDateTime";
 import { getDurationWithColor } from "../../../utils/getDurationWithColor";
-import { getSpentTimeInStatus } from "../../../utils/getSpentTimeInStatus";
+import { getTimeSpentInStatus } from "../../../utils/getTimeSpentInStatus";
 
 // Constants
 import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
@@ -86,15 +86,15 @@ export default function CollectionTableRow({ collection }) {
     ───────────────────────────── */
 
     const [spentTimeInStatus, setSpentTimeInStatus] = useState(() =>
-        getSpentTimeInStatus(collection)
+        getTimeSpentInStatus(collection)
     );
 
     useEffect(() => {
         // initial sync
-        setSpentTimeInStatus(getSpentTimeInStatus(collection));
+        setSpentTimeInStatus(getTimeSpentInStatus(collection));
 
         const intervalId = setInterval(() => {
-            setSpentTimeInStatus(getSpentTimeInStatus(collection));
+            setSpentTimeInStatus(getTimeSpentInStatus(collection));
         }, 1000);
 
         return () => clearInterval(intervalId);

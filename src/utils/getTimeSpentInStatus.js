@@ -1,6 +1,6 @@
 import { COLLECTION_STATUSES } from "../constants/collection-statuses";
 
-export const getSpentTimeInStatus = (collection) => {
+export const getTimeSpentInStatus = (collection) => {
     const {
         checkedInAt,
         startedLoadingAt,
