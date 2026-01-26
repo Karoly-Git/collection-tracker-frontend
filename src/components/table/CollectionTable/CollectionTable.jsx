@@ -34,8 +34,8 @@ export default function CollectionTable({
 
     /** 🔃 SORT STATE */
     const [sortConfig, setSortConfig] = useState({
-        key: null, // "checkedInAt", "materialName", etc.
-        direction: "asc",
+        key: "checkedInAt", // Default ordering: "checkedInAt", "materialName", etc.
+        direction: "desc", // "asc" or "desc"
     });
 
     useEffect(() => {

@@ -36,27 +36,40 @@ export default function Dashboard() {
     );
 
     const activeModal = useSelector((state) => state.modal.activeModal);
-    const collectionId = useSelector(
-        (state) => state.modal.clickedCollectionId
-    );
+    const collectionId = useSelector((state) => state.modal.clickedCollectionId);
 
-    const { collections } = useSelector((state) => state.collections);
+    // ✅ CHANGED: read more states so we can disable Escape while busy
+    const {
+        collections,
+        loading,
+        addCommentLoading,
+        addCollectionStatus,
+        updateStatusStatus,
+    } = useSelector((state) => state.collections);
+
     const collection = collections.find((c) => c.id === collectionId);
 
-    /* ─────────────────────────────
-       FILTER STATE CHECKS
-       (SEARCH EXCLUDED)
-    ───────────────────────────── */
-
-    const isStatusFilterActive =
-        Object.values(statusFilters).some((checked) => checked === false);
-
-    const isAnyFilterApplied =
-        !showTodayOnly || isStatusFilterActive;
+    // ✅ NEW: modal busy state
+    const isModalBusy =
+        loading ||
+        addCommentLoading ||
+        addCollectionStatus === "loading" ||
+        updateStatusStatus === "loading";
 
     /* ─────────────────────────────
-       HANDLERS
-    ───────────────────────────── */
+         FILTER STATE CHECKS
+         (SEARCH EXCLUDED)
+      ───────────────────────────── */
+
+    const isStatusFilterActive = Object.values(statusFilters).some(
+        (checked) => checked === false
+    );
+
+    const isAnyFilterApplied = !showTodayOnly || isStatusFilterActive;
+
+    /* ─────────────────────────────
+         HANDLERS
+      ───────────────────────────── */
 
     const handleOpenModal = (name) => {
         dispatch(openModal({ name }));
@@ -67,9 +80,7 @@ export default function Dashboard() {
     };
 
     const handleInputChange = (e) => {
-        setInputValue(
-            e.target.value.toLowerCase().replace(/\s{2,}/g, " ")
-        );
+        setInputValue(e.target.value.toLowerCase().replace(/\s{2,}/g, " "));
     };
 
     const handleStatusToggle = (status) => {
@@ -139,15 +150,12 @@ export default function Dashboard() {
             <div className="dashboard-controls status-filters">
                 {/* Today only chip */}
                 <label
-                    className={`status-chip today-only ${showTodayOnly ? "active" : ""
-                        }`}
+                    className={`status-chip today-only ${showTodayOnly ? "active" : ""}`}
                 >
                     <input
                         type="checkbox"
                         checked={showTodayOnly}
-                        onChange={(e) =>
-                            setShowTodayOnly(e.target.checked)
-                        }
+                        onChange={(e) => setShowTodayOnly(e.target.checked)}
                     />
                     <span className="chip-label">Today only</span>
                 </label>
@@ -162,13 +170,9 @@ export default function Dashboard() {
                         <input
                             type="checkbox"
                             checked={statusFilters[status]}
-                            onChange={() =>
-                                handleStatusToggle(status)
-                            }
+                            onChange={() => handleStatusToggle(status)}
                         />
-                        <span className="chip-label">
-                            {formatText(status)}
-                        </span>
+                        <span className="chip-label">{formatText(status)}</span>
                     </label>
                 ))}
 
@@ -196,12 +200,19 @@ export default function Dashboard() {
             {/* =========================
                MODALS
             ========================== */}
-            <Modal isOpen={activeModal === "add"} modalTitle="Add Collection">
+            <Modal
+                isOpen={activeModal === "add"}
+                escapeAction={handleCloseModal}
+                disableEscape={isModalBusy} // ✅ NEW
+                modalTitle="Add Collection"
+            >
                 <AddCollectionForm onCancel={handleCloseModal} />
             </Modal>
 
             <Modal
                 isOpen={activeModal === "status"}
+                escapeAction={handleCloseModal}
+                disableEscape={isModalBusy} // ✅ NEW
                 modalTitle="Update Collection Status"
             >
                 <UpdateStatusForm onCancel={handleCloseModal} />
@@ -209,16 +220,17 @@ export default function Dashboard() {
 
             <Modal
                 isOpen={activeModal === "info"}
+                escapeAction={handleCloseModal}
+                disableEscape={isModalBusy} // ✅ NEW
                 modalTitle="Collection Details"
             >
-                <CollectionInfoForm
-                    collection={collection}
-                    onCancel={handleCloseModal}
-                />
+                <CollectionInfoForm collection={collection} onCancel={handleCloseModal} />
             </Modal>
 
             <Modal
                 isOpen={activeModal === "delete"}
+                escapeAction={handleCloseModal}
+                disableEscape={isModalBusy} // ✅ NEW
                 modalTitle="Confirm Delete Collection"
             >
                 <DeleteCollectionForm onCancel={handleCloseModal} />
