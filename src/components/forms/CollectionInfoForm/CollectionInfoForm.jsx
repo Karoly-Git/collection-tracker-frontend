@@ -6,18 +6,19 @@ import Button from "../../ui/button/Button";
 
 import { FaCommentMedical as AddCommentIcon } from "react-icons/fa6";
 import { FaCommentSlash as DontAddCommentIcon } from "react-icons/fa6";
+import { MdEdit as EditIcon } from "react-icons/md";
+
 import { formatText } from "../../../utils/formatText";
 import { formatDateTime } from "../../../utils/formatDateTime";
 import StatusBadge from "../../table/StatusBadge/StatusBadge";
 
-// ✅ NEW: needed to reset error on icon click
 import { useDispatch } from "react-redux";
 import { resetAddCommentState } from "../../../state/collection/collectionSlice";
 
 export default function CollectionInfoForm({ collection, onCancel }) {
     if (!collection) return null;
 
-    const dispatch = useDispatch(); // ✅ NEW
+    const dispatch = useDispatch();
 
     const [isAddingComment, setIsAddingComment] = useState(false);
 
@@ -35,44 +36,128 @@ export default function CollectionInfoForm({ collection, onCancel }) {
         statusHistory,
     } = collection;
 
-    // store which status entry has the comment form open
+    // ✅ store which status entry has the comment form open
     const [activeStatusTimestamp, setActiveStatusTimestamp] = useState(null);
 
     const toggleCommentForStatus = (timestamp) => {
-        // ✅ NEW: reset add comment error when opening/closing comment form
         dispatch(resetAddCommentState());
-
         setActiveStatusTimestamp((prev) => (prev === timestamp ? null : timestamp));
+    };
+
+    // ✅ NEW: Edit mode for collection details
+    const [isEditing, setIsEditing] = useState(false);
+
+    // ✅ Local draft (editable fields)
+    const [draft, setDraft] = useState({
+        materialName,
+        customerName,
+        collectionRefNum,
+        lorryRegNum: lorryRegNum || "",
+    });
+
+    const handleChange = (field, value) => {
+        setDraft((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleCancelEdit = () => {
+        setDraft({
+            materialName,
+            customerName,
+            collectionRefNum,
+            lorryRegNum: lorryRegNum || "",
+        });
+        setIsEditing(false);
+    };
+
+    const handleSaveEdit = () => {
+        // ✅ Later: dispatch update thunk here
+        console.log("Saving edited collection details:", draft);
+
+        setIsEditing(false);
     };
 
     return (
         <section className="form collection-info-form">
+            {/* =========================
+          COLLECTION DETAILS
+      ========================== */}
             <header className="collection-header">
-                <h2>
-                    {materialName} • {customerName} • {id}
-                </h2>
+                <div className="collection-title-row">
+                    <h2>
+                        {materialName} • {customerName} • {id}
+                    </h2>
+
+                    {!isEditing && (
+                        <button
+                            type="button"
+                            className="edit-details-btn"
+                            onClick={() => setIsEditing(true)}
+                            disabled={isAddingComment}
+                            aria-label="Edit collection details"
+                            title="Edit collection details"
+                        >
+                            <EditIcon className="edit-icon" />
+                            Edit details
+                        </button>
+                    )}
+                </div>
 
                 <div className="collection-details">
                     <p>
                         <strong>Material</strong>
-                        <span>{materialName}</span>
+                        {isEditing ? (
+                            <input
+                                value={draft.materialName}
+                                onChange={(e) => handleChange("materialName", e.target.value)}
+                            />
+                        ) : (
+                            <span>{materialName}</span>
+                        )}
                     </p>
+
                     <p>
                         <strong>Customer</strong>
-                        <span>{customerName}</span>
+                        {isEditing ? (
+                            <input
+                                value={draft.customerName}
+                                onChange={(e) => handleChange("customerName", e.target.value)}
+                            />
+                        ) : (
+                            <span>{customerName}</span>
+                        )}
                     </p>
+
                     <p>
                         <strong>Reference number</strong>
-                        <span>{collectionRefNum}</span>
+                        {isEditing ? (
+                            <input
+                                value={draft.collectionRefNum}
+                                onChange={(e) =>
+                                    handleChange("collectionRefNum", e.target.value)
+                                }
+                            />
+                        ) : (
+                            <span>{collectionRefNum}</span>
+                        )}
                     </p>
+
                     <p>
                         <strong>Vehicle reg number</strong>
-                        <span>{lorryRegNum}</span>
+                        {isEditing ? (
+                            <input
+                                value={draft.lorryRegNum}
+                                onChange={(e) => handleChange("lorryRegNum", e.target.value)}
+                            />
+                        ) : (
+                            <span>{lorryRegNum || "-"}</span>
+                        )}
                     </p>
+
                     <p>
                         <strong>Current status</strong>
                         <span>{formatText(currentStatus)}</span>
                     </p>
+
                     <p>
                         <strong>Checked in at</strong>
                         <span>
@@ -81,6 +166,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 : "-"}
                         </span>
                     </p>
+
                     <p>
                         <strong>Started loading at</strong>
                         <span>
@@ -89,6 +175,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 : "-"}
                         </span>
                     </p>
+
                     <p>
                         <strong>Finished loading at</strong>
                         <span>
@@ -97,6 +184,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 : "-"}
                         </span>
                     </p>
+
                     <p>
                         <strong>Checked out at</strong>
                         <span>
@@ -106,8 +194,31 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                         </span>
                     </p>
                 </div>
+
+                {/* ✅ Save / Cancel only while editing */}
+                {isEditing && (
+                    <div className="actions">
+                        <Button
+                            type="button"
+                            text="Cancel"
+                            className="btn reject"
+                            onClick={handleCancelEdit}
+                            disabled={isAddingComment}
+                        />
+                        <Button
+                            type="button"
+                            text="Save"
+                            className="btn accept"
+                            onClick={handleSaveEdit}
+                            disabled={isAddingComment}
+                        />
+                    </div>
+                )}
             </header>
 
+            {/* =========================
+          STATUS HISTORY
+      ========================== */}
             <h3>Status History</h3>
 
             <ul className="status-history">
@@ -124,6 +235,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                 <strong className="status-title">
                                     <StatusBadge currentStatus={entry.status} isDiv={true} />
                                 </strong>
+
                                 <span className="timestamp">
                                     {formatDateTime(entry.timestamp, { time: true })}
                                 </span>
@@ -139,7 +251,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                     type="button"
                                     onClick={() => toggleCommentForStatus(entry.timestamp)}
                                     aria-label={isOpen ? "Cancel add comment" : "Add comment"}
-                                    disabled={isAddingComment}
+                                    disabled={isAddingComment || isEditing} // ✅ disable while editing too
                                 >
                                     {isOpen ? (
                                         !isAddingComment && <DontAddCommentIcon />
@@ -156,10 +268,9 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                         <AddCommentForm
                                             collectionId={id}
                                             statusKey={entry.status}
-                                            statusTimestamp={entry.timestamp} // ✅ NEW
+                                            statusTimestamp={entry.timestamp}
                                             userId={entry.updatedBy?.userId || "System"}
                                             onCancel={() => {
-                                                // ✅ NEW: reset error when the form closes
                                                 dispatch(resetAddCommentState());
                                                 setActiveStatusTimestamp(null);
                                             }}
@@ -183,7 +294,10 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                 })}
             </ul>
 
-            {!isAddingComment && (
+            {/* =========================
+          CLOSE BUTTON
+      ========================== */}
+            {!isAddingComment && !isEditing && (
                 <div className="actions">
                     <Button
                         type="button"

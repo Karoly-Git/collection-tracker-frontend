@@ -25,6 +25,49 @@
         color: var(--muted);
     }
 
+    /* ✅ NEW: title row with edit button */
+    .collection-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+
+        h2 {
+            margin: 0;
+            flex: 1;
+        }
+
+        .edit-details-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent);
+            cursor: pointer;
+            white-space: nowrap;
+
+            svg {
+                font-size: 1rem;
+            }
+
+            &:hover {
+                background: var(--card);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+    }
+
     /* ===== COLLECTION SUMMARY ===== */
     .collection-details {
         margin-top: 1rem;
@@ -55,6 +98,25 @@
                 text-transform: uppercase;
                 color: var(--text);
             }
+
+            /* ✅ NEW: edit inputs inside collection-details */
+            input {
+                width: 100%;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px 12px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: var(--text);
+                background: #ffffff;
+                outline: none;
+
+                &:focus {
+                    border-color: var(--accent);
+                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+                }
+            }
         }
     }
 
@@ -77,7 +139,6 @@
         transition: transform 0.15s ease, box-shadow 0.15s ease;
 
         &:hover {
-            //transform: translateY(-1px);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
         }
 
@@ -142,6 +203,11 @@
 
                 &:hover {
                     text-decoration: underline;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
                 }
             }
         }

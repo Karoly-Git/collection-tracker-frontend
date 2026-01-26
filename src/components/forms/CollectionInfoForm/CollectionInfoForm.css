@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .collection-info-form {
   --bg: #ffffff;
   --card: #f9fafb;
@@ -10,6 +11,7 @@
   max-width: 760px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   padding-bottom: 1rem;
+  /* ✅ NEW: title row with edit button */
   /* ===== COLLECTION SUMMARY ===== */
   /* ===== TIMELINE ===== */
   /* ===== STATUS COLOURS ===== */
@@ -25,6 +27,42 @@
   letter-spacing: 0.08em;
   color: var(--muted);
 }
+.collection-info-form .collection-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+.collection-info-form .collection-title-row h2 {
+  margin: 0;
+  flex: 1;
+}
+.collection-info-form .collection-title-row .edit-details-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.collection-info-form .collection-title-row .edit-details-btn svg {
+  font-size: 1rem;
+}
+.collection-info-form .collection-title-row .edit-details-btn:hover {
+  background: var(--card);
+}
+.collection-info-form .collection-title-row .edit-details-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .collection-info-form .collection-details {
   margin-top: 1rem;
   display: grid;
@@ -37,6 +75,7 @@
 }
 .collection-info-form .collection-details p {
   margin: 0;
+  /* ✅ NEW: edit inputs inside collection-details */
 }
 .collection-info-form .collection-details p strong {
   display: block;
@@ -52,6 +91,22 @@
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text);
+}
+.collection-info-form .collection-details p input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text);
+  background: #ffffff;
+  outline: none;
+}
+.collection-info-form .collection-details p input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 .collection-info-form .status-history {
   list-style: none;
@@ -129,6 +184,10 @@
 }
 .collection-info-form .status-entry .updated-by button:hover {
   text-decoration: underline;
+}
+.collection-info-form .status-entry .updated-by button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .collection-info-form .status-entry .comments {
   margin-top: 14px;
