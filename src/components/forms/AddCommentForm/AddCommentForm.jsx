@@ -13,6 +13,7 @@ export default function AddCommentForm({
     statusKey,
     userId,
     onCancel,
+    onSubmittingChange,
 }) {
     const dispatch = useDispatch();
 
@@ -30,6 +31,16 @@ export default function AddCommentForm({
     useEffect(() => {
         textareaRef.current?.focus();
     }, []);
+
+    /* ---------- Inform parent when redux loading changes ---------- */
+    useEffect(() => {
+        onSubmittingChange?.(addCommentLoading);
+
+        // ✅ Safety: when component unmounts, reset to false
+        return () => {
+            onSubmittingChange?.(false);
+        };
+    }, [addCommentLoading, onSubmittingChange]);
 
     /* ---------- Submit ---------- */
     async function handleSubmit(e) {
@@ -83,14 +94,6 @@ export default function AddCommentForm({
 
             {/* ---------- Actions ---------- */}
             <div className="actions">
-                {/*<Button
-                    type="button"
-                    text="Cancel"
-                    className="btn reject"
-                    onClick={onCancel}
-                    disabled={addCommentLoading}
-                />*/}
-
                 <Button
                     type="submit"
                     text={addCommentLoading ? "Adding…" : "Add Comment"}

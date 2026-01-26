@@ -13,6 +13,8 @@ import StatusBadge from '../../table/StatusBadge/StatusBadge';
 export default function CollectionInfoForm({ collection, onCancel }) {
     if (!collection) return null;
 
+    const [isAddingComment, setIsAddingComment] = useState(false);
+
     const {
         id,
         materialName,
@@ -127,9 +129,8 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                             collectionId={id}
                                             statusKey={entry.status}
                                             userId={entry.updatedBy?.userId || 'System'}
-                                            onCancel={() =>
-                                                setActiveStatusTimestamp(null)
-                                            }
+                                            onCancel={() => setActiveStatusTimestamp(null)}
+                                            onSubmittingChange={setIsAddingComment}
                                         />
                                     </li>
                                 )
@@ -153,14 +154,16 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                     );
                 })}
             </ul>
-            <div className="actions">
-                <Button
-                    type="button"
-                    text="Close"
-                    className="btn reject"
-                    onClick={onCancel}
-                />
-            </div>
+            {!isAddingComment && (
+                <div className="actions">
+                    <Button
+                        type="button"
+                        text="Close"
+                        className="btn reject"
+                        onClick={onCancel}
+                    />
+                </div>
+            )}
         </section>
     );
 }
