@@ -28,6 +28,8 @@ export default function CollectionInfoForm({ collection, onCancel }) {
         collectionRefNum,
         lorryRegNum,
         checkedInAt,
+        startedLoadingAt,
+        finishedLoadingAt,
         checkedOutAt,
         currentStatus,
         statusHistory,
@@ -76,6 +78,22 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                         <span>
                             {checkedInAt
                                 ? formatDateTime(checkedInAt, { date: true, time: true })
+                                : "-"}
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Started loading at</strong>
+                        <span>
+                            {startedLoadingAt
+                                ? formatDateTime(startedLoadingAt, { date: true, time: true })
+                                : "-"}
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Finished loading at</strong>
+                        <span>
+                            {finishedLoadingAt
+                                ? formatDateTime(finishedLoadingAt, { date: true, time: true })
                                 : "-"}
                         </span>
                     </p>
