@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/button/Button";
 import Spinner from "../../ui/Spinner/Spinner";
 
-import { addCommentToCollectionStatus } from "../../../state/collection/collectionSlice";
+import { addCommentToCollectionStatus, resetAddCommentState } from "../../../state/collection/collectionSlice";
 
 export default function AddCommentForm({
     collectionId,
     statusKey,
+    statusTimestamp, // ✅ NEW
     userId,
     onCancel,
     onSubmittingChange,
@@ -18,7 +19,7 @@ export default function AddCommentForm({
     const dispatch = useDispatch();
 
     /* ---------- Redux state ---------- */
-    const { addCommentLoading, addCommentError } = useSelector(
+    const { addCommentLoading, addCommentError, addCommentTarget } = useSelector(
         (state) => state.collections
     );
 
@@ -32,28 +33,35 @@ export default function AddCommentForm({
         textareaRef.current?.focus();
     }, []);
 
+    // ✅ check if this is the form that is submitting / errored
+    const isThisFormTarget =
+        addCommentTarget?.collectionId === collectionId &&
+        addCommentTarget?.statusKey === statusKey &&
+        addCommentTarget?.statusTimestamp === statusTimestamp;
+
     /* ---------- Inform parent when redux loading changes ---------- */
     useEffect(() => {
-        onSubmittingChange?.(addCommentLoading);
+        // Only hide Close while THIS form is actively submitting
+        onSubmittingChange?.(addCommentLoading && isThisFormTarget);
 
-        // ✅ Safety: when component unmounts, reset to false
         return () => {
             onSubmittingChange?.(false);
         };
-    }, [addCommentLoading, onSubmittingChange]);
+    }, [addCommentLoading, isThisFormTarget, onSubmittingChange]);
 
     /* ---------- Submit ---------- */
     async function handleSubmit(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!text.trim() || addCommentLoading) return;
+        if (!text.trim() || (addCommentLoading && isThisFormTarget)) return;
 
         try {
             await dispatch(
                 addCommentToCollectionStatus({
                     collectionId,
                     statusKey,
+                    statusTimestamp, // ✅ NEW
                     userId,
                     text,
                     timestamp: new Date().toISOString(),
@@ -70,14 +78,14 @@ export default function AddCommentForm({
     return (
         <form className="form add-comment-form" onSubmit={handleSubmit}>
             {/* ---------- Status header ---------- */}
-            {addCommentLoading && (
+            {addCommentLoading && isThisFormTarget && (
                 <div className="form-header">
                     <Spinner size={22} inline />
                     <span>Adding comment… Please wait</span>
                 </div>
             )}
 
-            {addCommentError && !addCommentLoading && (
+            {addCommentError && !addCommentLoading && isThisFormTarget && (
                 <div className="form-header error">
                     <span>❌ {addCommentError}</span>
                 </div>
@@ -88,18 +96,31 @@ export default function AddCommentForm({
                 ref={textareaRef}
                 placeholder="Write your comment here..."
                 value={text}
-                disabled={addCommentLoading}
-                onChange={(e) => setText(e.target.value)}
+                disabled={addCommentLoading && isThisFormTarget}
+                onChange={(e) => {
+                    // ✅ Clear the error as soon as user types again
+                    if (addCommentError) {
+                        dispatch(resetAddCommentState());
+                    }
+
+                    setText(e.target.value);
+                }}
             />
 
             {/* ---------- Actions ---------- */}
             <div className="actions">
                 <Button
                     type="submit"
-                    text={addCommentLoading ? "Adding…" : "Add Comment"}
-                    className={`btn accept ${!text.trim() || addCommentLoading ? "disabled" : ""
+                    text={
+                        addCommentLoading && isThisFormTarget
+                            ? "Adding comment…"
+                            : addCommentError && isThisFormTarget
+                                ? "Retry Add Comment"
+                                : "Add Comment"
+                    }
+                    className={`btn accept ${!text.trim() || (addCommentLoading && isThisFormTarget) ? "disabled" : ""
                         }`}
-                    disabled={!text.trim() || addCommentLoading}
+                    disabled={!text.trim() || (addCommentLoading && isThisFormTarget)}
                 />
             </div>
         </form>

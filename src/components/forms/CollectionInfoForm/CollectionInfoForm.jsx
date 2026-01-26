@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useState } from "react";
 import "../FormStyle.css";
-import './CollectionInfoForm.css';
-import AddCommentForm from '../AddCommentForm/AddCommentForm';
+import "./CollectionInfoForm.css";
+import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../../ui/button/Button";
 
-import { FaCommentMedical as AddCommentIcon } from 'react-icons/fa6';
-import { FaCommentSlash as DontAddCommentIcon } from 'react-icons/fa6';
-import { formatText } from '../../../utils/formatText';
-import { formatDateTime } from '../../../utils/formatDateTime';
-import StatusBadge from '../../table/StatusBadge/StatusBadge';
+import { FaCommentMedical as AddCommentIcon } from "react-icons/fa6";
+import { FaCommentSlash as DontAddCommentIcon } from "react-icons/fa6";
+import { formatText } from "../../../utils/formatText";
+import { formatDateTime } from "../../../utils/formatDateTime";
+import StatusBadge from "../../table/StatusBadge/StatusBadge";
+
+// ✅ NEW: needed to reset error on icon click
+import { useDispatch } from "react-redux";
+import { resetAddCommentState } from "../../../state/collection/collectionSlice";
 
 export default function CollectionInfoForm({ collection, onCancel }) {
     if (!collection) return null;
+
+    const dispatch = useDispatch(); // ✅ NEW
 
     const [isAddingComment, setIsAddingComment] = useState(false);
 
@@ -24,22 +30,25 @@ export default function CollectionInfoForm({ collection, onCancel }) {
         checkedInAt,
         checkedOutAt,
         currentStatus,
-        statusHistory
+        statusHistory,
     } = collection;
 
     // store which status entry has the comment form open
     const [activeStatusTimestamp, setActiveStatusTimestamp] = useState(null);
 
     const toggleCommentForStatus = (timestamp) => {
-        setActiveStatusTimestamp((prev) =>
-            prev === timestamp ? null : timestamp
-        );
+        // ✅ NEW: reset add comment error when opening/closing comment form
+        dispatch(resetAddCommentState());
+
+        setActiveStatusTimestamp((prev) => (prev === timestamp ? null : timestamp));
     };
 
     return (
         <section className="form collection-info-form">
             <header className="collection-header">
-                <h2>{materialName} • {customerName} • {id}</h2>
+                <h2>
+                    {materialName} • {customerName} • {id}
+                </h2>
 
                 <div className="collection-details">
                     <p>
@@ -64,11 +73,19 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                     </p>
                     <p>
                         <strong>Checked in at</strong>
-                        <span>{checkedInAt ? formatDateTime(checkedInAt, { date: true, time: true }) : '-'}</span>
+                        <span>
+                            {checkedInAt
+                                ? formatDateTime(checkedInAt, { date: true, time: true })
+                                : "-"}
+                        </span>
                     </p>
                     <p>
                         <strong>Checked out at</strong>
-                        <span>{checkedOutAt ? formatDateTime(checkedOutAt, { date: true, time: true }) : '-'}</span>
+                        <span>
+                            {checkedOutAt
+                                ? formatDateTime(checkedOutAt, { date: true, time: true })
+                                : "-"}
+                        </span>
                     </p>
                 </div>
             </header>
@@ -87,9 +104,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                             {/* Status header */}
                             <div className="status-header">
                                 <strong className="status-title">
-                                    {/*formatText(entry.status)*/}
                                     <StatusBadge currentStatus={entry.status} isDiv={true} />
-
                                 </strong>
                                 <span className="timestamp">
                                     {formatDateTime(entry.timestamp, { time: true })}
@@ -104,14 +119,9 @@ export default function CollectionInfoForm({ collection, onCancel }) {
 
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        toggleCommentForStatus(entry.timestamp)
-                                    }
-                                    aria-label={
-                                        isOpen
-                                            ? 'Cancel add comment'
-                                            : 'Add comment'
-                                    }
+                                    onClick={() => toggleCommentForStatus(entry.timestamp)}
+                                    aria-label={isOpen ? "Cancel add comment" : "Add comment"}
+                                    disabled={isAddingComment}
                                 >
                                     {isOpen ? (
                                         !isAddingComment && <DontAddCommentIcon />
@@ -128,32 +138,33 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                                         <AddCommentForm
                                             collectionId={id}
                                             statusKey={entry.status}
-                                            userId={entry.updatedBy?.userId || 'System'}
-                                            onCancel={() => setActiveStatusTimestamp(null)}
+                                            statusTimestamp={entry.timestamp} // ✅ NEW
+                                            userId={entry.updatedBy?.userId || "System"}
+                                            onCancel={() => {
+                                                // ✅ NEW: reset error when the form closes
+                                                dispatch(resetAddCommentState());
+                                                setActiveStatusTimestamp(null);
+                                            }}
                                             onSubmittingChange={setIsAddingComment}
                                         />
                                     </li>
-                                )
-                                }
+                                )}
 
-                                {entry.comments
-                                    .toReversed()
-                                    .map((comment) => (
-                                        <li
-                                            key={comment.id}
-                                        >
-                                            <em>{comment.text}</em>
-                                            <div className="comment-meta">
-                                                {comment.userId} •{' '}
-                                                {formatDateTime(comment.timestamp, { time: true })}
-                                            </div>
-                                        </li>
-                                    ))}
+                                {entry.comments.toReversed().map((comment) => (
+                                    <li key={comment.id}>
+                                        <em>{comment.text}</em>
+                                        <div className="comment-meta">
+                                            {comment.userId} •{" "}
+                                            {formatDateTime(comment.timestamp, { time: true })}
+                                        </div>
+                                    </li>
+                                ))}
                             </ul>
                         </li>
                     );
                 })}
             </ul>
+
             {!isAddingComment && (
                 <div className="actions">
                     <Button

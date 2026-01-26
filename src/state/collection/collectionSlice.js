@@ -15,6 +15,10 @@ const initialState = {
     addCommentLoading: false,
     addCommentError: null,
 
+    // ✅ NEW: track which status comment form is submitting / errored
+    // so loading + error messages show only on the correct AddCommentForm
+    addCommentTarget: null, // ✅ NEW
+
     // ✅ Add collection status
     addCollectionStatus: "idle", // "idle" | "loading" | "succeeded" | "failed"
     addCollectionError: null,
@@ -104,7 +108,18 @@ export const updateCollectionStatusById = createAsyncThunk(
 export const addCommentToCollectionStatus = createAsyncThunk(
     "collection/addCommentToCollectionStatus",
     async (
-        { collectionId, statusKey, userId, text, timestamp },
+        {
+            collectionId,
+            statusKey,
+
+            // ✅ NEW: identify the exact status entry being commented on
+            // (used only for UI scoping)
+            statusTimestamp, // ✅ NEW
+
+            userId,
+            text,
+            timestamp,
+        },
         { rejectWithValue }
     ) => {
         try {
@@ -112,7 +127,7 @@ export const addCommentToCollectionStatus = createAsyncThunk(
             await new Promise((resolve) => setTimeout(resolve, 3000));
 
             // ❌ simulate failure (50% chance)
-            //if (Math.random() < 0.5) {
+            // if (Math.random() < 0.5) {
             if (true) {
                 throw new Error("Simulated error: comment could not be added");
             }
@@ -170,6 +185,12 @@ const collectionSlice = createSlice({
         resetUpdateStatusState: (state) => {
             state.updateStatusStatus = "idle";
             state.updateStatusError = null;
+        },
+        // ✅ NEW
+        resetAddCommentState: (state) => {
+            state.addCommentLoading = false;
+            state.addCommentError = null;
+            state.addCommentTarget = null;
         },
     },
     extraReducers: (builder) => {
@@ -229,12 +250,22 @@ const collectionSlice = createSlice({
             })
 
             /* ---------------- Add comment ---------------- */
-            .addCase(addCommentToCollectionStatus.pending, (state) => {
+            .addCase(addCommentToCollectionStatus.pending, (state, action) => {
                 state.addCommentLoading = true;
                 state.addCommentError = null;
+
+                // ✅ NEW: store which form should show the spinner/error
+                state.addCommentTarget = {
+                    collectionId: action.meta.arg.collectionId,
+                    statusKey: action.meta.arg.statusKey,
+                    statusTimestamp: action.meta.arg.statusTimestamp,
+                };
             })
             .addCase(addCommentToCollectionStatus.fulfilled, (state, action) => {
                 state.addCommentLoading = false;
+
+                // ✅ NEW: clear target on success
+                state.addCommentTarget = null;
 
                 const updatedCollection = action.payload;
                 const index = state.collections.findIndex(
@@ -248,7 +279,11 @@ const collectionSlice = createSlice({
             .addCase(addCommentToCollectionStatus.rejected, (state, action) => {
                 state.addCommentLoading = false;
                 state.addCommentError =
-                    action.payload || "Something went wrong while adding the comment.";
+                    action.payload ||
+                    "Something went wrong while adding the comment.";
+
+                // ✅ NOTE: DO NOT clear addCommentTarget here
+                // We want the error to show on the correct form
             })
 
             /* ---------------- Add collection ✅ ---------------- */
@@ -273,6 +308,7 @@ const collectionSlice = createSlice({
 export const {
     resetAddCollectionState,
     resetUpdateStatusState,
+    resetAddCommentState,
 } = collectionSlice.actions;
 
 export default collectionSlice.reducer;

@@ -5,8 +5,6 @@ REFACTOR / RESTRUCTURE
     ✔ No button tag should be in the <td> where not needed.
     ✔ Make reusable component for No result, Loading, Not found, etc. messages.
     ✔ getDurationWithColor: make it scalable and able to choose as many intervals and colors as needed (+ integrate color style in JSX)
-    - Authentication
-    - Listening to server/database changes and update accordingly
     - Rename addCommentUnderStatus to addNewComment
 
 
@@ -16,9 +14,9 @@ FUNCTIONALITIES / UI / UX
     ✔ System message if no match to filter options. At this moment, the message is displayed only if no match to the searching value.
     ✔ A-Z & Z-A order in collection table
     ✔ Lorry spent time plus indicator displayed in the table row:
-        ✔ / time <= 1h ==> green
-        ✔ / 1h <= time < 2h ==> yellow
-        ✔ / time >= 2h ==> red 
+        ✔ - time <= 1h ==> green
+        ✔ - 1h <= time < 2h ==> yellow
+        ✔ - time >= 2h ==> red 
     ✔ Add a "filter reset button" to set all filters back to default.
     ✔ setInterval to update the displayed times.
     ✔ For addCollection: in-progress, failed, success messages
@@ -26,18 +24,20 @@ FUNCTIONALITIES / UI / UX
     ✔ Under the badge, display the spent time of that status.
     ✔ Delete collection: failed message and retry option if error occurs.
     ✔ Symulate collection deleting error.
+    - Authentication
+    - Listening to server/database changes and update accordingly
     - In the info modal:
-        / option to amend the records
+        - option to amend the records
         ✔ dont display the show/hide comment icon while a comment is being added
         ✔ hide the modal close button while a comment is being added
-        / the "adding in progress/failed to add messages should be 
-          displayed only at the currently edited comment form, not for all comments
+        ✔ Comment adding:
+            ✔ "in progress/failed" messages should be displayed only at the currently edited comment form
+            ✔ clear error message when user starts typing again
+            ✔ clear error message when show/hide icons or close button clicked
+            ✔ Add Retry button if comment adding failed
     - What if the status just accidentally changed? How to redo it?
     - Authorisation on login. userId: "9999", // This should come from auth state
-    - When adding comment in the info modal, disable concurrent fields/buttons
-    - If browser refreshes, keep the currently selected filters.
     - (From-To date picker as filter?)
-    - Collectin table default ordering by time (newes/oldest first?)
 
 
 ------------------------
@@ -46,6 +46,7 @@ STYLES
     ✔ Make form element styles global
     - Design messages: progress/failed/success.
     - Make status badge colors global => easy to scale/change
+    - When adding comment in the info modal, disable concurrent fields/buttons
     - Dark mode in the settings
     - Fix the sidebar collapse on event when hamburger icon is clicked
 
@@ -57,6 +58,8 @@ TO SETTINGS PAGE
     - Dark mode / Bright mode / Device default
     - Do you want to get notifications if lorry spent time exceeds 1h, 2h...
     - Collection table default ordering.
+    - If browser refreshes, keep the currently selected filters.
+    - Collectin table default ordering by time (newes/oldest first?)
 
 
 ------------------------
