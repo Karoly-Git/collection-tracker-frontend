@@ -2,41 +2,41 @@
 REFACTOR / RESTRUCTURE
 ------------------------
     ✔ Move StatusBadge into UI
-    ✔ No button tag should be in the <td> where not needed.
-    ✔ Make reusable component for No result, Loading, Not found, etc. messages.
-    ✔ getDurationWithColor: make it scalable and able to choose as many intervals and colors as needed (+ integrate color style in JSX)
-    - Rename addCommentUnderStatus to addNewComment
+    ✔ No button tag should be in the <td> where not needed
+    ✔ Make reusable component for No result, Loading, Not found, etc. messages
+    ✔ Make getDurationWithColor scalable and able to choose as many intervals and colors as needed (+ integrate color style in JSX)
+    ✔ Rename addCommentUnderStatus to addNewComment and addCommentToCollectionStatus to addComment
 
 
 ------------------------
 FUNCTIONALITIES / UI / UX
 ------------------------
-    ✔ System message if no match to filter options. At this moment, the message is displayed only if no match to the searching value.
+    ✔ System message if no match to filter options. The message is displayed only if no match to the search value
     ✔ A-Z & Z-A order in collection table
     ✔ Lorry spent time plus indicator displayed in the table row:
-        ✔ - time <= 1h ==> green
-        ✔ - 1h <= time < 2h ==> yellow
-        ✔ - time >= 2h ==> red 
+        ✔ time <= 1h ==> green
+        ✔ 1h <= time < 2h ==> yellow
+        ✔ time >= 2h ==> red 
     ✔ Add a "filter reset button" to set all filters back to default.
-    ✔ setInterval to update the displayed times.
+    ✔ Use setInterval to update the displayed times.
     ✔ For addCollection: in-progress, failed, success messages
     ✔ For status update: in-progress, failed, success messages
     ✔ Under the badge, display the spent time of that status.
-    ✔ Delete collection: failed message and retry option if error occurs.
+    ✔ Delete collection: failed message and retry option on error.
     ✔ Simulate collection deleting error.
     - Authentication
-    - Listening to server/database changes and update accordingly
+    - Listen to server/database changes and update UI accordingly
     - In the info modal:
-        - option to amend the records
-        ✔ don't display the show/hide comment icon while a comment is being added
-        ✔ hide the modal close button while a comment is being added
+        - Option to edit records
+        ✔ Don't display the show/hide comment icon while a comment is being added
+        ✔ Hide the modal close button while a comment is being added
         ✔ Comment adding:
-            ✔ "in progress/failed" messages should be displayed only at the currently edited comment form
-            ✔ clear error message when user starts typing again
-            ✔ clear error message when show/hide icons or close button clicked
+            ✔ In "progress/failed" messages should be displayed only at the currently edited comment form
+            ✔ Clear error message when user starts typing again
+            ✔ Clear error message when show/hide icons or Close button click
             ✔ Add Retry button if comment adding failed
     - What if the status just accidentally changed? How to redo it?
-    - Authorisation on login. userId: "9999", // This should come from auth state
+    - Authorization on login. userId: "9999", // This should come from auth state
     - (From-To date picker as filter?)
 
 
@@ -44,7 +44,7 @@ FUNCTIONALITIES / UI / UX
 STYLES
 ------------------------
     ✔ Make form element styles global
-    - Design messages: progress/failed/success.
+    - Design messages: progress/failed/success
     - Make status badge colors global => easy to scale/change
     - When adding comment in the info modal, disable concurrent fields/buttons
     - Dark mode in the settings
@@ -57,8 +57,8 @@ TO SETTINGS PAGE
     - Today's collections checked by default or not
     - Dark mode / Bright mode / Device default
     - Do you want to get notifications if lorry spent time exceeds 1h, 2h...
-    - Collection table default ordering.
-    - If browser refreshes, keep the currently selected filters.
+    - Collection table default ordering
+    - If browser refreshes, keep the currently selected filters
     - Collection table default ordering by time (newest/oldest first?)
 
 
