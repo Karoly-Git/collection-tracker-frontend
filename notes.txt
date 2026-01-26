@@ -11,6 +11,13 @@ REFACTOR / RESTRUCTURE
 ------------------------
 FUNCTIONALITIES / UI / UX
 ------------------------
+    - Authentication
+    - Listen to server/database changes and update UI accordingly
+    - In the info modal:
+        - Option to edit records
+    - What if the status just accidentally changed? How to redo it?
+    - Authorization on login. userId: "9999", // This should come from auth state
+    - (From-To date picker as filter?)
     ✔ System message if no match to filter options. The message is displayed only if no match to the search value
     ✔ A-Z & Z-A order in collection table
     ✔ Lorry spent time plus indicator displayed in the table row:
@@ -24,10 +31,6 @@ FUNCTIONALITIES / UI / UX
     ✔ Under the badge, display the spent time of that status.
     ✔ Delete collection: failed message and retry option on error.
     ✔ Simulate collection deleting error.
-    - Authentication
-    - Listen to server/database changes and update UI accordingly
-    - In the info modal:
-        - Option to edit records
         ✔ Don't display the show/hide comment icon while a comment is being added
         ✔ Hide the modal close button while a comment is being added
         ✔ Comment adding:
@@ -35,20 +38,17 @@ FUNCTIONALITIES / UI / UX
             ✔ Clear error message when user starts typing again
             ✔ Clear error message when show/hide icons or Close button click
             ✔ Add Retry button if comment adding failed
-    - What if the status just accidentally changed? How to redo it?
-    - Authorization on login. userId: "9999", // This should come from auth state
-    - (From-To date picker as filter?)
 
 
 ------------------------
 STYLES
 ------------------------
-    ✔ Make form element styles global
     - Design messages: progress/failed/success
     - Make status badge colors global => easy to scale/change
     - When adding comment in the info modal, disable concurrent fields/buttons
     - Dark mode in the settings
     - Fix the sidebar collapse on event when hamburger icon is clicked
+    ✔ Make form element styles global
 
 
 ------------------------
