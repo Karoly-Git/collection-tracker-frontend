@@ -15,6 +15,10 @@ import StatusBadge from "../../table/StatusBadge/StatusBadge";
 import { useDispatch } from "react-redux";
 import { resetAddCommentState } from "../../../state/collection/collectionSlice";
 
+import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
+import { CUSTOMER_NAMES } from "../../../constants/customer-names";
+import { MATERIAL_NAMES } from "../../../constants/material-names";
+
 export default function CollectionInfoForm({ collection, onCancel }) {
     if (!collection) return null;
 
@@ -53,6 +57,7 @@ export default function CollectionInfoForm({ collection, onCancel }) {
         customerName,
         collectionRefNum,
         lorryRegNum: lorryRegNum || "",
+        currentStatus,
     });
 
     const handleChange = (field, value) => {
@@ -106,10 +111,15 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                     <p>
                         <strong>Material</strong>
                         {isEditing ? (
-                            <input
-                                value={draft.materialName}
+                            <select
                                 onChange={(e) => handleChange("materialName", e.target.value)}
-                            />
+                            >
+                                {Object.entries(MATERIAL_NAMES).map(([key, value]) => (
+                                    <option key={key} value={value}>
+                                        {value}
+                                    </option>
+                                ))}
+                            </select>
                         ) : (
                             <span>{materialName}</span>
                         )}
@@ -118,10 +128,15 @@ export default function CollectionInfoForm({ collection, onCancel }) {
                     <p>
                         <strong>Customer</strong>
                         {isEditing ? (
-                            <input
-                                value={draft.customerName}
+                            <select
                                 onChange={(e) => handleChange("customerName", e.target.value)}
-                            />
+                            >
+                                {Object.entries(CUSTOMER_NAMES).map(([key, value]) => (
+                                    <option key={key} value={value}>
+                                        {value}
+                                    </option>
+                                ))}
+                            </select>
                         ) : (
                             <span>{customerName}</span>
                         )}
@@ -155,7 +170,19 @@ export default function CollectionInfoForm({ collection, onCancel }) {
 
                     <p>
                         <strong>Current status</strong>
-                        <span>{formatText(currentStatus)}</span>
+                        {isEditing ? (
+                            <select
+                                onChange={(e) => handleChange("currentStatus", e.target.value)}
+                            >
+                                {Object.entries(COLLECTION_STATUSES).map(([key, value]) => (
+                                    <option key={key} value={value}>
+                                        {formatText(value)}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <span>{formatText(currentStatus)}</span>
+                        )}
                     </p>
 
                     <p>
