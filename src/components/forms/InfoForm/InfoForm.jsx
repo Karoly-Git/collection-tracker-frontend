@@ -48,7 +48,7 @@ export default function InfoForm({ collection, onCancel }) {
         setActiveStatusTimestamp((prev) => (prev === timestamp ? null : timestamp));
     };
 
-    // ✅ NEW: Edit mode for collection details
+    // ✅ Edit mode for collection details
     const [isEditing, setIsEditing] = useState(false);
 
     // ✅ Local draft (editable fields)
@@ -57,11 +57,66 @@ export default function InfoForm({ collection, onCancel }) {
         customerName,
         collectionRefNum,
         lorryRegNum: lorryRegNum || "",
+        checkedInAt,
+        startedLoadingAt,
+        finishedLoadingAt,
+        checkedOutAt,
         currentStatus,
     });
 
+    // ✅ Status order (important for dropdown + timestamp logic)
+    const STATUS_ORDER = [
+        COLLECTION_STATUSES.CHECKED_IN,
+        COLLECTION_STATUSES.LOADING,
+        COLLECTION_STATUSES.LOADED,
+        COLLECTION_STATUSES.CHECKED_OUT,
+    ];
+
+    // ✅ Map statuses to timestamp field names in draft
+    const STATUS_TIMESTAMP_FIELD = {
+        [COLLECTION_STATUSES.CHECKED_IN]: "checkedInAt",
+        [COLLECTION_STATUSES.LOADING]: "startedLoadingAt",
+        [COLLECTION_STATUSES.LOADED]: "finishedLoadingAt",
+        [COLLECTION_STATUSES.CHECKED_OUT]: "checkedOutAt",
+    };
+
+    // ✅ Dropdown = 1 before + current + 1 after
+    const currentIndex = STATUS_ORDER.indexOf(draft.currentStatus);
+
+    const allowedStatuses = STATUS_ORDER.filter((_, index) => {
+        return Math.abs(index - currentIndex) <= 1;
+    });
+
     const handleChange = (field, value) => {
-        setDraft((prev) => ({ ...prev, [field]: value }));
+        setDraft((prev) => {
+            // ✅ normal field update
+            if (field !== "currentStatus") {
+                return { ...prev, [field]: value };
+            }
+
+            const now = new Date().toISOString();
+            const updated = { ...prev, currentStatus: value };
+
+            const newIndex = STATUS_ORDER.indexOf(value);
+            const oldIndex = STATUS_ORDER.indexOf(prev.currentStatus);
+
+            // ✅ set timestamp for new status only if missing
+            const tsField = STATUS_TIMESTAMP_FIELD[value];
+            if (tsField && !updated[tsField]) {
+                updated[tsField] = now;
+            }
+
+            // ✅ if moving backwards, clear all later timestamps
+            if (newIndex < oldIndex) {
+                for (let i = newIndex + 1; i < STATUS_ORDER.length; i++) {
+                    const statusToClear = STATUS_ORDER[i];
+                    const fieldToClear = STATUS_TIMESTAMP_FIELD[statusToClear];
+                    updated[fieldToClear] = null;
+                }
+            }
+
+            return updated;
+        });
     };
 
     const handleCancelEdit = () => {
@@ -70,6 +125,11 @@ export default function InfoForm({ collection, onCancel }) {
             customerName,
             collectionRefNum,
             lorryRegNum: lorryRegNum || "",
+            checkedInAt,
+            startedLoadingAt,
+            finishedLoadingAt,
+            checkedOutAt,
+            currentStatus,
         });
         setIsEditing(false);
     };
@@ -77,7 +137,6 @@ export default function InfoForm({ collection, onCancel }) {
     const handleSaveEdit = () => {
         // ✅ Later: dispatch update thunk here
         console.log("Saving edited collection details:", draft);
-
         setIsEditing(false);
     };
 
@@ -89,7 +148,7 @@ export default function InfoForm({ collection, onCancel }) {
             <header className="collection-header">
                 <div className="collection-title-row">
                     <h2>
-                        {materialName} • {customerName} • {id}
+                        {draft.materialName} • {draft.customerName} • {id}
                     </h2>
 
                     {!isEditing && (
@@ -112,6 +171,7 @@ export default function InfoForm({ collection, onCancel }) {
                         <strong>Material</strong>
                         {isEditing ? (
                             <select
+                                value={draft.materialName}
                                 onChange={(e) => handleChange("materialName", e.target.value)}
                             >
                                 {Object.entries(MATERIAL_NAMES).map(([key, value]) => (
@@ -121,7 +181,7 @@ export default function InfoForm({ collection, onCancel }) {
                                 ))}
                             </select>
                         ) : (
-                            <span>{materialName}</span>
+                            <span>{draft.materialName}</span>
                         )}
                     </p>
 
@@ -129,6 +189,7 @@ export default function InfoForm({ collection, onCancel }) {
                         <strong>Customer</strong>
                         {isEditing ? (
                             <select
+                                value={draft.customerName}
                                 onChange={(e) => handleChange("customerName", e.target.value)}
                             >
                                 {Object.entries(CUSTOMER_NAMES).map(([key, value]) => (
@@ -138,7 +199,7 @@ export default function InfoForm({ collection, onCancel }) {
                                 ))}
                             </select>
                         ) : (
-                            <span>{customerName}</span>
+                            <span>{draft.customerName}</span>
                         )}
                     </p>
 
@@ -152,7 +213,7 @@ export default function InfoForm({ collection, onCancel }) {
                                 }
                             />
                         ) : (
-                            <span>{collectionRefNum}</span>
+                            <span>{draft.collectionRefNum}</span>
                         )}
                     </p>
 
@@ -164,7 +225,7 @@ export default function InfoForm({ collection, onCancel }) {
                                 onChange={(e) => handleChange("lorryRegNum", e.target.value)}
                             />
                         ) : (
-                            <span>{lorryRegNum || "-"}</span>
+                            <span>{draft.lorryRegNum || "-"}</span>
                         )}
                     </p>
 
@@ -172,24 +233,25 @@ export default function InfoForm({ collection, onCancel }) {
                         <strong>Current status</strong>
                         {isEditing ? (
                             <select
+                                value={draft.currentStatus}
                                 onChange={(e) => handleChange("currentStatus", e.target.value)}
                             >
-                                {Object.entries(COLLECTION_STATUSES).map(([key, value]) => (
-                                    <option key={key} value={value}>
-                                        {formatText(value)}
+                                {allowedStatuses.map((status) => (
+                                    <option key={status} value={status}>
+                                        {formatText(status)}
                                     </option>
                                 ))}
                             </select>
                         ) : (
-                            <span>{formatText(currentStatus)}</span>
+                            <span>{formatText(draft.currentStatus)}</span>
                         )}
                     </p>
 
                     <p>
                         <strong>Checked in at</strong>
                         <span>
-                            {checkedInAt
-                                ? formatDateTime(checkedInAt, { date: true, time: true })
+                            {draft.checkedInAt
+                                ? formatDateTime(draft.checkedInAt, { date: true, time: true })
                                 : "-"}
                         </span>
                     </p>
@@ -197,8 +259,11 @@ export default function InfoForm({ collection, onCancel }) {
                     <p>
                         <strong>Started loading at</strong>
                         <span>
-                            {startedLoadingAt
-                                ? formatDateTime(startedLoadingAt, { date: true, time: true })
+                            {draft.startedLoadingAt
+                                ? formatDateTime(draft.startedLoadingAt, {
+                                    date: true,
+                                    time: true,
+                                })
                                 : "-"}
                         </span>
                     </p>
@@ -206,8 +271,11 @@ export default function InfoForm({ collection, onCancel }) {
                     <p>
                         <strong>Finished loading at</strong>
                         <span>
-                            {finishedLoadingAt
-                                ? formatDateTime(finishedLoadingAt, { date: true, time: true })
+                            {draft.finishedLoadingAt
+                                ? formatDateTime(draft.finishedLoadingAt, {
+                                    date: true,
+                                    time: true,
+                                })
                                 : "-"}
                         </span>
                     </p>
@@ -215,8 +283,11 @@ export default function InfoForm({ collection, onCancel }) {
                     <p>
                         <strong>Checked out at</strong>
                         <span>
-                            {checkedOutAt
-                                ? formatDateTime(checkedOutAt, { date: true, time: true })
+                            {draft.checkedOutAt
+                                ? formatDateTime(draft.checkedOutAt, {
+                                    date: true,
+                                    time: true,
+                                })
                                 : "-"}
                         </span>
                     </p>
@@ -278,7 +349,7 @@ export default function InfoForm({ collection, onCancel }) {
                                     type="button"
                                     onClick={() => toggleCommentForStatus(entry.timestamp)}
                                     aria-label={isOpen ? "Cancel add comment" : "Add comment"}
-                                    disabled={isAddingComment || isEditing} // ✅ disable while editing too
+                                    disabled={isAddingComment || isEditing}
                                 >
                                     {isOpen ? (
                                         !isAddingComment && <DontAddCommentIcon />
