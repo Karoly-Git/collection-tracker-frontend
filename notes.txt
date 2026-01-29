@@ -15,10 +15,9 @@ FUNCTIONALITIES / UI / UX
     - Listen to server/database changes and update UI accordingly
     - What if the status just accidentally changed? How to redo it?
     - Authorization on login. userId: "9999", // This should come from auth state
-    - (From-To date picker as filter?)
-    - In the info modal:
+    ✔ In the info modal:
         ✔ Option to edit records
-        - Style the UI differently when isEditing is true
+        ✔ Style the UI differently when isEditing is true
     ✔ System message if no match to filter options. The message is displayed only if no match to the search value
     ✔ A-Z & Z-A order in collection table
     ✔ Lorry spent time plus indicator displayed in the table row:
