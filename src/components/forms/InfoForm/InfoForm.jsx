@@ -331,7 +331,8 @@ export default function InfoForm({ collection, onCancel }) {
                             {/* Status header */}
                             <div className="status-header">
                                 <strong className="status-title">
-                                    <StatusBadge currentStatus={entry.status} isDiv={true} />
+                                    {/*<StatusBadge currentStatus={entry.status} isDiv={true} />*/}
+                                    {formatText(entry.status)}
                                 </strong>
 
                                 <span className="timestamp">

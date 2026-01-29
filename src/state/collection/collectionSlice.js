@@ -51,12 +51,12 @@ export const deleteCollectionById = createAsyncThunk(
     async (collectionId, { rejectWithValue }) => {
         try {
             // ⏳ simulate slow API
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // ❌ simulate failure (50% chance)
-            if (Math.random() < 0.5) {
-                throw new Error("Simulated error: collection could not be deleted");
-            }
+            // if (Math.random() < 0.5) {
+            //     throw new Error("Simulated error: collection could not be deleted");
+            // }
 
             await deleteCollection(collectionId);
             return collectionId;
@@ -77,12 +77,12 @@ export const updateCollectionStatusById = createAsyncThunk(
     ) => {
         try {
             // ⏳ simulate slow API (3 seconds)
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // ❌ simulate failure (50% chance)
-            if (Math.random() < 0.5) {
-                throw new Error("Simulated error: status could not be updated");
-            }
+            // if (Math.random() < 0.5) {
+            //     throw new Error("Simulated error: status could not be updated");
+            // }
 
             const updatedCollection = await updateCollectionStatus({
                 collectionId,
@@ -124,13 +124,12 @@ export const addComment = createAsyncThunk(
     ) => {
         try {
             // ⏳ simulate slow API (3 seconds)
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // ❌ simulate failure (50% chance)
             // if (Math.random() < 0.5) {
-            if (false) {
-                throw new Error("Simulated error: comment could not be added");
-            }
+            //     throw new Error("Simulated error: comment could not be added");
+            // }
 
             const updatedCollection = await addNewComment({
                 collectionId,
@@ -155,13 +154,12 @@ export const addNewCollection = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             // ⏳ simulate slow API (3 seconds)
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
 
             // ❌ simulate failure (50% chance)
-            //if (Math.random() < 0.5) {
-            if (false) {
-                throw new Error("Simulated error: collection could not be added");
-            }
+            // if (Math.random() < 0.5) {
+            //     throw new Error("Simulated error: collection could not be added");
+            // }
 
             const newCollection = await addCollection(payload);
             return newCollection;
