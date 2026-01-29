@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "../FormStyle.css";
 import "./InfoForm.css";
 import AddCommentForm from "../AddCommentForm/AddCommentForm";
@@ -20,93 +20,104 @@ import { CUSTOMER_NAMES } from "../../../constants/customer-names";
 import { MATERIAL_NAMES } from "../../../constants/material-names";
 
 export default function InfoForm({ collection, onCancel }) {
-    if (!collection) return null;
-
     const dispatch = useDispatch();
 
     const [isAddingComment, setIsAddingComment] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
-    const {
-        id,
-        materialName,
-        customerName,
-        collectionRefNum,
-        lorryRegNum,
-        checkedInAt,
-        startedLoadingAt,
-        finishedLoadingAt,
-        checkedOutAt,
-        currentStatus,
-        statusHistory,
-    } = collection;
-
-    // ✅ store which status entry has the comment form open
+    // store which status entry has the comment form open
     const [activeStatusTimestamp, setActiveStatusTimestamp] = useState(null);
+
+    // helper: create draft from backend collection data
+    const buildDraftFromCollection = (c) => ({
+        materialName: c.materialName,
+        customerName: c.customerName,
+        collectionRefNum: c.collectionRefNum,
+        lorryRegNum: c.lorryRegNum || "",
+        checkedInAt: c.checkedInAt,
+        startedLoadingAt: c.startedLoadingAt,
+        finishedLoadingAt: c.finishedLoadingAt,
+        checkedOutAt: c.checkedOutAt,
+        currentStatus: c.currentStatus,
+    });
+
+    // local draft (editable fields)
+    const [draft, setDraft] = useState(() =>
+        collection ? buildDraftFromCollection(collection) : null
+    );
+
+    // keep draft in sync when a *different* collection is opened
+    useEffect(() => {
+        if (!collection) return;
+        setDraft(buildDraftFromCollection(collection));
+        setIsEditing(false);
+        setActiveStatusTimestamp(null);
+        dispatch(resetAddCommentState());
+    }, [collection, dispatch]);
+
+    // early return after hooks (important!)
+    if (!collection || !draft) return null;
+
+    // only destructure what should remain fixed (not editable)
+    const { id, statusHistory } = collection;
+
+    // status order (rules)
+    const STATUS_ORDER = useMemo(
+        () => [
+            COLLECTION_STATUSES.CHECKED_IN,
+            COLLECTION_STATUSES.LOADING,
+            COLLECTION_STATUSES.LOADED,
+            COLLECTION_STATUSES.CHECKED_OUT,
+        ],
+        []
+    );
+
+    // map status -> timestamp field in draft
+    const STATUS_TIMESTAMP_FIELD = useMemo(
+        () => ({
+            [COLLECTION_STATUSES.CHECKED_IN]: "checkedInAt",
+            [COLLECTION_STATUSES.LOADING]: "startedLoadingAt",
+            [COLLECTION_STATUSES.LOADED]: "finishedLoadingAt",
+            [COLLECTION_STATUSES.CHECKED_OUT]: "checkedOutAt",
+        }),
+        []
+    );
+
+    // dropdown should show 1 before/current/1 after
+    const currentStatusIndex = STATUS_ORDER.indexOf(draft.currentStatus);
+
+    const allowedStatuses = STATUS_ORDER.filter((_, idx) => {
+        return Math.abs(idx - currentStatusIndex) <= 1;
+    });
 
     const toggleCommentForStatus = (timestamp) => {
         dispatch(resetAddCommentState());
         setActiveStatusTimestamp((prev) => (prev === timestamp ? null : timestamp));
     };
 
-    // ✅ Edit mode for collection details
-    const [isEditing, setIsEditing] = useState(false);
-
-    // ✅ Local draft (editable fields)
-    const [draft, setDraft] = useState({
-        materialName,
-        customerName,
-        collectionRefNum,
-        lorryRegNum: lorryRegNum || "",
-        checkedInAt,
-        startedLoadingAt,
-        finishedLoadingAt,
-        checkedOutAt,
-        currentStatus,
-    });
-
-    // ✅ Status order (important for dropdown + timestamp logic)
-    const STATUS_ORDER = [
-        COLLECTION_STATUSES.CHECKED_IN,
-        COLLECTION_STATUSES.LOADING,
-        COLLECTION_STATUSES.LOADED,
-        COLLECTION_STATUSES.CHECKED_OUT,
-    ];
-
-    // ✅ Map statuses to timestamp field names in draft
-    const STATUS_TIMESTAMP_FIELD = {
-        [COLLECTION_STATUSES.CHECKED_IN]: "checkedInAt",
-        [COLLECTION_STATUSES.LOADING]: "startedLoadingAt",
-        [COLLECTION_STATUSES.LOADED]: "finishedLoadingAt",
-        [COLLECTION_STATUSES.CHECKED_OUT]: "checkedOutAt",
-    };
-
-    // ✅ Dropdown = 1 before + current + 1 after
-    const currentIndex = STATUS_ORDER.indexOf(draft.currentStatus);
-
-    const allowedStatuses = STATUS_ORDER.filter((_, index) => {
-        return Math.abs(index - currentIndex) <= 1;
-    });
-
     const handleChange = (field, value) => {
         setDraft((prev) => {
-            // ✅ normal field update
+            if (!prev) return prev;
+
+            // normal field update
             if (field !== "currentStatus") {
                 return { ...prev, [field]: value };
             }
 
+            // status update
             const now = new Date().toISOString();
             const updated = { ...prev, currentStatus: value };
 
             const newIndex = STATUS_ORDER.indexOf(value);
             const oldIndex = STATUS_ORDER.indexOf(prev.currentStatus);
 
-            // ✅ set timestamp for new status only if missing
+            // set timestamp for new status ONLY if missing
             const tsField = STATUS_TIMESTAMP_FIELD[value];
             if (tsField && !updated[tsField]) {
                 updated[tsField] = now;
             }
 
-            // ✅ if moving backwards, clear all later timestamps
+            // if moving backwards, clear timestamps after new status
             if (newIndex < oldIndex) {
                 for (let i = newIndex + 1; i < STATUS_ORDER.length; i++) {
                     const statusToClear = STATUS_ORDER[i];
@@ -120,24 +131,16 @@ export default function InfoForm({ collection, onCancel }) {
     };
 
     const handleCancelEdit = () => {
-        setDraft({
-            materialName,
-            customerName,
-            collectionRefNum,
-            lorryRegNum: lorryRegNum || "",
-            checkedInAt,
-            startedLoadingAt,
-            finishedLoadingAt,
-            checkedOutAt,
-            currentStatus,
-        });
+        setDraft(buildDraftFromCollection(collection));
         setIsEditing(false);
     };
 
     const handleSaveEdit = () => {
-        // ✅ Later: dispatch update thunk here
         console.log("Saving edited collection details:", draft);
         setIsEditing(false);
+
+        // Later:
+        // dispatch(updateCollectionThunk({ id, ...draft }))
     };
 
     return (
@@ -284,16 +287,13 @@ export default function InfoForm({ collection, onCancel }) {
                         <strong>Checked out at</strong>
                         <span>
                             {draft.checkedOutAt
-                                ? formatDateTime(draft.checkedOutAt, {
-                                    date: true,
-                                    time: true,
-                                })
+                                ? formatDateTime(draft.checkedOutAt, { date: true, time: true })
                                 : "-"}
                         </span>
                     </p>
                 </div>
 
-                {/* ✅ Save / Cancel only while editing */}
+                {/* Save / Cancel only while editing */}
                 {isEditing && (
                     <div className="actions">
                         <Button
