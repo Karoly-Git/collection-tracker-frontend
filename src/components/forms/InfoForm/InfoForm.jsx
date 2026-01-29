@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../FormStyle.css";
-import "./CollectionInfoForm.css";
+import "./InfoForm.css";
 import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../../ui/button/Button";
 
@@ -19,7 +19,7 @@ import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
 import { CUSTOMER_NAMES } from "../../../constants/customer-names";
 import { MATERIAL_NAMES } from "../../../constants/material-names";
 
-export default function CollectionInfoForm({ collection, onCancel }) {
+export default function InfoForm({ collection, onCancel }) {
     if (!collection) return null;
 
     const dispatch = useDispatch();

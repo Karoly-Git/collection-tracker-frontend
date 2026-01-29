@@ -11,7 +11,7 @@ import "./Dashboard.css";
 import Modal from "../../components/ui/modal/Modal";
 import CollectionTable from "../../components/table/CollectionTable/CollectionTable";
 import AddCollectionForm from "../../components/forms/AddCollectionForm/AddCollectionForm";
-import CollectionInfoForm from "../../components/forms/CollectionInfoForm/CollectionInfoForm";
+import InfoForm from "../../components/forms/InfoForm/InfoForm";
 
 import { openModal, closeModal } from "../../state/collection/modalSlice";
 import UpdateStatusForm from "../../components/forms/updateStatusForm/UpdateStatusForm";
@@ -224,7 +224,7 @@ export default function Dashboard() {
                 disableEscape={isModalBusy} // ✅ NEW
                 modalTitle="Collection Details"
             >
-                <CollectionInfoForm collection={collection} onCancel={handleCloseModal} />
+                <InfoForm collection={collection} onCancel={handleCloseModal} />
             </Modal>
 
             <Modal
