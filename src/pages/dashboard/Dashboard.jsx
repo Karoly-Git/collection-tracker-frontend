@@ -147,7 +147,6 @@ export default function Dashboard() {
 
 
             <div className="dashboard-controls">
-                <h5>Filters:</h5>
                 <div className="dashboard-filters">
                     {/* Today only chip */}
 

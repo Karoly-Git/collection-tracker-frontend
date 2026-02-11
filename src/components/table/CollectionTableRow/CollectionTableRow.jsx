@@ -141,9 +141,9 @@ export default function CollectionTableRow({ collection }) {
             </td>
 
             {/* Material */}
-            <td>
+            <td className="material-column" onClick={() => handleOpenModal("info", id)}>
                 <div className="cell-content material-name">
-                    {id} {materialName}
+                    {materialName}
                 </div>
 
                 <div className="time-checked-in">

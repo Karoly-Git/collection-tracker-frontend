@@ -2,7 +2,7 @@
     padding: 2rem;
 
     @media(max-width: 1000px) {
-        padding: 0;
+        padding: 0.5rem;
     }
 
     /* =========================
@@ -14,16 +14,6 @@
         align-items: center;
         margin-bottom: 1.5rem;
         gap: 1rem;
-    }
-
-    h5 {
-        font-weight: 500;
-        letter-spacing: 1px;
-        margin-right: 1rem;
-
-        @media(max-width: 430px) {
-            display: none;
-        }
     }
 
     .dashboard-controls {

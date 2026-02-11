@@ -31,13 +31,21 @@
             .content-icon {
                 display: none;
 
-                @media(max-width: 650px) {
+                @media(max-width: 750px) {
                     display: unset;
+                }
+
+                &.material-icon {
+                    font-size: 1.4rem;
+                }
+
+                &.ref-icon {
+                    font-size: 1.8rem;
                 }
             }
 
             .content-text {
-                @media(max-width: 650px) {
+                @media(max-width: 750px) {
                     display: none;
                 }
             }
@@ -106,6 +114,11 @@
 
             .material-name {
                 font-weight: 600;
+
+            }
+
+            .material-column {
+                cursor: pointer;
             }
 
             .collection-ref-number {

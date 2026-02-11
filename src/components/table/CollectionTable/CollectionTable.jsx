@@ -232,7 +232,7 @@ export default function CollectionTable({
 
                             <th onClick={() => handleSort("materialName")}>
                                 <span className="th-content">
-                                    <MaterialIcon className="content-icon" />
+                                    <MaterialIcon className="content-icon material-icon" />
                                     <span className="content-text">Material</span>
                                     <span className="sort-icon">
                                         {renderSortIcon("materialName")}
@@ -254,7 +254,7 @@ export default function CollectionTable({
 
                             <th onClick={() => handleSort("collectionRefNum")}>
                                 <span className="th-content">
-                                    <RefIcon className="content-icon" />
+                                    <RefIcon className="content-icon ref-icon" />
 
                                     <span className="content-text">Reference</span>
                                     <span className="content-icon" />

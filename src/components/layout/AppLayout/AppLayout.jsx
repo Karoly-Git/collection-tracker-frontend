@@ -1,12 +1,12 @@
 import { useState } from "react";
-import TopBar from "../topbar/TopBar";
+import TopBar from "../TopBar/TopBar";
 import Sidebar from "../sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
 
 import "./AppLayout.scss";
 
 export default function AppLayout() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <div className="app-layout">
