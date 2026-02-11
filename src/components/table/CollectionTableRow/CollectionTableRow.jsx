@@ -24,9 +24,6 @@ import { COLLECTION_STATUSES } from "../../../constants/collection-statuses";
 import Button from "../../ui/button/Button";
 import StatusBadge from "../StatusBadge/StatusBadge";
 
-// Styles
-import "./CollectionTableRow.scss";
-
 const userLoggedIn = true;
 
 /**

@@ -144,48 +144,48 @@ export default function Dashboard() {
             </div>
 
 
-            {/* =========================
-               FILTERS (CHIPS)
-            ========================== */}
-            <div className="dashboard-controls status-filters">
-                {/* Today only chip */}
-                <label
-                    className={`status-chip today-only ${showTodayOnly ? "active" : ""}`}
-                >
-                    <input
-                        type="checkbox"
-                        checked={showTodayOnly}
-                        onChange={(e) => setShowTodayOnly(e.target.checked)}
-                    />
-                    <span className="chip-label">Today only</span>
-                </label>
-
-                {/* Status chips */}
-                {Object.values(COLLECTION_STATUSES).map((status) => (
+            <h5>Filters:</h5>
+            <div className="dashboard-controls">
+                <div className="dashboard-filters">
+                    {/* Today only chip */}
                     <label
-                        key={status}
-                        className={`status-chip status-${status.toLowerCase()} ${statusFilters[status] ? "active" : ""
-                            }`}
+                        className={`status-chip today-only ${showTodayOnly ? "active" : ""}`}
                     >
                         <input
                             type="checkbox"
-                            checked={statusFilters[status]}
-                            onChange={() => handleStatusToggle(status)}
+                            checked={showTodayOnly}
+                            onChange={(e) => setShowTodayOnly(e.target.checked)}
                         />
-                        <span className="chip-label">{formatText(status)}</span>
+                        <span className="chip-label">Today only</span>
                     </label>
-                ))}
 
-                {/* RESET FILTERS (ONLY WHEN CHIP FILTERS CHANGE) */}
-                {isAnyFilterApplied && (
-                    <Button
-                        type="button"
-                        icon={ResetFiltersIcon}
-                        text=""
-                        className="btn icon-btn"
-                        onClick={resetFilters}
-                    />
-                )}
+                    {/* Status chips */}
+                    {Object.values(COLLECTION_STATUSES).map((status) => (
+                        <label
+                            key={status}
+                            className={`status-chip status-${status.toLowerCase()} ${statusFilters[status] ? "active" : ""
+                                }`}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={statusFilters[status]}
+                                onChange={() => handleStatusToggle(status)}
+                            />
+                            <span className="chip-label">{formatText(status)}</span>
+                        </label>
+                    ))}
+
+                    {/* RESET FILTERS (ONLY WHEN CHIP FILTERS CHANGE) */}
+                    {isAnyFilterApplied && (
+                        <Button
+                            type="button"
+                            icon={ResetFiltersIcon}
+                            text=""
+                            className="btn icon-btn"
+                            onClick={resetFilters}
+                        />
+                    )}
+                </div>
             </div>
 
             {/* =========================

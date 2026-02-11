@@ -89,7 +89,7 @@
     height: 34px;
     border-radius: 8px;
     cursor: pointer;
-    color: #9ca3af;
+    color: #7e8694;
     transition:
         background-color 0.15s ease,
         color 0.15s ease,
@@ -116,12 +116,12 @@
     }
 
     &.info:hover {
-        color: #2563eb;
-        background-color: #e0ecff;
+        color: #fff;
+        background-color: #175ef7;
     }
 
     &.delete:hover {
-        color: #b91c1c;
-        background-color: #fee2e2;
+        color: #fff;
+        background-color: #d51f1f;
     }
 }
