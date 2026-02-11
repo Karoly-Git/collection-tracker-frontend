@@ -10,7 +10,9 @@ export default function AppLayout() {
 
     return (
         <div className="app-layout">
-            <TopBar onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+            <TopBar
+                isSidebarOpen={isSidebarOpen}
+                onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
 
             <div className="layout-row">
                 <Sidebar isSidebarOpen={isSidebarOpen} />

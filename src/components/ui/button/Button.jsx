@@ -12,7 +12,8 @@ export default function Button({
             className={className}
             onClick={onClick}
         >
-            {Icon && <Icon className="icon" />} {text}
+            {Icon && <Icon className="icon" />}
+            <span className="btn-text">{text}</span>
         </button>
     );
 }

@@ -46,6 +46,12 @@
         &:hover {
             background-color: #135eb4;
         }
+
+        .btn-text {
+            @media(max-width: 600px) {
+                display: none;
+            }
+        }
     }
 
     &.reject {

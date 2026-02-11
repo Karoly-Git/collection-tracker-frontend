@@ -9,6 +9,13 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.5rem;
+        gap: 1rem;
+    }
+
+    h5 {
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-right: 1rem;
     }
 
     .dashboard-controls {
@@ -112,8 +119,11 @@
                 }
 
                 .chip-label {
+                    display: flex;
+                    align-items: center;
                     padding: 0.4rem 0.8rem;
                     border-radius: 10px;
+                    gap: 0.5rem;
 
                     font-size: 0.75rem;
                     font-weight: 500;
@@ -126,6 +136,16 @@
                     user-select: none;
 
                     transition: all 150ms ease-in-out;
+
+                    .chip-text {
+                        @media(max-width: 830px) {
+                            display: none;
+                        }
+                    }
+
+                    .chip-icon {
+                        font-size: 1.15rem;
+                    }
                 }
 
                 &:not(.active) .chip-label {

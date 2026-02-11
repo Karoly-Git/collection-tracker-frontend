@@ -5,6 +5,7 @@ import Button from "../../components/ui/button/Button";
 import { GoPlus as PlusIcon } from "react-icons/go";
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
 import { RxReset as ResetFiltersIcon } from "react-icons/rx";
+import { IoTodaySharp as TodayIcon } from "react-icons/io5";
 
 import "./Dashboard.scss";
 
@@ -19,6 +20,7 @@ import DeleteCollectionForm from "../../components/forms/DeleteCollectionForm.js
 
 import { COLLECTION_STATUSES } from "../../constants/collection-statuses";
 import { formatText } from "../../utils/formatText";
+import { STATUS_ICONS } from "../../constants/status-icons";
 
 export default function Dashboard() {
     const userLoggedIn = true;
@@ -144,36 +146,47 @@ export default function Dashboard() {
             </div>
 
 
-            <h5>Filters:</h5>
             <div className="dashboard-controls">
+                <h5>Filters:</h5>
                 <div className="dashboard-filters">
                     {/* Today only chip */}
+
                     <label
-                        className={`status-chip today-only ${showTodayOnly ? "active" : ""}`}
+                        className={`status-chip ${showTodayOnly ? "active" : ""}`}
                     >
                         <input
                             type="checkbox"
                             checked={showTodayOnly}
                             onChange={(e) => setShowTodayOnly(e.target.checked)}
                         />
-                        <span className="chip-label">Today only</span>
+                        <span className="chip-label">
+                            <TodayIcon className="chip-icon" />
+                            <span className="chip-text">Today</span>
+                        </span>
                     </label>
 
-                    {/* Status chips */}
-                    {Object.values(COLLECTION_STATUSES).map((status) => (
-                        <label
-                            key={status}
-                            className={`status-chip status-${status.toLowerCase()} ${statusFilters[status] ? "active" : ""
-                                }`}
-                        >
-                            <input
-                                type="checkbox"
-                                checked={statusFilters[status]}
-                                onChange={() => handleStatusToggle(status)}
-                            />
-                            <span className="chip-label">{formatText(status)}</span>
-                        </label>
-                    ))}
+                    {Object.values(COLLECTION_STATUSES).map((status) => {
+                        const Icon = STATUS_ICONS[status];
+
+                        return (
+                            <label
+                                key={status}
+                                className={`status-chip status-${status.toLowerCase()} ${statusFilters[status] ? "active" : ""
+                                    }`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={statusFilters[status]}
+                                    onChange={() => handleStatusToggle(status)}
+                                />
+
+                                <span className="chip-label">
+                                    {Icon && <Icon className="chip-icon" />}
+                                    <span className="chip-text">{formatText(status)}</span>
+                                </span>
+                            </label>
+                        );
+                    })}
 
                     {/* RESET FILTERS (ONLY WHEN CHIP FILTERS CHANGE) */}
                     {isAnyFilterApplied && (

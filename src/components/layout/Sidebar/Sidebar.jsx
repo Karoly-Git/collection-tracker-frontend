@@ -15,7 +15,6 @@ export default function Sidebar({ isSidebarOpen }) {
                         <span className="icon">
                             <MdOutlineDashboardCustomize />
                         </span>
-                        <span className="label">Dashboard</span>
                     </NavLink>
                 </li>
 
@@ -24,7 +23,6 @@ export default function Sidebar({ isSidebarOpen }) {
                         <span className="icon">
                             <IoIosStats />
                         </span>
-                        <span className="label">Reports</span>
                     </NavLink>
                 </li>
 
@@ -33,7 +31,6 @@ export default function Sidebar({ isSidebarOpen }) {
                         <span className="icon">
                             <IoSettingsOutline />
                         </span>
-                        <span className="label">Settings</span>
                     </NavLink>
                 </li>
 
@@ -42,7 +39,6 @@ export default function Sidebar({ isSidebarOpen }) {
                         <span className="icon">
                             <MdLogin />
                         </span>
-                        <span className="label">Login</span>
                     </NavLink>
                 </li>
             </ul>
