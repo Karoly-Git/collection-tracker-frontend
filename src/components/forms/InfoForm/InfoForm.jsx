@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import "../FormStyle.css";
-import "./InfoForm.css";
+import "../FormStyle.scss";
+import "./InfoForm.scss";
 import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../../ui/button/Button";
 

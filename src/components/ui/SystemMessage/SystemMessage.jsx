@@ -1,6 +1,6 @@
 import Button from "../button/Button";
 import Spinner from "../Spinner/Spinner";
-import "./SystemMessage.css";
+import "./SystemMessage.scss";
 
 const ICONS_BY_VARIANT = {
     loading: null,

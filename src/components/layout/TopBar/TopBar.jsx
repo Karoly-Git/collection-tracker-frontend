@@ -1,5 +1,5 @@
 import { RxHamburgerMenu as HamburgerIcon } from "react-icons/rx";
-import "./TopBar.css";
+import "./TopBar.scss";
 
 export default function TopBar({ onToggleSidebar }) {
     return (

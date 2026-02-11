@@ -1,5 +1,5 @@
 import Spinner from "../../Spinner/Spinner";
-import "./LoadingState.css";
+import "./LoadingState.scss";
 
 export default function LoadingState({
     title = "Loading collections",

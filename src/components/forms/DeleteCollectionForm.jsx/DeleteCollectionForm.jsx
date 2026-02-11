@@ -1,5 +1,5 @@
-import "../FormStyle.css";
-import "./DeleteCollectionForm.css";
+import "../FormStyle.scss";
+import "./DeleteCollectionForm.scss";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

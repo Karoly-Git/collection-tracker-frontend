@@ -1,5 +1,5 @@
 import AppRouter from "./components/routes/AppRouter";
-import "./App.css";
+import "./App.scss";
 
 export default function App() {
   return (

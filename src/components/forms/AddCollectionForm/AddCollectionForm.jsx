@@ -5,7 +5,7 @@ import Button from "../../ui/button/Button";
 import Spinner from "../../ui/Spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 
-import "../FormStyle.css";
+import "../FormStyle.scss";
 import {
     addNewCollection,
     resetAddCollectionState,

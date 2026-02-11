@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./Modal.css";
+import "./Modal.scss";
 import { IoMdClose as CloseIcon } from "react-icons/io";
 
 export default function Modal({

@@ -3,25 +3,31 @@
   padding-left: 0.25rem;
   margin-top: 0.5rem;
 }
+
 .delete-collection-form .identifier {
   background: #f8f8f8;
   padding: 12px;
   margin: 16px 0;
   border-radius: 4px;
 }
+
 .delete-collection-form .identifier-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
 }
+
 .delete-collection-form .identifier-row .label {
   font-family: monospace;
   text-transform: uppercase;
 }
+
 .delete-collection-form .identifier-row .value {
   font-weight: 600;
   font-family: monospace;
   font-size: 1.15rem;
   color: #555;
   text-transform: uppercase;
-}/*# sourceMappingURL=DeleteCollectionForm.css.map */
+}
+
+/*# sourceMappingURL=DeleteCollectionForm.scss.map */

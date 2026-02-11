@@ -17,7 +17,7 @@ import { RiSortNumberAsc as AscNumIcon } from "react-icons/ri";
 import { RiSortNumberDesc as DescNumIcon } from "react-icons/ri";
 
 // Styles
-import "./CollectionTable.css";
+import "./CollectionTable.scss";
 
 export default function CollectionTable({
     searchValue,

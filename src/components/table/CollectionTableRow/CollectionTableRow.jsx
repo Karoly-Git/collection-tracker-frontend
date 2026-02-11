@@ -25,7 +25,7 @@ import Button from "../../ui/button/Button";
 import StatusBadge from "../StatusBadge/StatusBadge";
 
 // Styles
-import "./CollectionTableRow.css";
+import "./CollectionTableRow.scss";
 
 const userLoggedIn = true;
 

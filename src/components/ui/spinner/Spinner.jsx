@@ -1,4 +1,4 @@
-import "./Spinner.css";
+import "./Spinner.scss";
 
 export default function Spinner({
     size = 48,

@@ -6,7 +6,7 @@ import { GoPlus as PlusIcon } from "react-icons/go";
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
 import { RxReset as ResetFiltersIcon } from "react-icons/rx";
 
-import "./Dashboard.css";
+import "./Dashboard.scss";
 
 import Modal from "../../components/ui/modal/Modal";
 import CollectionTable from "../../components/table/CollectionTable/CollectionTable";
@@ -106,7 +106,32 @@ export default function Dashboard() {
                HEADER
             ========================== */}
             <div className="dashboard-head">
-                <h2 className="dashboard-title">Collection Overview</h2>
+                {/* =========================
+               SEARCH
+            ========================== */}
+                <div className="dashboard-controls">
+                    <div className="dashboard-search">
+                        <SearchIcon className="search-icon" />
+                        <input
+                            type="text"
+                            placeholder="Search collections..."
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            disabled={!userLoggedIn}
+                        />
+
+                        {inputValue && (
+                            <button
+                                type="button"
+                                className="reset-btn"
+                                onClick={() => setInputValue("")}
+                            >
+                                ✕
+                            </button>
+                        )}
+                    </div>
+                </div>
+
 
                 {userLoggedIn && (
                     <Button
@@ -118,31 +143,6 @@ export default function Dashboard() {
                 )}
             </div>
 
-            {/* =========================
-               SEARCH
-            ========================== */}
-            <div className="dashboard-controls">
-                <div className="dashboard-search">
-                    <SearchIcon className="search-icon" />
-                    <input
-                        type="text"
-                        placeholder="Search collections..."
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        disabled={!userLoggedIn}
-                    />
-
-                    {inputValue && (
-                        <button
-                            type="button"
-                            className="reset-btn"
-                            onClick={() => setInputValue("")}
-                        >
-                            ✕
-                        </button>
-                    )}
-                </div>
-            </div>
 
             {/* =========================
                FILTERS (CHIPS)

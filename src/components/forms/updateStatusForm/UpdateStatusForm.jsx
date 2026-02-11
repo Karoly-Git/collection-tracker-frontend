@@ -16,8 +16,8 @@ import Button from "../../ui/button/Button";
 import Spinner from "../../ui/Spinner/Spinner";
 
 // Styles
-import "../FormStyle.css";
-import "./UpdateStatusForm.css";
+import "../FormStyle.scss";
+import "./UpdateStatusForm.scss";
 
 // React Icons
 import { FaArrowRightLong } from "react-icons/fa6";

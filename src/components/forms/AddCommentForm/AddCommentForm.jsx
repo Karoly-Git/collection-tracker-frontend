@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../FormStyle.css";
+import "../FormStyle.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 
