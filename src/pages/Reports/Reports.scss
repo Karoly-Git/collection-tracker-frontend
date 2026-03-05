@@ -75,19 +75,4 @@
             color: #143757;
         }
     }
-
-    &__chart-placeholder {
-        height: 180px;
-        border-radius: 8px;
-        background: #f5f7fb;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        color: #888;
-        font-size: 0.9rem;
-
-        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
-    }
 }

@@ -1,3 +1,4 @@
+import CollectionsPerHourChart from "@/components/charts/CollectionsPerHourChart/CollectionsPerHourChart";
 import "./Reports.scss";
 
 export default function Reports() {
@@ -54,9 +55,7 @@ export default function Reports() {
             <section className="reports__section">
                 <h2>Collections per hour</h2>
 
-                <div className="reports__chart-placeholder">
-                    Chart placeholder
-                </div>
+                <CollectionsPerHourChart />
             </section>
 
 
