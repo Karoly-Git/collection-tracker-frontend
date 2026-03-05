@@ -1,11 +1,10 @@
-import type { FormEvent } from "react";
 import "./Login.scss";
 
 export default function Login() {
-    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = (e: SubmitEvent): void => {
         e.preventDefault();
 
-        const form = new FormData(e.currentTarget);
+        const form = new FormData(e.target as HTMLFormElement);
         const email = form.get("email");
         const password = form.get("password");
 
@@ -17,7 +16,10 @@ export default function Login() {
             <div className="login__card">
                 <h1 className="login__title">Login</h1>
 
-                <form className="login__form" onSubmit={handleSubmit}>
+                <form
+                    className="login__form"
+                    onSubmit={(e) => handleSubmit(e.nativeEvent)}
+                >
                     <div className="login__field">
                         <label htmlFor="email">Email</label>
                         <input

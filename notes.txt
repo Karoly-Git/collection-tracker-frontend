@@ -4,3 +4,5 @@ refactor: code improvement without behaviour change
 style: formatting / css
 chore: tooling / configs
 
+lables: react vite ts ci/cd vitest 
+
