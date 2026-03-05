@@ -1,0 +1,6 @@
+feat: new feature
+fix: bug fix
+refactor: code improvement without behaviour change
+style: formatting / css
+chore: tooling / configs
+
