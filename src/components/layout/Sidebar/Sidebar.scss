@@ -4,13 +4,14 @@
     padding: 1rem;
     display: flex;
     transition: margin-left 0.3s ease, padding 0.3s ease;
+    //height: 100%;
 
     ul {
         list-style: none;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        width: 100%;
+        //width: 100%;
         //background-color: red;
     }
 

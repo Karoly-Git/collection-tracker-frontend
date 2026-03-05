@@ -1,0 +1,19 @@
+.top-bar {
+    background-color: #08213b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    color: white;
+
+    h1 {
+        font-size: 1.75rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+
+    .hamburger-icon {
+        font-size: 2rem;
+        cursor: pointer;
+    }
+}

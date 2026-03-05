@@ -1,0 +1,20 @@
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .app-layout__body {
+        display: flex;
+        flex: 1; // key change
+        //margin: 1rem;
+
+        .app-layout__content {
+            background-color: red;
+            width: 100%;
+            //max-width: 1200px;
+            padding: 1rem;
+            //margin-left: auto;
+            //margin-right: auto;
+        }
+    }
+}

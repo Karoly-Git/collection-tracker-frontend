@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [
     react(),
     tsconfigPaths()
-  ]
+  ],
+  css: {
+    devSourcemap: true
+  }
 });

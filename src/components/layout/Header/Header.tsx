@@ -1,7 +1,19 @@
+import TopBar from '../TopBar/TopBar';
 import './Header.scss';
 
-export default function Header() {
+type HeaderProps = {
+    isSidebarOpen: boolean;
+    toggleSidebar: () => void;
+};
+
+
+export default function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
     return (
-        <div>Header</div>
+        <header>
+            <TopBar
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+            />
+        </header>
     )
 }

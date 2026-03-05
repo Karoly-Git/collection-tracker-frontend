@@ -1,0 +1,24 @@
+.footer {
+    background-color: #143757;
+    color: #ffffff;
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+
+    .footer__container {
+        max-width: 1200px;
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .footer__text {
+        opacity: 0.85;
+    }
+
+    .footer__version {
+        opacity: 0.6;
+        font-size: 0.75rem;
+    }
+}
