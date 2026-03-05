@@ -1,0 +1,33 @@
+$primary: #1e4e8c;
+$muted: #6b7280;
+$bg: #f8fafc;
+$border: #e5e7eb;
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3rem;
+    margin-top: 3rem;
+
+    border: 1px solid $border;
+    border-radius: 12px;
+    background: $bg;
+
+    text-align: center;
+
+    h2 {
+        margin-top: 1rem;
+        margin-bottom: 0.4rem;
+        font-size: 1.5rem;
+        color: $primary;
+    }
+
+    p {
+        color: $muted;
+        line-height: 1.5;
+        max-width: 420px;
+    }
+}

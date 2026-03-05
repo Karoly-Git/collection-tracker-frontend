@@ -1,0 +1,27 @@
+.spinner {
+  display: inline-block;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #e5e7eb;
+  border-top-color: #1e4e8c;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+.spinner--inline {
+  vertical-align: middle;
+}
+.spinner--primary {
+  border-top-color: #1e4e8c;
+}
+.spinner--light {
+  border-top-color: #ffffff;
+}
+.spinner--danger {
+  border-top-color: #c62828;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}/*# sourceMappingURL=Spinner.css.map */
