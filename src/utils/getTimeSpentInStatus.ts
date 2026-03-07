@@ -33,21 +33,21 @@ export const getTimeSpentInStatus = (collection: Collection): string => {
 
     let ms: number | null = null;
 
-    if (currentStatus === COLLECTION_STATUSES.CHECKED_IN) {
+    if (currentStatus === COLLECTION_STATUSES.CHECKED_IN.text) {
         ms = (started ?? now) - checkedIn;
     }
 
-    else if (currentStatus === COLLECTION_STATUSES.LOADING) {
+    else if (currentStatus === COLLECTION_STATUSES.LOADING_IN_PROGRESS.text) {
         if (!started) return "--:--:--";
         ms = (finished ?? now) - started;
     }
 
-    else if (currentStatus === COLLECTION_STATUSES.LOADED) {
+    else if (currentStatus === COLLECTION_STATUSES.LOADED.text) {
         if (!finished) return "--:--:--";
         ms = (checkedOut ?? now) - finished;
     }
 
-    else if (currentStatus === COLLECTION_STATUSES.CHECKED_OUT) {
+    else if (currentStatus === COLLECTION_STATUSES.CHECKED_OUT.text) {
         if (!finished || !checkedOut) return "--:--:--";
         ms = checkedOut - finished;
     }
