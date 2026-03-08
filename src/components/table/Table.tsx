@@ -1,33 +1,85 @@
+import { useState, useMemo } from "react";
+
 import data from "@/constants/data.json";
 import type { Collection } from "@/types/collection";
 
-const sortedCollections = data as Collection[];
+import TableRow from "./TableRow";
 
 // Icons
-//import { IoSearchSharp as SearchIcon } from "react-icons/io5";
-//import { LuArrowDownAZ as AscAbcIcon } from "react-icons/lu";
-//import { LuArrowUpAZ as DescAbcIcon } from "react-icons/lu";
-//import { RiSortNumberAsc as AscNumIcon } from "react-icons/ri";
-//import { RiSortNumberDesc as DescNumIcon } from "react-icons/ri";
-
-//import { RiSortNumberDesc as Icon } from "react-icons/ri";
 import { SiMaterialdesignicons as MaterialIcon } from "react-icons/si";
 import { LuTimer as TimerIcon } from "react-icons/lu";
 import { MdOutlineCorporateFare as CustomerIcon } from "react-icons/md";
-//import { AiOutlineFieldNumber } from "react-icons/ai";
 import { TbNumber as RefIcon } from "react-icons/tb";
 import { GrStatusInfo as StatusIcon } from "react-icons/gr";
-import TableRow from './TableRow';
 
-import './Table.scss';
+import { LuArrowDownAZ as AscIcon } from "react-icons/lu";
+import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
+import "./Table.scss";
 
 export default function Table() {
 
-    // just temporarly
-    const handleSort = (text: string): string => { return text ? '' : ''; };
-    const renderSortIcon = (text: string): string => { return text ? '' : ''; };
+    const collections = data as Collection[];
 
+    const [sortKey, setSortKey] = useState<keyof Collection | null>("checkedInAt");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
+    const handleSort = (key: keyof Collection): void => {
+
+        if (sortKey === key) {
+            setSortDirection(prev => prev === "asc" ? "desc" : "asc");
+        } else {
+            setSortKey(key);
+            setSortDirection("asc");
+        }
+
+    };
+
+    const renderSortIcon = (key: keyof Collection): React.ReactNode => {
+
+        if (sortKey !== key) return null;
+
+        return sortDirection === "asc"
+            ? <AscIcon />
+            : <DescIcon />;
+    };
+
+    const sortedCollections = useMemo(() => {
+
+        if (!sortKey) return collections;
+
+        return [...collections].sort((a, b) => {
+
+            const aValue = a[sortKey];
+            const bValue = b[sortKey];
+
+            // Special handling for date sorting
+            if (sortKey === "checkedInAt") {
+
+                const aTime = new Date(aValue as string).getTime();
+                const bTime = new Date(bValue as string).getTime();
+
+                return sortDirection === "asc"
+                    ? bTime - aTime
+                    : aTime - bTime;
+            }
+
+            // Handle null / undefined values
+            if (aValue === null || aValue === undefined) return 1;
+            if (bValue === null || bValue === undefined) return -1;
+
+            // Default comparison for strings / numbers
+            if (aValue === bValue) return 0;
+
+            if (sortDirection === "asc") {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return aValue < bValue ? 1 : -1;
+            }
+
+        });
+
+    }, [collections, sortKey, sortDirection]);
     return (
         <table className="collection-table">
             <thead>
@@ -55,9 +107,7 @@ export default function Table() {
                     <th className="customer-column" onClick={() => handleSort("customerName")}>
                         <span className="th-content">
                             <CustomerIcon className="content-icon" />
-
                             <span className="content-text">Customer</span>
-                            <span className="content-icon" />
                             <span className="sort-icon">
                                 {renderSortIcon("customerName")}
                             </span>
@@ -67,9 +117,7 @@ export default function Table() {
                     <th onClick={() => handleSort("collectionRefNum")}>
                         <span className="th-content">
                             <RefIcon className="content-icon ref-icon" />
-
                             <span className="content-text">Reference</span>
-                            <span className="content-icon" />
                             <span className="sort-icon">
                                 {renderSortIcon("collectionRefNum")}
                             </span>
@@ -79,9 +127,7 @@ export default function Table() {
                     <th onClick={() => handleSort("currentStatus")}>
                         <span className="th-content">
                             <StatusIcon className="content-icon" />
-
                             <span className="content-text">Status</span>
-                            <span className="content-icon" />
                             <span className="sort-icon">
                                 {renderSortIcon("currentStatus")}
                             </span>
@@ -99,5 +145,5 @@ export default function Table() {
                 ))}
             </tbody>
         </table>
-    )
+    );
 }
