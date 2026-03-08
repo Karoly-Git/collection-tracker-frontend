@@ -87,6 +87,7 @@ export default function Table({ searchValue, filtersList }: TableProps) {
         });
 
     }, [collections, sortKey, sortDirection]);
+
     return (
         <table className="collection-table">
             <thead>
