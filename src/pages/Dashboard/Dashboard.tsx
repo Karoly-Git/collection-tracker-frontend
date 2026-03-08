@@ -6,12 +6,18 @@ import { GoPlus as PlusIcon } from "react-icons/go";
 
 import Button from '@/components/ui/button/Button';
 import './Dashboard.scss';
+import { useState } from 'react';
+import { COLLECTION_STATUSES } from '@/constants/collection-statuses';
 
 export default function Dashboard() {
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [filtersList, setFiltersList] = useState<string[]>([...Object.keys(COLLECTION_STATUSES), "TODAY"]);
+
     return (
         <div className='dashboard'>
             <div className='controls'>
-                <SearchBar />
+                <SearchBar setSearchValue={setSearchValue} />
+
                 <Button
                     variant='add-btn'
                     icon={PlusIcon}
@@ -19,8 +25,13 @@ export default function Dashboard() {
                     onClick={() => { }}
                 />
             </div>
-            <FilterBar />
-            <Table />
+
+            <FilterBar setFiltersList={setFiltersList} />
+
+            <Table
+                searchValue={searchValue}
+                filtersList={filtersList}
+            />
         </div>
     )
 }

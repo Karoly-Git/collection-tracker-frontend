@@ -5,7 +5,7 @@
         "customerName": "Weavix",
         "collectionRefNum": "ref-2-0",
         "lorryRegNum": "lr80abc",
-        "checkedInAt": "2026-03-06T13:12:00.000Z",
+        "checkedInAt": "2026-03-08T13:12:00.000Z",
         "startedLoadingAt": null,
         "finishedLoadingAt": null,
         "checkedOutAt": null,
@@ -13,7 +13,7 @@
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T12:12:00.000Z",
+                "timestamp": "2026-03-08T12:12:00.000Z",
                 "updatedByUserId": "wb-001",
                 "comments": []
             }
@@ -25,7 +25,7 @@
         "customerName": "Weavix",
         "collectionRefNum": "ref-3-0",
         "lorryRegNum": "lr53abc",
-        "checkedInAt": "2026-03-06T11:42:00.000Z",
+        "checkedInAt": "2026-03-08T11:42:00.000Z",
         "startedLoadingAt": null,
         "finishedLoadingAt": null,
         "checkedOutAt": null,
@@ -33,7 +33,7 @@
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T10:42:00.000Z",
+                "timestamp": "2026-03-08T10:42:00.000Z",
                 "updatedByUserId": "wb-001",
                 "comments": []
             }
@@ -45,7 +45,7 @@
         "customerName": "Weavix",
         "collectionRefNum": "ref-4-0",
         "lorryRegNum": "lr74abc",
-        "checkedInAt": "2026-03-06T09:12:00.000Z",
+        "checkedInAt": "2026-03-08T09:12:00.000Z",
         "startedLoadingAt": null,
         "finishedLoadingAt": null,
         "checkedOutAt": null,
@@ -53,7 +53,7 @@
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T09:12:00.000Z",
+                "timestamp": "2026-03-08T09:12:00.000Z",
                 "updatedByUserId": "wb-001",
                 "comments": []
             }
@@ -65,7 +65,7 @@
         "customerName": "Thready",
         "collectionRefNum": "ref-26-1",
         "lorryRegNum": "lr42abc",
-        "checkedInAt": "2026-03-06T08:42:00.000Z",
+        "checkedInAt": "2026-03-08T08:42:00.000Z",
         "startedLoadingAt": null,
         "finishedLoadingAt": null,
         "checkedOutAt": null,
@@ -73,7 +73,7 @@
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T08:42:00.000Z",
+                "timestamp": "2026-03-08T08:42:00.000Z",
                 "updatedByUserId": "wb-002",
                 "comments": []
             }
@@ -85,21 +85,21 @@
         "customerName": "Fibron",
         "collectionRefNum": "ref-27-1",
         "lorryRegNum": "lr63abc",
-        "checkedInAt": "2026-03-06T08:42:00.000Z",
-        "startedLoadingAt": "2026-03-06T09:42:00.000Z",
+        "checkedInAt": "2026-03-08T08:42:00.000Z",
+        "startedLoadingAt": "2026-03-08T09:42:00.000Z",
         "finishedLoadingAt": null,
         "checkedOutAt": null,
         "currentStatus": "LOADING_IN_PROGRESS",
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T08:42:00.000Z",
+                "timestamp": "2026-03-08T08:42:00.000Z",
                 "updatedByUserId": "wb-001",
                 "comments": []
             },
             {
                 "status": "LOADING_IN_PROGRESS",
-                "timestamp": "2026-03-06T09:42:00.000Z",
+                "timestamp": "2026-03-08T09:42:00.000Z",
                 "updatedByUserId": "flt-2",
                 "comments": []
             }
@@ -111,27 +111,27 @@
         "customerName": "Weavix",
         "collectionRefNum": "ref-28-1",
         "lorryRegNum": "lr29abc",
-        "checkedInAt": "2026-03-06T08:12:00.000Z",
-        "startedLoadingAt": "2026-03-06T08:42:00.000Z",
-        "finishedLoadingAt": "2026-03-06T09:42:00.000Z",
+        "checkedInAt": "2026-03-08T08:12:00.000Z",
+        "startedLoadingAt": "2026-03-08T08:42:00.000Z",
+        "finishedLoadingAt": "2026-03-08T09:42:00.000Z",
         "checkedOutAt": null,
         "currentStatus": "LOADED",
         "statusHistory": [
             {
                 "status": "CHECKED_IN",
-                "timestamp": "2026-03-06T08:12:00.000Z",
+                "timestamp": "2026-03-08T08:12:00.000Z",
                 "updatedByUserId": "wb-001",
                 "comments": []
             },
             {
                 "status": "LOADING_IN_PROGRESS",
-                "timestamp": "2026-03-06T08:42:00.000Z",
+                "timestamp": "2026-03-08T08:42:00.000Z",
                 "updatedByUserId": "flt-3",
                 "comments": []
             },
             {
                 "status": "LOADED",
-                "timestamp": "2026-03-06T09:42:00.000Z",
+                "timestamp": "2026-03-08T09:42:00.000Z",
                 "updatedByUserId": "flt-3",
                 "comments": []
             }

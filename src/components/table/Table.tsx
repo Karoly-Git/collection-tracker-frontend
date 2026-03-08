@@ -17,7 +17,14 @@ import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
 import "./Table.scss";
 
-export default function Table() {
+type TableProps = {
+    searchValue: string;
+    filtersList: string[]
+}
+
+export default function Table({ searchValue, filtersList }: TableProps) {
+    console.log(searchValue);
+    console.log(filtersList);
 
     const collections = data as Collection[];
 

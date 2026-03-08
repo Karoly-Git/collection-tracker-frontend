@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import "./FilterBar.scss";
 
@@ -10,7 +11,12 @@ import { COLLECTION_STATUSES } from "@/constants/collection-statuses";
 import { formatText } from "@/utils/formatText";
 import Button from "@/components/ui/button/Button";
 
-export default function FilterBar() {
+
+type FilterBarProps = {
+    setFiltersList: Dispatch<SetStateAction<string[]>>;
+};
+
+export default function FilterBar({ setFiltersList }: FilterBarProps) {
     const statusKeys = Object.keys(COLLECTION_STATUSES) as (keyof typeof COLLECTION_STATUSES)[];
 
     type FilterKey = "TODAY" | keyof typeof COLLECTION_STATUSES;
@@ -27,10 +33,17 @@ export default function FilterBar() {
             ...prev,
             [key]: !prev[key],
         }));
+
+        setFiltersList(prev =>
+            prev.includes(key)
+                ? prev.filter(e => e !== key)
+                : [...prev, key]
+        );
     };
 
     const resetFilters = (): void => {
         setFilters(createInitialFilters());
+        setFiltersList([...Object.keys(COLLECTION_STATUSES), "TODAY"]);
     };
 
     const isAllTrue = Object.values(filters).every(Boolean);

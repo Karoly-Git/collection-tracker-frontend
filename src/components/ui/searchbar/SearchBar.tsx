@@ -1,14 +1,22 @@
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { IoSearchSharp as SearchIcon } from "react-icons/io5";
 import './SearchBar.scss';
 
-export default function SearchBar() {
+
+type SearchBarProps = {
+    setSearchValue: Dispatch<SetStateAction<string>>;
+};
+
+export default function SearchBar({ setSearchValue }: SearchBarProps) {
     const [inputValue, setInputValue] = useState<string>("");
 
     const userLoggedIn = true;
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setInputValue(e.target.value.toLowerCase().replace(/\s{2,}/g, " "));
+        const value = e.target.value.toLowerCase().replace(/\s{2,}/g, " ");
+        setInputValue(value);
+        setSearchValue(value);
     };
 
     return (
