@@ -34,7 +34,10 @@ export default function SearchBar({ setSearchValue }: SearchBarProps) {
                 <button
                     type="button"
                     className="reset-btn"
-                    onClick={() => setInputValue("")}
+                    onClick={() => {
+                        setInputValue("");
+                        setSearchValue("")
+                    }}
                 >
                     ✕
                 </button>

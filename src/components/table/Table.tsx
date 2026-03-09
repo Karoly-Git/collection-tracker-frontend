@@ -23,9 +23,6 @@ type TableProps = {
 }
 
 export default function Table({ searchValue, filtersList }: TableProps) {
-    console.log(searchValue);
-    console.log(filtersList);
-
     const collections = data as Collection[];
 
     const [sortKey, setSortKey] = useState<keyof Collection | null>("checkedInAt");
@@ -88,6 +85,29 @@ export default function Table({ searchValue, filtersList }: TableProps) {
 
     }, [collections, sortKey, sortDirection]);
 
+    const filteredCollections = useMemo(() => {
+        const today = new Date().toDateString();
+        const search = searchValue.toLowerCase();
+
+        return sortedCollections.filter((c) => {
+            const matchesStatus = filtersList.includes(c.currentStatus);
+
+            const matchesSearch =
+                c.materialName.toLowerCase().includes(search) ||
+                c.customerName.toLowerCase().includes(search) ||
+                String(c.collectionRefNum).toLowerCase().includes(search);
+
+            if (filtersList.includes("TODAY")) {
+                const checkedDate = new Date(c.checkedInAt).toDateString();
+                const matchesToday = today === checkedDate;
+
+                return matchesStatus && matchesSearch && matchesToday;
+            }
+
+            return matchesStatus && matchesSearch;
+        });
+    }, [sortedCollections, searchValue, filtersList]);
+
     return (
         <table className="collection-table">
             <thead>
@@ -145,7 +165,7 @@ export default function Table({ searchValue, filtersList }: TableProps) {
             </thead>
 
             <tbody>
-                {sortedCollections.map((collection) => (
+                {filteredCollections.map((collection) => (
                     <TableRow
                         key={collection.id}
                         collection={collection}

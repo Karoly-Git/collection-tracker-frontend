@@ -26,7 +26,10 @@ export default function Dashboard() {
                 />
             </div>
 
-            <FilterBar setFiltersList={setFiltersList} />
+            <FilterBar
+                filtersList={filtersList}
+                setFiltersList={setFiltersList}
+            />
 
             <Table
                 searchValue={searchValue}
