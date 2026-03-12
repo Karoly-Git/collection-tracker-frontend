@@ -1,6 +1,8 @@
-import { API_URL } from "./config";
+const API_URL = import.meta.env.BASE_URL;
 
-export const getAllCollections = async () => {
+import type { Collection } from "@/types/collection";
+
+export const getAllCollections = async (): Promise<Collection[]> => {
     const response = await fetch(`${API_URL}/collections`, {
         method: "GET",
     });
@@ -9,9 +11,10 @@ export const getAllCollections = async () => {
         throw new Error(`Failed to fetch collections (${response.status})`);
     }
 
-    return response.json();
+    return response.json() as Promise<Collection[]>;
 };
 
+/*
 export const getCollectionById = async (id) => {
     const response = await fetch(`${API_URL}/collections/${id}`, {
         method: "GET",
@@ -66,30 +69,6 @@ export const updateCollectionStatus = async ({
     return response.json();
 };
 
-export const addNewComment = async ({ collectionId, statusKey, userId, text, timestamp }) => {
-    const response = await fetch(
-        `${API_URL}/comments/collection/${collectionId}/status/${statusKey}/comment`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userId, // REQUIRED
-                text, // REQUIRED
-                timestamp // REQUIRED
-            }),
-        }
-    );
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to add comment");
-    }
-
-    return response.json();
-};
-
 export const addCollection = async ({
     materialName,
     customerName,
@@ -122,3 +101,4 @@ export const addCollection = async ({
 
     return response.json();
 };
+*/

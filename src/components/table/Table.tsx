@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
-import data from "@/constants/data.json";
 import type { Collection } from "@/types/collection";
+
+import { getAllCollections } from "@/api/collection";
 
 import TableRow from "./TableRow";
 
@@ -23,7 +24,22 @@ type TableProps = {
 }
 
 export default function Table({ searchValue, filtersList }: TableProps) {
-    const collections = data as Collection[];
+    //const collections = data as Collection[];
+
+    const [collections, setCollections] = useState<Collection[]>([]);
+
+    useEffect(() => {
+        async function fetchCollections() {
+            try {
+                const result = await getAllCollections();
+                setCollections(result);
+            } catch (error) {
+                console.error("Failed to fetch collections:", error);
+            }
+        }
+
+        fetchCollections();
+    }, []);
 
     const [sortKey, setSortKey] = useState<keyof Collection | null>("checkedInAt");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
