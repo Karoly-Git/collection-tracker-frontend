@@ -17,6 +17,7 @@ import { LuArrowDownAZ as AscIcon } from "react-icons/lu";
 import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
 import "./Table.scss";
+import Spinner from "../ui/spinner/Spinner";
 
 type TableProps = {
     searchValue: string;
@@ -27,6 +28,8 @@ export default function Table({ searchValue, filtersList }: TableProps) {
     //const collections = data as Collection[];
 
     const [collections, setCollections] = useState<Collection[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isError, setIsError] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchCollections() {
@@ -35,6 +38,9 @@ export default function Table({ searchValue, filtersList }: TableProps) {
                 setCollections(result);
             } catch (error) {
                 console.error("Failed to fetch collections:", error);
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
             }
         }
 
@@ -125,69 +131,74 @@ export default function Table({ searchValue, filtersList }: TableProps) {
     }, [sortedCollections, searchValue, filtersList]);
 
     return (
-        <table className="collection-table">
-            <thead>
-                <tr>
-                    <th onClick={() => handleSort("checkedInAt")}>
-                        <span className="th-content">
-                            <TimerIcon className="content-icon" />
-                            <span className="content-text">Timer</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("checkedInAt")}
-                            </span>
-                        </span>
-                    </th>
+        isError ? <>Hooops...</> :
+            isLoading ?
+                <div className="loading-spinner-container">
+                    <Spinner />
+                </div> :
+                <table className="collection-table">
+                    <thead>
+                        <tr>
+                            <th onClick={() => handleSort("checkedInAt")}>
+                                <span className="th-content">
+                                    <TimerIcon className="content-icon" />
+                                    <span className="content-text">Timer</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("checkedInAt")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("materialName")}>
-                        <span className="th-content">
-                            <MaterialIcon className="content-icon material-icon" />
-                            <span className="content-text">Material</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("materialName")}
-                            </span>
-                        </span>
-                    </th>
+                            <th onClick={() => handleSort("materialName")}>
+                                <span className="th-content">
+                                    <MaterialIcon className="content-icon material-icon" />
+                                    <span className="content-text">Material</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("materialName")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th className="customer-column" onClick={() => handleSort("customerName")}>
-                        <span className="th-content">
-                            <CustomerIcon className="content-icon" />
-                            <span className="content-text">Customer</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("customerName")}
-                            </span>
-                        </span>
-                    </th>
+                            <th className="customer-column" onClick={() => handleSort("customerName")}>
+                                <span className="th-content">
+                                    <CustomerIcon className="content-icon" />
+                                    <span className="content-text">Customer</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("customerName")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("collectionRefNum")}>
-                        <span className="th-content">
-                            <RefIcon className="content-icon ref-icon" />
-                            <span className="content-text">Reference</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("collectionRefNum")}
-                            </span>
-                        </span>
-                    </th>
+                            <th onClick={() => handleSort("collectionRefNum")}>
+                                <span className="th-content">
+                                    <RefIcon className="content-icon ref-icon" />
+                                    <span className="content-text">Reference</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("collectionRefNum")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("currentStatus")}>
-                        <span className="th-content">
-                            <StatusIcon className="content-icon" />
-                            <span className="content-text">Status</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("currentStatus")}
-                            </span>
-                        </span>
-                    </th>
-                </tr>
-            </thead>
+                            <th onClick={() => handleSort("currentStatus")}>
+                                <span className="th-content">
+                                    <StatusIcon className="content-icon" />
+                                    <span className="content-text">Status</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("currentStatus")}
+                                    </span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
 
-            <tbody>
-                {filteredCollections.map((collection) => (
-                    <TableRow
-                        key={collection.id}
-                        collection={collection}
-                    />
-                ))}
-            </tbody>
-        </table>
+                    <tbody>
+                        {filteredCollections.map((collection) => (
+                            <TableRow
+                                key={collection.id}
+                                collection={collection}
+                            />
+                        ))}
+                    </tbody>
+                </table>
     );
 }
