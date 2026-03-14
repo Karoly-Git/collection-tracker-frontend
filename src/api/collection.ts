@@ -3,12 +3,34 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 import type { Collection } from "@/types/collection";
 
 export const getAllCollections = async (): Promise<Collection[]> => {
-    const response = await fetch(`${BASE_URL}/collections`, {
-        method: "GET",
-    });
+    const response = await fetch(`${BASE_URL}/collections`,
+        {
+            method: "GET",
+        });
 
     if (!response.ok) {
         throw new Error(`Failed to fetch collections (${response.status})`);
+    }
+
+    return response.json() as Promise<Collection[]>;
+};
+
+export const getTodayCollections = async (): Promise<Collection[]> => {
+    const today = new Date().toDateString();
+
+    const response = await fetch(
+        `${BASE_URL}/collections/today?today=${encodeURIComponent(today)}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    );
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to fetch today's collections");
     }
 
     return response.json() as Promise<Collection[]>;

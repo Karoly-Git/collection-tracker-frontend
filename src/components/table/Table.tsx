@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 
 import type { Collection } from "@/types/collection";
 
-import { getAllCollections } from "@/api/collection";
+import { getTodayCollections } from "@/api/collection";
 
 import TableRow from "./TableRow";
 
@@ -34,7 +34,7 @@ export default function Table({ searchValue, filtersList }: TableProps) {
     useEffect(() => {
         async function fetchCollections() {
             try {
-                const result = await getAllCollections();
+                const result = await getTodayCollections();
                 setCollections(result);
             } catch (error) {
                 console.error("Failed to fetch collections:", error);
