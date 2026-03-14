@@ -1,6 +1,14 @@
 const API_URL = import.meta.env.API_URL;
 
-export const addComment = async ({ collectionId, statusKey, userId, text, timestamp }) => {
+type CommentProps = {
+    collectionId: string;
+    statusKey: string;
+    userId: string;
+    text: string;
+    timestamp: string;
+};
+
+export const addComment = async ({ collectionId, statusKey, userId, text, timestamp }: CommentProps) => {
     const response = await fetch(
         `${API_URL}/comments/collection/${collectionId}/status/${statusKey}/comment`,
         {
