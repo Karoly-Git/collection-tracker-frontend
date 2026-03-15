@@ -8,7 +8,12 @@ type MessageProps = {
     btnText?: string;
 };
 
-export default function Message({ title = "Oops...", message = "Something went wrong.", onRetry, btnText }: MessageProps) {
+export default function Message({
+    title = "Oops...",
+    message = "Something went wrong.",
+    onRetry,
+    btnText = "Retry"
+}: MessageProps) {
     return (
         <div className="message-wrapper">
             <div className="message-container">
