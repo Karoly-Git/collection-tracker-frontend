@@ -28,6 +28,7 @@ export default function AppLayout() {
 
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
+                    toggleSidebar={toggleSidebar}
                 />
             </div>
 

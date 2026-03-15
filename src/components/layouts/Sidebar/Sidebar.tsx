@@ -15,15 +15,16 @@ const menuItems = [
 
 type SidebarProps = {
     isSidebarOpen: boolean;
+    toggleSidebar: () => void;
 };
 
-export default function Sidebar({ isSidebarOpen }: SidebarProps) {
+export default function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
     return (
         <nav className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
             <ul>
                 {menuItems.map(({ to, icon: Icon, text }) => (
                     <li key={to}>
-                        <NavLink to={to}>
+                        <NavLink to={to} onClick={toggleSidebar}>
                             <span className="icon">
                                 <Icon />
                             </span>
