@@ -19,7 +19,7 @@ type SidebarProps = {
 
 export default function Sidebar({ isSidebarOpen }: SidebarProps) {
     return (
-        <nav className={`sidebar ${isSidebarOpen ? "" : "collapsed"}`}>
+        <nav className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
             <ul>
                 {menuItems.map(({ to, icon: Icon, text }) => (
                     <li key={to}>

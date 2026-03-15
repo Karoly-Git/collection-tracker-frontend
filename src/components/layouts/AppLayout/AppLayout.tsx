@@ -22,13 +22,13 @@ export default function AppLayout() {
             />
 
             <div className="app-layout__body">
-                <Sidebar
-                    isSidebarOpen={isSidebarOpen}
-                />
-
                 <main className="app-layout__content">
                     <Outlet />
                 </main>
+
+                <Sidebar
+                    isSidebarOpen={isSidebarOpen}
+                />
             </div>
 
             <Footer />
