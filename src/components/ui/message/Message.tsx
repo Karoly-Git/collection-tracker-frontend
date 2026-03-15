@@ -10,22 +10,24 @@ type MessageProps = {
 
 export default function Message({ title = "Oops...", message = "Something went wrong.", onRetry, btnText }: MessageProps) {
     return (
-        <div className="message-container">
-            <h2 className="message-title">
-                {title}
-            </h2>
+        <div className="message-wrapper">
+            <div className="message-container">
+                <h2 className="message-title">
+                    {title}
+                </h2>
 
-            <p className="message">
-                {message}
-            </p>
+                <p className="message">
+                    {message}
+                </p>
 
-            {onRetry && (
-                <Button
-                    variant="primary"
-                    text={btnText}
-                    onClick={onRetry}
-                />
-            )}
+                {onRetry && (
+                    <Button
+                        variant="primary"
+                        text={btnText}
+                        onClick={onRetry}
+                    />
+                )}
+            </div>
         </div>
     );
 }
