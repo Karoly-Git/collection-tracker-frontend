@@ -10,7 +10,7 @@ import "./AppLayout.scss";
 export default function AppLayout() {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
-    const toggleSidebar = (): void => {
+    const toggleSidebar = () => {
         setIsSidebarOpen(prev => !prev);
     };
 
