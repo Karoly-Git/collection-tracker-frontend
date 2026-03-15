@@ -1,6 +1,6 @@
 .sidebar {
     background-color: #143757;
-    width: 76px;
+    //width: 76px;
     padding: 1rem;
     display: flex;
     transition: margin-left 0.3s ease, padding 0.3s ease;
@@ -17,7 +17,6 @@
 
     li {
         display: flex;
-        justify-content: center;
     }
 
     a {
@@ -36,6 +35,10 @@
             align-items: center;
             justify-content: center;
             color: #cbd5e1;
+        }
+
+        .text {
+            //background-color: red;
         }
 
         &:hover {

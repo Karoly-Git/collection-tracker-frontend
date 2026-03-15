@@ -7,10 +7,10 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 
 const menuItems = [
-    { to: "/", icon: MdOutlineDashboardCustomize },
-    { to: "/reports", icon: IoIosStats },
-    { to: "/settings", icon: IoSettingsOutline },
-    { to: "/login", icon: MdLogin },
+    { to: "/", icon: MdOutlineDashboardCustomize, text: "Dashboard" },
+    { to: "/reports", icon: IoIosStats, text: "Reports" },
+    { to: "/settings", icon: IoSettingsOutline, text: "Settings" },
+    { to: "/login", icon: MdLogin, text: "Login" },
 ];
 
 type SidebarProps = {
@@ -21,11 +21,14 @@ export default function Sidebar({ isSidebarOpen }: SidebarProps) {
     return (
         <nav className={`sidebar ${isSidebarOpen ? "" : "collapsed"}`}>
             <ul>
-                {menuItems.map(({ to, icon: Icon }) => (
+                {menuItems.map(({ to, icon: Icon, text }) => (
                     <li key={to}>
                         <NavLink to={to}>
                             <span className="icon">
                                 <Icon />
+                            </span>
+                            <span className="text">
+                                {text}
                             </span>
                         </NavLink>
                     </li>
