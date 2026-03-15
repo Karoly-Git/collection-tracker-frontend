@@ -34,12 +34,13 @@ export default function FilterBar({ filtersList, setFiltersList }: FilterBarProp
     return (
         <div className="filter-bar">
             {/* Today filter */}
-            <Button
-                variant={`filter-btn ${filtersList.includes("TODAY") ? "active-filter" : ""}`}
-                icon={TodayIcon}
-                text="Today"
-                onClick={() => toggleFilter("TODAY")}
-            />
+            {false &&
+                <Button
+                    variant={`filter-btn ${filtersList.includes("TODAY") ? "active-filter" : ""}`}
+                    icon={TodayIcon}
+                    text="Today"
+                    onClick={() => toggleFilter("TODAY")}
+                />}
 
             {/* Status filters */}
             {statusKeys.map(status => {

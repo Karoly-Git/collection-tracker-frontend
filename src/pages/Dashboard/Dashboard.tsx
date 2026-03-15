@@ -11,7 +11,7 @@ import { COLLECTION_STATUSES } from '@/constants/collection-statuses';
 import Spinner from '@/components/ui/spinner/Spinner';
 import type { Collection } from '@/types/collection';
 import { getTodayCollections } from '@/api/collection';
-import Error from '@/components/ui/error/Error';
+import Message from '@/components/ui/message/Message';
 
 export default function Dashboard() {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -43,9 +43,10 @@ export default function Dashboard() {
     return (
         <>
             {isError ? (
-                <Error
+                <Message
                     message="Failed to load collections."
                     onRetry={fetchCollections}
+                    btnText="Try again"
                 />) : isLoading ? (
                     <div className="loading-spinner-container">
                         <Spinner />

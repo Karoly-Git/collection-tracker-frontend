@@ -15,6 +15,7 @@ import { LuArrowDownAZ as AscIcon } from "react-icons/lu";
 import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
 import "./Table.scss";
+import Message from "../ui/message/Message";
 
 type TableProps = {
     searchValue: string;
@@ -109,69 +110,77 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
     }, [sortedCollections, searchValue, filtersList]);
 
     return (
-        <table className="collection-table">
-            <thead>
-                <tr>
-                    <th onClick={() => handleSort("checkedInAt")}>
-                        <span className="th-content">
-                            <TimerIcon className="content-icon" />
-                            <span className="content-text">Timer</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("checkedInAt")}
-                            </span>
-                        </span>
-                    </th>
+        <>
+            {!filteredCollections.length ? (
+                <Message
+                    title="No collections match your current search or filter"
+                    message="Try adjusting the filters or clearing the search."
+                />) : (
+                <table className="collection-table">
+                    <thead>
+                        <tr>
+                            <th onClick={() => handleSort("checkedInAt")}>
+                                <span className="th-content">
+                                    <TimerIcon className="content-icon" />
+                                    <span className="content-text">Timer</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("checkedInAt")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("materialName")}>
-                        <span className="th-content">
-                            <MaterialIcon className="content-icon material-icon" />
-                            <span className="content-text">Material</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("materialName")}
-                            </span>
-                        </span>
-                    </th>
+                            <th onClick={() => handleSort("materialName")}>
+                                <span className="th-content">
+                                    <MaterialIcon className="content-icon material-icon" />
+                                    <span className="content-text">Material</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("materialName")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th className="customer-column" onClick={() => handleSort("customerName")}>
-                        <span className="th-content">
-                            <CustomerIcon className="content-icon" />
-                            <span className="content-text">Customer</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("customerName")}
-                            </span>
-                        </span>
-                    </th>
+                            <th className="customer-column" onClick={() => handleSort("customerName")}>
+                                <span className="th-content">
+                                    <CustomerIcon className="content-icon" />
+                                    <span className="content-text">Customer</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("customerName")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("collectionRefNum")}>
-                        <span className="th-content">
-                            <RefIcon className="content-icon ref-icon" />
-                            <span className="content-text">Reference</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("collectionRefNum")}
-                            </span>
-                        </span>
-                    </th>
+                            <th onClick={() => handleSort("collectionRefNum")}>
+                                <span className="th-content">
+                                    <RefIcon className="content-icon ref-icon" />
+                                    <span className="content-text">Reference</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("collectionRefNum")}
+                                    </span>
+                                </span>
+                            </th>
 
-                    <th onClick={() => handleSort("currentStatus")}>
-                        <span className="th-content">
-                            <StatusIcon className="content-icon" />
-                            <span className="content-text">Status</span>
-                            <span className="sort-icon">
-                                {renderSortIcon("currentStatus")}
-                            </span>
-                        </span>
-                    </th>
-                </tr>
-            </thead>
+                            <th onClick={() => handleSort("currentStatus")}>
+                                <span className="th-content">
+                                    <StatusIcon className="content-icon" />
+                                    <span className="content-text">Status</span>
+                                    <span className="sort-icon">
+                                        {renderSortIcon("currentStatus")}
+                                    </span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
 
-            <tbody>
-                {filteredCollections.map((collection) => (
-                    <TableRow
-                        key={collection.id}
-                        collection={collection}
-                    />
-                ))}
-            </tbody>
-        </table>
+                    <tbody>
+                        {filteredCollections.map((collection) => (
+                            <TableRow
+                                key={collection.id}
+                                collection={collection}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </>
     );
 }
