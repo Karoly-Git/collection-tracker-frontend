@@ -12,6 +12,7 @@ import Spinner from '@/components/ui/spinner/Spinner';
 import type { Collection } from '@/types/collection';
 import { getTodayCollections } from '@/api/collection';
 import Message from '@/components/ui/message/Message';
+import { currentUser } from '@/constants/users';
 
 export default function Dashboard() {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -53,6 +54,11 @@ export default function Dashboard() {
                     </div>
                 ) : (
                 <div className='dashboard'>
+                    {currentUser.loggedIn &&
+                        <h4 className="user-status">
+                            Signed in as <span className="user-name">{currentUser.name}</span>
+                        </h4>
+                    }
                     <div className='controls'>
                         <SearchBar setSearchValue={setSearchValue} />
 

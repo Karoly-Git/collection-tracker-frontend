@@ -13,3 +13,5 @@ export const users: User[] = [
         loggedIn: true
     }
 ];
+
+export const currentUser: User = users[0];
