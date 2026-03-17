@@ -1,4 +1,3 @@
-import Table from '@/components/table/Table';
 import SearchBar from '@/components/ui/searchbar/SearchBar';
 import FilterBar from '@/components/ui/filter-bar/FilterBar';
 
@@ -13,6 +12,7 @@ import type { Collection } from '@/types/collection';
 import { getTodayCollections } from '@/api/collection';
 import Message from '@/components/ui/message/Message';
 import { currentUser } from '@/constants/users';
+import CollectionsView from '@/components/collections/CollectionsView';
 
 export default function Dashboard() {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -75,7 +75,7 @@ export default function Dashboard() {
                         setFiltersList={setFiltersList}
                     />
 
-                    <Table
+                    <CollectionsView
                         searchValue={searchValue}
                         filtersList={filtersList}
                         collections={collections}

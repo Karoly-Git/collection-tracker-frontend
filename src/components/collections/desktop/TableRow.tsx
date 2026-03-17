@@ -3,7 +3,7 @@ import { BsInfoCircle as InfoIcon } from "react-icons/bs";
 import { RiDeleteBin2Line as BinIcon } from "react-icons/ri";
 
 // UI Components
-import Button from "../ui/button/Button";
+
 
 // Constants
 import { COLLECTION_STATUSES } from "@/constants/collection-statuses";
@@ -16,6 +16,7 @@ import { getTimeSpentInStatus } from "@/utils/getTimeSpentInStatus";
 import { useEffect, useState } from "react";
 import { getTimeOnSiteAndIndicator } from "@/utils/getTimeOnSiteAndIndicator";
 import { formatText } from "@/utils/formatText";
+import Button from "@/components/ui/button/Button";
 
 // Types
 type TableRowProps = {

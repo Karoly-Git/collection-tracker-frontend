@@ -4,16 +4,15 @@
     align-items: center;
     padding: 1rem;
     color: white;
+    height: 75px;
 
     h1 {
         font-size: 1.75rem;
         font-weight: 500;
         letter-spacing: 2px;
 
-        .head {
-            @media(max-width: 360px) {
-                display: none;
-            }
+        @media(max-width: 360px) {
+            font-size: 1.25rem;
         }
     }
 

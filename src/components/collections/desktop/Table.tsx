@@ -15,24 +15,26 @@ import { LuArrowDownAZ as AscIcon } from "react-icons/lu";
 import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
 import "./Table.scss";
-import Message from "../ui/message/Message";
+import Message from "../../ui/message/Message";
 
 type TableProps = {
-    searchValue: string;
-    filtersList: string[];
     collections: Collection[];
-}
+};
 
-export default function Table({ searchValue, filtersList, collections }: TableProps) {
-    //const collections = data as Collection[];
+export default function Table({ collections }: TableProps) {
 
-    const [sortKey, setSortKey] = useState<keyof Collection | null>("checkedInAt");
-    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+    const [sortKey, setSortKey] =
+        useState<keyof Collection | null>("checkedInAt");
+
+    const [sortDirection, setSortDirection] =
+        useState<"asc" | "desc">("asc");
 
     const handleSort = (key: keyof Collection): void => {
 
         if (sortKey === key) {
-            setSortDirection(prev => prev === "asc" ? "desc" : "asc");
+            setSortDirection(prev =>
+                prev === "asc" ? "desc" : "asc"
+            );
         } else {
             setSortKey(key);
             setSortDirection("asc");
@@ -47,6 +49,7 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
         return sortDirection === "asc"
             ? <AscIcon />
             : <DescIcon />;
+
     };
 
     const sortedCollections = useMemo(() => {
@@ -58,7 +61,7 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
             const aValue = a[sortKey];
             const bValue = b[sortKey];
 
-            // Special handling for date sorting
+            // Special case for dates
             if (sortKey === "checkedInAt") {
 
                 const aTime = new Date(aValue as string).getTime();
@@ -69,56 +72,35 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
                     : aTime - bTime;
             }
 
-            // Handle null / undefined values
+            // Handle nulls
             if (aValue === null || aValue === undefined) return 1;
             if (bValue === null || bValue === undefined) return -1;
 
-            // Default comparison for strings / numbers
             if (aValue === bValue) return 0;
 
             if (sortDirection === "asc") {
                 return aValue > bValue ? 1 : -1;
-            } else {
-                return aValue < bValue ? 1 : -1;
             }
+
+            return aValue < bValue ? 1 : -1;
 
         });
 
     }, [collections, sortKey, sortDirection]);
 
-    const filteredCollections = useMemo(() => {
-        const today = new Date().toDateString();
-        const search = searchValue.toLowerCase();
-
-        return sortedCollections.filter((c) => {
-            const matchesStatus = filtersList.includes(c.currentStatus);
-
-            const matchesSearch =
-                c.materialName.toLowerCase().includes(search) ||
-                c.customerName.toLowerCase().includes(search) ||
-                String(c.collectionRefNum).toLowerCase().includes(search);
-
-            if (filtersList.includes("TODAY")) {
-                const checkedDate = new Date(c.checkedInAt).toDateString();
-                const matchesToday = today === checkedDate;
-
-                return matchesStatus && matchesSearch && matchesToday;
-            }
-
-            return matchesStatus && matchesSearch;
-        });
-    }, [sortedCollections, searchValue, filtersList]);
-
     return (
         <>
-            {!filteredCollections.length ? (
+            {!sortedCollections.length ? (
                 <Message
                     title="No collections match your current search or filter"
                     message="Try adjusting the filters or clearing the search."
-                />) : (
+                />
+            ) : (
                 <table className="collection-table">
+
                     <thead>
                         <tr>
+
                             <th onClick={() => handleSort("checkedInAt")}>
                                 <span className="th-content">
                                     <TimerIcon className="content-icon" />
@@ -139,7 +121,10 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
                                 </span>
                             </th>
 
-                            <th className="customer-column" onClick={() => handleSort("customerName")}>
+                            <th
+                                className="customer-column"
+                                onClick={() => handleSort("customerName")}
+                            >
                                 <span className="th-content">
                                     <CustomerIcon className="content-icon" />
                                     <span className="content-text">Customer</span>
@@ -168,17 +153,25 @@ export default function Table({ searchValue, filtersList, collections }: TablePr
                                     </span>
                                 </span>
                             </th>
+
+                            <th>
+                                <span className="th-content">
+                                    <span className="content-text">-</span>
+                                </span>
+                            </th>
+
                         </tr>
                     </thead>
 
                     <tbody>
-                        {filteredCollections.map((collection) => (
+                        {sortedCollections.map(collection => (
                             <TableRow
                                 key={collection.id}
                                 collection={collection}
                             />
                         ))}
                     </tbody>
+
                 </table>
             )}
         </>
