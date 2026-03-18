@@ -49,7 +49,7 @@ export default function TableRow({ collection }: TableRowProps) {
             <td>
                 <div className="cell-content timer">
                     <span
-                        style={{ backgroundColor: urgencyColor }}
+                        style={{ color: urgencyColor }}
                         className="time"
                     >
                         {timeOnSite}
