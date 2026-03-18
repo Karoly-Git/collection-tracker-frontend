@@ -2,6 +2,7 @@ import SearchBar from '@/components/ui/searchbar/SearchBar';
 import FilterBar from '@/components/ui/filter-bar/FilterBar';
 
 import { GoPlus as PlusIcon } from "react-icons/go";
+import { FaSliders } from "react-icons/fa6";
 
 import Button from '@/components/ui/button/Button';
 import './Dashboard.scss';
@@ -61,6 +62,12 @@ export default function Dashboard() {
                     }
                     <div className='controls'>
                         <SearchBar setSearchValue={setSearchValue} />
+
+                        <Button
+                            variant='filter-btn'
+                            icon={FaSliders}
+                            onClick={() => { }}
+                        />
 
                         <Button
                             variant='add-btn'

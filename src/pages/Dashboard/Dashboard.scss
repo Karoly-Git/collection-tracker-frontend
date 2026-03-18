@@ -26,6 +26,12 @@
         align-items: flex-start;
         gap: 1rem;
 
+        .filter-btn {
+            padding: 11px;
+            background-color: #004fb6;
+            color: white;
+        }
+
         .add-btn {
             margin-left: auto;
 
