@@ -2,13 +2,20 @@ import { useEffect } from "react";
 import "./Modal.scss";
 import { IoMdClose as CloseIcon } from "react-icons/io";
 
+type ModalProps = {
+    isOpen: boolean;
+    escapeAction: () => void;
+    disableEscape?: boolean;
+    modalTitle: string;
+    children: React.ReactNode;
+};
 export default function Modal({
     isOpen,
     escapeAction,
-    disableEscape = false, // ✅ NEW
+    disableEscape = false,
     modalTitle,
     children,
-}) {
+}: ModalProps) {
     useEffect(() => {
         if (!isOpen) return;
 
@@ -24,7 +31,7 @@ export default function Modal({
         // ✅ do nothing if modal closed OR escape disabled
         if (!isOpen || disableEscape) return;
 
-        const handleEscape = (event) => {
+        const handleEscape = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
                 escapeAction?.();
             }

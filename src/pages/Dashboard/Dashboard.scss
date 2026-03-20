@@ -23,7 +23,7 @@
 
     .controls {
         display: flex;
-        align-items: flex-start;
+        // align-items: flex-start;
         gap: 1rem;
 
         .filter-btn {
@@ -34,11 +34,20 @@
 
         .add-btn {
             margin-left: auto;
+        }
 
-            @media(max-width: 500px) {
-                .btn-text {
-                    display: none;
-                }
+        @media (max-width: 500px) {
+            .add-btn {
+                margin-left: unset;
+            }
+
+            .filter-btn {
+                margin-left: auto;
+                margin-right: 0;
+            }
+
+            .btn-text {
+                display: none;
             }
         }
     }

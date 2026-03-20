@@ -14,14 +14,21 @@ import { getTodayCollections } from '@/api/collection';
 import Message from '@/components/ui/message/Message';
 import { currentUser } from '@/constants/users';
 import CollectionsView from '@/components/collections/CollectionsView';
+import Modal from '@/components/ui/modal/Modal';
 
 export default function Dashboard() {
     const [searchValue, setSearchValue] = useState<string>("");
-    const [filtersList, setFiltersList] = useState<string[]>([...Object.keys(COLLECTION_STATUSES), "TODAY"]);
+    const [filtersList, setFiltersList] = useState<string[]>([
+        ...Object.keys(COLLECTION_STATUSES),
+        "TODAY"
+    ]);
 
     const [collections, setCollections] = useState<Collection[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
+
+    // ✅ modal state
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false);
 
     const fetchCollections = async () => {
         setIsLoading(true);
@@ -49,24 +56,27 @@ export default function Dashboard() {
                     message="Failed to load collections."
                     onRetry={fetchCollections}
                     btnText="Try again"
-                />) : isLoading ? (
-                    <div className="loading-spinner-container">
-                        <Spinner />
-                    </div>
-                ) : (
+                />
+            ) : isLoading ? (
+                <div className="loading-spinner-container">
+                    <Spinner />
+                </div>
+            ) : (
                 <div className='dashboard'>
-                    {currentUser.loggedIn &&
+                    {currentUser.loggedIn && (
                         <h4 className="user-status">
-                            Signed in as <span className="user-name">{currentUser.name}</span>
+                            Signed in as <span className="user-name">{currentUser.name}</span> (example user)
                         </h4>
-                    }
+                    )}
+
                     <div className='controls'>
                         <SearchBar setSearchValue={setSearchValue} />
 
+                        {/* ✅ FILTER BUTTON */}
                         <Button
                             variant='filter-btn'
                             icon={FaSliders}
-                            onClick={() => { }}
+                            onClick={() => setIsFilterModalOpen(true)}
                         />
 
                         <Button
@@ -77,10 +87,17 @@ export default function Dashboard() {
                         />
                     </div>
 
-                    <FilterBar
-                        filtersList={filtersList}
-                        setFiltersList={setFiltersList}
-                    />
+                    {/* ✅ FILTER MODAL */}
+                    <Modal
+                        isOpen={isFilterModalOpen}
+                        escapeAction={() => setIsFilterModalOpen(false)}
+                        modalTitle="Filters"
+                    >
+                        <FilterBar
+                            filtersList={filtersList}
+                            setFiltersList={setFiltersList}
+                        />
+                    </Modal>
 
                     <CollectionsView
                         searchValue={searchValue}
