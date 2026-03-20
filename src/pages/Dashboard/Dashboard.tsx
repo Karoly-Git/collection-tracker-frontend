@@ -27,8 +27,8 @@ export default function Dashboard() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
 
-    // ✅ modal state
     const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
 
     const fetchCollections = async () => {
         setIsLoading(true);
@@ -72,7 +72,6 @@ export default function Dashboard() {
                     <div className='controls'>
                         <SearchBar setSearchValue={setSearchValue} />
 
-                        {/* ✅ FILTER BUTTON */}
                         <Button
                             variant='filter-btn'
                             icon={FaSliders}
@@ -83,11 +82,10 @@ export default function Dashboard() {
                             variant='add-btn'
                             icon={PlusIcon}
                             text='Add collection'
-                            onClick={() => { }}
+                            onClick={() => setIsAddModalOpen(true)}
                         />
                     </div>
 
-                    {/* ✅ FILTER MODAL */}
                     <Modal
                         isOpen={isFilterModalOpen}
                         escapeAction={() => setIsFilterModalOpen(false)}
@@ -97,6 +95,14 @@ export default function Dashboard() {
                             filtersList={filtersList}
                             setFiltersList={setFiltersList}
                         />
+                    </Modal>
+
+                    <Modal
+                        isOpen={isAddModalOpen}
+                        escapeAction={() => setIsAddModalOpen(false)}
+                        modalTitle="Add Collection"
+                    >
+                        Add Collection Form
                     </Modal>
 
                     <CollectionsView

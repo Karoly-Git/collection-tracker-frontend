@@ -28,7 +28,7 @@ export default function Modal({
     }, [isOpen]);
 
     useEffect(() => {
-        // ✅ do nothing if modal closed OR escape disabled
+        // Do nothing if modal closed OR escape disabled
         if (!isOpen || disableEscape) return;
 
         const handleEscape = (event: KeyboardEvent) => {

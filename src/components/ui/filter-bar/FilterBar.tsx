@@ -2,7 +2,6 @@ import type { Dispatch, SetStateAction } from "react";
 
 import "./FilterBar.scss";
 
-import { IoMdClose as ResetIcon } from "react-icons/io";
 import { IoTodaySharp as TodayIcon } from "react-icons/io5";
 
 import { COLLECTION_STATUSES } from "@/constants/collection-statuses";
@@ -25,10 +24,6 @@ export default function FilterBar({ filtersList, setFiltersList }: FilterBarProp
                 ? prev.filter(e => e !== key)
                 : [...prev, key]
         );
-    };
-
-    const resetFilters = (): void => {
-        setFiltersList([...Object.keys(COLLECTION_STATUSES), "TODAY"]);
     };
 
     return (
@@ -54,16 +49,6 @@ export default function FilterBar({ filtersList, setFiltersList }: FilterBarProp
                     />
                 );
             })}
-
-            {/* Reset filters */}
-            {filtersList.length !== 5 && (
-                <Button
-                    type="button"
-                    icon={ResetIcon}
-                    variant="only-icon-btn"
-                    onClick={resetFilters}
-                />
-            )}
         </div>
     );
 }
