@@ -1,3 +1,4 @@
+import BottomNav from "../BottomNav/BottomNav";
 import "./Footer.scss";
 
 export default function Footer() {
@@ -14,6 +15,8 @@ export default function Footer() {
                     v1.0.0
                 </span>
             </div>
+
+            <BottomNav />
         </footer>
     );
 }

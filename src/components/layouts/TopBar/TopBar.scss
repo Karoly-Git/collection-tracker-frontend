@@ -19,5 +19,9 @@
     .hamburger-icon {
         font-size: 2rem;
         cursor: pointer;
+
+        @media(max-width: 500px) {
+            display: none;
+        }
     }
 }
