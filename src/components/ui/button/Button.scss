@@ -22,15 +22,6 @@
         transform: translateY(1px);
     }
 
-    &.delete {
-        background: darkred;
-        color: #fff;
-
-        &:hover {
-            background: #b60000;
-        }
-    }
-
     &.add-btn {
         white-space: nowrap;
         background-color: #004fb6;
@@ -48,12 +39,13 @@
         color: white;
     }
 
-    &.info {
-        background: rgb(0, 139, 42);
-        color: #fff;
+    &.info,
+    &.delete {
+        background-color: transparent;
+        border: 2px solid transparent;
 
         &:hover {
-            background: #15b600;
+            border-color: gray;
         }
     }
 
