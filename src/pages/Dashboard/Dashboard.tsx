@@ -63,7 +63,7 @@ export default function Dashboard() {
                 </div>
             ) : (
                 <div className='dashboard'>
-                    {currentUser.loggedIn && (
+                    {false && currentUser.loggedIn && (
                         <h4 className="user-status">
                             Signed in as <span className="user-name">{currentUser.name}</span> (example user)
                         </h4>

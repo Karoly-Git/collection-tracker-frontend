@@ -3,4 +3,8 @@ header {
     position: fixed;
     z-index: 1100;
     width: 100vw;
+
+    @media(max-width: 500px) {
+        display: none;
+    }
 }

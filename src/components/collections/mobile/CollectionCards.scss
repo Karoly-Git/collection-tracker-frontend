@@ -1,11 +1,12 @@
 .collection-cards {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 65px;
 
     .collection-card {
         background: white;
