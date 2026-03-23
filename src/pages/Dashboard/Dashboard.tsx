@@ -102,7 +102,7 @@ export default function Dashboard() {
                         escapeAction={() => setIsAddModalOpen(false)}
                         modalTitle="Add Collection"
                     >
-                        Add Collection Form
+                        A form to add new collection will be here.
                     </Modal>
 
                     <CollectionsView

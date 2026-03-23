@@ -21,9 +21,10 @@ import Button from "@/components/ui/button/Button";
 // Types
 type TableRowProps = {
     collection: Collection;
+    setIsInfoModalOpen: (value: boolean) => void;
+    setIsDeleteModalOpen: (value: boolean) => void;
 };
-
-export default function TableRow({ collection }: TableRowProps) {
+export default function TableRow({ collection, setIsInfoModalOpen, setIsDeleteModalOpen }: TableRowProps) {
     const [timeOnSite, setTimeOnSite] = useState<string>("");
     const [urgencyColor, setUrgencyColor] = useState<string>("");
 
@@ -109,11 +110,13 @@ export default function TableRow({ collection }: TableRowProps) {
                 <Button
                     variant="info only-icon-btn"
                     icon={InfoIcon}
+                    onClick={() => setIsInfoModalOpen(true)}
                 />
 
                 <Button
                     variant="delete only-icon-btn"
                     icon={BinIcon}
+                    onClick={() => setIsDeleteModalOpen(true)}
                 />
 
             </td>
