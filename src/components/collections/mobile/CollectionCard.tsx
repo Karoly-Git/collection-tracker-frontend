@@ -16,9 +16,11 @@ import { RiDeleteBin2Line as BinIcon } from "react-icons/ri";
 
 type Props = {
     collection: Collection;
+    setIsInfoModalOpen: (value: boolean) => void;
+    setIsDeleteModalOpen: (value: boolean) => void;
 };
 
-export default function CollectionCard({ collection }: Props) {
+export default function CollectionCard({ collection, setIsInfoModalOpen, setIsDeleteModalOpen }: Props) {
 
     const [timeOnSite, setTimeOnSite] = useState("");
     const [urgencyColor, setUrgencyColor] = useState("");
@@ -112,11 +114,13 @@ export default function CollectionCard({ collection }: Props) {
                 <Button
                     variant="info only-icon-btn"
                     icon={InfoIcon}
+                    onClick={() => setIsInfoModalOpen(true)}
                 />
 
                 <Button
                     variant="delete only-icon-btn"
                     icon={BinIcon}
+                    onClick={() => setIsDeleteModalOpen(true)}
                 />
 
             </div>

@@ -16,13 +16,14 @@ import { LuArrowUpAZ as DescIcon } from "react-icons/lu";
 
 import "./Table.scss";
 import Message from "../../ui/message/Message";
-import Modal from "@/components/ui/modal/Modal";
 
 type TableProps = {
     collections: Collection[];
+    setIsInfoModalOpen: (value: boolean) => void;
+    setIsDeleteModalOpen: (value: boolean) => void;
 };
 
-export default function Table({ collections }: TableProps) {
+export default function Table({ collections, setIsInfoModalOpen, setIsDeleteModalOpen }: TableProps) {
 
     const [sortKey, setSortKey] =
         useState<keyof Collection | null>("checkedInAt");
@@ -89,28 +90,8 @@ export default function Table({ collections }: TableProps) {
 
     }, [collections, sortKey, sortDirection]);
 
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-
-
     return (
         <>
-            <Modal
-                isOpen={isInfoModalOpen}
-                escapeAction={() => setIsInfoModalOpen(false)}
-                modalTitle="Info"
-            >
-                Info form will be here
-            </Modal>
-
-            <Modal
-                isOpen={isDeleteModalOpen}
-                escapeAction={() => setIsDeleteModalOpen(false)}
-                modalTitle="Delete Collection"
-            >
-                Delete form will be here
-            </Modal>
-
             {!sortedCollections.length ? (
                 <Message
                     title="No collections match your current search or filter"

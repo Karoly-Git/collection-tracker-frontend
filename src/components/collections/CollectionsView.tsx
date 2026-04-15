@@ -11,12 +11,16 @@ type CollectionsViewProps = {
     collections: Collection[];
     searchValue: string;
     filtersList: string[];
+    setIsInfoModalOpen: (value: boolean) => void;
+    setIsDeleteModalOpen: (value: boolean) => void;
 };
 
 export default function CollectionsView({
     collections,
     searchValue,
-    filtersList
+    filtersList,
+    setIsInfoModalOpen,
+    setIsDeleteModalOpen
 }: CollectionsViewProps) {
 
     const filteredCollections = useFilteredCollections({
@@ -42,11 +46,19 @@ export default function CollectionsView({
 
     if (isMobile) {
         return (
-            <CollectionCards collections={filteredCollections} />
+            <CollectionCards
+                collections={filteredCollections}
+                setIsInfoModalOpen={setIsInfoModalOpen}
+                setIsDeleteModalOpen={setIsDeleteModalOpen}
+            />
         );
     }
 
     return (
-        <Table collections={filteredCollections} />
+        <Table
+            collections={filteredCollections}
+            setIsInfoModalOpen={setIsInfoModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
     );
 }

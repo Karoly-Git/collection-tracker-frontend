@@ -30,6 +30,9 @@ export default function Dashboard() {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
 
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
     const fetchCollections = async () => {
         setIsLoading(true);
         setIsError(false);
@@ -105,10 +108,28 @@ export default function Dashboard() {
                         A form to add new collection will be here.
                     </Modal>
 
+                    <Modal
+                        isOpen={isInfoModalOpen}
+                        escapeAction={() => setIsInfoModalOpen(false)}
+                        modalTitle="Info"
+                    >
+                        Info form will be here
+                    </Modal>
+
+                    <Modal
+                        isOpen={isDeleteModalOpen}
+                        escapeAction={() => setIsDeleteModalOpen(false)}
+                        modalTitle="Delete Collection"
+                    >
+                        Delete form will be here
+                    </Modal>
+
                     <CollectionsView
                         searchValue={searchValue}
                         filtersList={filtersList}
                         collections={collections}
+                        setIsInfoModalOpen={setIsInfoModalOpen}
+                        setIsDeleteModalOpen={setIsDeleteModalOpen}
                     />
                 </div>
             )}

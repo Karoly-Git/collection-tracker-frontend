@@ -7,9 +7,11 @@ import Message from "@/components/ui/message/Message";
 
 type CollectionCardsProps = {
     collections: Collection[];
+    setIsInfoModalOpen: (value: boolean) => void;
+    setIsDeleteModalOpen: (value: boolean) => void;
 };
 
-export default function CollectionCards({ collections }: CollectionCardsProps) {
+export default function CollectionCards({ collections, setIsInfoModalOpen, setIsDeleteModalOpen }: CollectionCardsProps) {
 
     return (
         <>
@@ -23,6 +25,8 @@ export default function CollectionCards({ collections }: CollectionCardsProps) {
                         <CollectionCard
                             key={collection.id}
                             collection={collection}
+                            setIsInfoModalOpen={setIsInfoModalOpen}
+                            setIsDeleteModalOpen={setIsDeleteModalOpen}
                         />
                     ))}
                 </div>
