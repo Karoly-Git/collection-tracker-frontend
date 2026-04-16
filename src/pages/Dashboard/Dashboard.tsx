@@ -109,11 +109,19 @@ export default function Dashboard() {
                     </Modal>
 
                     <Modal
+                        isOpen={isStatusModalOpen}
+                        escapeAction={() => setIsStatusModalOpen(false)}
+                        modalTitle="Change Status"
+                    >
+                        A form to update collection status will be here.
+                    </Modal>
+
+                    <Modal
                         isOpen={isInfoModalOpen}
                         escapeAction={() => setIsInfoModalOpen(false)}
-                        modalTitle="Info"
+                        modalTitle="Collection Info"
                     >
-                        Info form will be here
+                        A form to display and update collection info will be here.
                     </Modal>
 
                     <Modal
@@ -121,16 +129,9 @@ export default function Dashboard() {
                         escapeAction={() => setIsDeleteModalOpen(false)}
                         modalTitle="Delete Collection"
                     >
-                        Delete form will be here
+                        A form to delete a collection will be here.
                     </Modal>
 
-                    <Modal
-                        isOpen={isStatusModalOpen}
-                        escapeAction={() => setIsStatusModalOpen(false)}
-                        modalTitle="Status Change"
-                    >
-                        Status change form will be here
-                    </Modal>
 
                     <CollectionsView
                         searchValue={searchValue}
