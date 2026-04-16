@@ -13,6 +13,7 @@ type CollectionsViewProps = {
     filtersList: string[];
     setIsInfoModalOpen: (value: boolean) => void;
     setIsDeleteModalOpen: (value: boolean) => void;
+    setIsStatusModalOpen: (value: boolean) => void;
 };
 
 export default function CollectionsView({
@@ -20,7 +21,8 @@ export default function CollectionsView({
     searchValue,
     filtersList,
     setIsInfoModalOpen,
-    setIsDeleteModalOpen
+    setIsDeleteModalOpen,
+    setIsStatusModalOpen
 }: CollectionsViewProps) {
 
     const filteredCollections = useFilteredCollections({
@@ -50,6 +52,7 @@ export default function CollectionsView({
                 collections={filteredCollections}
                 setIsInfoModalOpen={setIsInfoModalOpen}
                 setIsDeleteModalOpen={setIsDeleteModalOpen}
+                setIsStatusModalOpen={setIsStatusModalOpen}
             />
         );
     }
@@ -59,6 +62,7 @@ export default function CollectionsView({
             collections={filteredCollections}
             setIsInfoModalOpen={setIsInfoModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
+            setIsStatusModalOpen={setIsStatusModalOpen}
         />
     );
 }

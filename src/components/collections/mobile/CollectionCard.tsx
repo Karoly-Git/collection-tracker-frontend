@@ -18,9 +18,10 @@ type Props = {
     collection: Collection;
     setIsInfoModalOpen: (value: boolean) => void;
     setIsDeleteModalOpen: (value: boolean) => void;
+    setIsStatusModalOpen: (value: boolean) => void;
 };
 
-export default function CollectionCard({ collection, setIsInfoModalOpen, setIsDeleteModalOpen }: Props) {
+export default function CollectionCard({ collection, setIsInfoModalOpen, setIsDeleteModalOpen, setIsStatusModalOpen }: Props) {
 
     const [timeOnSite, setTimeOnSite] = useState("");
     const [urgencyColor, setUrgencyColor] = useState("");
@@ -98,6 +99,7 @@ export default function CollectionCard({ collection, setIsInfoModalOpen, setIsDe
                     text={formatText(
                         COLLECTION_STATUSES[collection.currentStatus].text
                     )}
+                    onClick={() => setIsStatusModalOpen(true)}
                 />
 
                 {collection.currentStatus !==

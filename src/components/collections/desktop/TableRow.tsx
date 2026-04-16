@@ -23,8 +23,9 @@ type TableRowProps = {
     collection: Collection;
     setIsInfoModalOpen: (value: boolean) => void;
     setIsDeleteModalOpen: (value: boolean) => void;
+    setIsStatusModalOpen: (value: boolean) => void;
 };
-export default function TableRow({ collection, setIsInfoModalOpen, setIsDeleteModalOpen }: TableRowProps) {
+export default function TableRow({ collection, setIsInfoModalOpen, setIsDeleteModalOpen, setIsStatusModalOpen }: TableRowProps) {
     const [timeOnSite, setTimeOnSite] = useState<string>("");
     const [urgencyColor, setUrgencyColor] = useState<string>("");
 
@@ -96,7 +97,7 @@ export default function TableRow({ collection, setIsInfoModalOpen, setIsDeleteMo
                     variant={COLLECTION_STATUSES[collection.currentStatus].text}
                     icon={COLLECTION_STATUSES[collection.currentStatus].icon}
                     text={formatText(COLLECTION_STATUSES[collection.currentStatus].text)}
-                    onClick={() => { }}
+                    onClick={() => setIsStatusModalOpen(true)}
                 />
 
                 {collection.currentStatus !== COLLECTION_STATUSES.CHECKED_OUT.text && (

@@ -9,9 +9,10 @@ type CollectionCardsProps = {
     collections: Collection[];
     setIsInfoModalOpen: (value: boolean) => void;
     setIsDeleteModalOpen: (value: boolean) => void;
+    setIsStatusModalOpen: (value: boolean) => void;
 };
 
-export default function CollectionCards({ collections, setIsInfoModalOpen, setIsDeleteModalOpen }: CollectionCardsProps) {
+export default function CollectionCards({ collections, setIsInfoModalOpen, setIsDeleteModalOpen, setIsStatusModalOpen }: CollectionCardsProps) {
 
     return (
         <>
@@ -27,6 +28,7 @@ export default function CollectionCards({ collections, setIsInfoModalOpen, setIs
                             collection={collection}
                             setIsInfoModalOpen={setIsInfoModalOpen}
                             setIsDeleteModalOpen={setIsDeleteModalOpen}
+                            setIsStatusModalOpen={setIsStatusModalOpen}
                         />
                     ))}
                 </div>

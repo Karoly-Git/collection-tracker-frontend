@@ -21,9 +21,10 @@ type TableProps = {
     collections: Collection[];
     setIsInfoModalOpen: (value: boolean) => void;
     setIsDeleteModalOpen: (value: boolean) => void;
+    setIsStatusModalOpen: (value: boolean) => void;
 };
 
-export default function Table({ collections, setIsInfoModalOpen, setIsDeleteModalOpen }: TableProps) {
+export default function Table({ collections, setIsInfoModalOpen, setIsDeleteModalOpen, setIsStatusModalOpen }: TableProps) {
 
     const [sortKey, setSortKey] =
         useState<keyof Collection | null>("checkedInAt");
@@ -172,6 +173,7 @@ export default function Table({ collections, setIsInfoModalOpen, setIsDeleteModa
                                 collection={collection}
                                 setIsInfoModalOpen={setIsInfoModalOpen}
                                 setIsDeleteModalOpen={setIsDeleteModalOpen}
+                                setIsStatusModalOpen={setIsStatusModalOpen}
                             />
                         ))}
                     </tbody>
